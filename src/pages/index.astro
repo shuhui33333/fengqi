@@ -1,11 +1,558 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>丰麒集团有限公司 | FENGQI GROUP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;700&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --gold-dark: #8B6914;
+    --black: #0A0A0A;
+    --black-2: #111111;
+    --black-3: #1A1A1A;
+    --white: #F5F0E8;
+    --white-dim: rgba(245,240,232,0.7);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Noto Serif SC', serif; overflow-x: hidden; cursor: none; }
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
+  /* Cursor */
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(201,168,76,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.15s ease; }
 
-<Layout>
-	<Welcome />
-</Layout>
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s ease; }
+  nav.scrolled { background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); padding: 16px 60px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo-icon { width: 42px; height: 42px; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 16px; color: var(--gold); }
+  .nav-logo-cn { font-size: 16px; font-weight: 500; color: var(--gold); letter-spacing: 4px; display: block; }
+  .nav-logo-en { font-family: 'Cinzel', serif; font-size: 9px; color: var(--gold-dark); letter-spacing: 5px; display: block; margin-top: 2px; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 300; color: var(--white-dim); text-decoration: none; letter-spacing: 3px; position: relative; transition: color 0.3s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* Hero */
+  .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%), linear-gradient(180deg, var(--black) 0%, var(--black-2) 100%); }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%); }
+  .hero-content { position: relative; text-align: center; z-index: 2; padding: 0 20px; }
+  .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 8px; color: var(--gold); margin-bottom: 28px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+  .hero-title { font-family: 'Noto Serif SC', serif; font-size: clamp(52px, 8vw, 96px); font-weight: 300; line-height: 1.1; letter-spacing: 12px; margin-bottom: 12px; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+  .hero-title span { color: var(--gold); }
+  .hero-subtitle { font-family: 'Cinzel', serif; font-size: clamp(12px, 2vw, 16px); letter-spacing: 10px; color: var(--gold-dark); margin-bottom: 48px; opacity: 0; animation: fadeUp 1s ease 0.7s forwards; }
+  .hero-divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 40px; opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+  .hero-tagline { font-size: 15px; font-weight: 300; color: var(--white-dim); letter-spacing: 6px; opacity: 0; animation: fadeUp 1s ease 1.1s forwards; }
+  .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeIn 1s ease 1.8s forwards; }
+  .hero-scroll span { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 4px; color: var(--gold-dark); }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(180deg, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  .hero-corner { position: absolute; width: 60px; height: 60px; opacity: 0.4; }
+  .hero-corner.tl { top: 20px; left: 20px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .hero-corner.tr { top: 20px; right: 20px; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+  .hero-corner.bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .hero-corner.br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scrollPulse { 0%,100% { opacity:0.3; } 50% { opacity:1; } }
+
+  /* Section commons */
+  .sec { padding: 120px 60px; max-width: 1400px; margin: 0 auto; }
+  .sec-bg { background: var(--black-2); border-top: 1px solid rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.08); }
+  .sec-bg .sec { max-width: none; }
+  .sec-bg-inner { max-width: 1400px; margin: 0 auto; padding: 120px 60px; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 6px; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
+  .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 300; letter-spacing: 6px; line-height: 1.3; margin-bottom: 20px; }
+  .section-title em { color: var(--gold); font-style: normal; }
+  .gold-line { width: 60px; height: 1px; background: var(--gold); margin-bottom: 60px; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-text { font-size: 15px; font-weight: 300; line-height: 2; color: var(--white-dim); letter-spacing: 1px; margin-bottom: 32px; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(201,168,76,0.1); margin-top: 8px; }
+  .stat-item { background: var(--black-2); padding: 28px 24px; transition: background 0.3s; }
+  .stat-item:hover { background: var(--black-3); }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 12px; font-weight: 300; color: var(--white-dim); letter-spacing: 2px; }
+  .about-card { background: var(--black-3); border: 1px solid rgba(201,168,76,0.15); padding: 48px; position: relative; overflow: hidden; }
+  .about-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--gold), transparent); }
+  .about-card-title { font-size: 18px; font-weight: 500; color: var(--gold); letter-spacing: 4px; margin-bottom: 20px; }
+  .about-card-text { font-size: 14px; line-height: 2.2; color: var(--white-dim); font-weight: 300; letter-spacing: 1px; margin-bottom: 24px; }
+  .honor-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--white-dim); letter-spacing: 1px; margin-bottom: 10px; }
+  .honor-item::before { content: '◆'; color: var(--gold); font-size: 7px; flex-shrink: 0; margin-top: 4px; }
+
+  /* Segments */
+  .segments-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: rgba(201,168,76,0.1); margin-top: 0; }
+  .segment-card { background: var(--black-2); padding: 48px 28px; transition: background 0.4s; position: relative; overflow: hidden; }
+  .segment-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.4s; }
+  .segment-card:hover { background: var(--black-3); }
+  .segment-card:hover::before { transform: scaleX(1); }
+  .segment-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: rgba(201,168,76,0.1); line-height: 1; margin-bottom: 20px; transition: color 0.4s; }
+  .segment-card:hover .segment-num { color: rgba(201,168,76,0.22); }
+  .segment-name { font-size: 17px; font-weight: 500; color: var(--gold); letter-spacing: 3px; margin-bottom: 10px; }
+  .segment-en { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; color: var(--gold-dark); margin-bottom: 20px; }
+  .segment-desc { font-size: 12px; font-weight: 300; color: var(--white-dim); line-height: 2; letter-spacing: 0.5px; }
+  .segment-tags { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 10px; letter-spacing: 1px; color: var(--gold-dark); border: 1px solid rgba(201,168,76,0.2); padding: 3px 8px; }
+
+  /* Global */
+  .map-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 60px; align-items: end; }
+  .map-desc { font-size: 14px; line-height: 2.2; color: var(--white-dim); font-weight: 300; letter-spacing: 1px; }
+  .regions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(201,168,76,0.1); }
+  .region-card { background: var(--black-2); padding: 36px 28px; transition: background 0.3s; }
+  .region-card:hover { background: var(--black-3); }
+  .region-title { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .region-loc { font-size: 12px; color: var(--white-dim); letter-spacing: 1px; padding-left: 12px; position: relative; font-weight: 300; margin-bottom: 8px; }
+  .region-loc::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 1px; background: var(--gold-dark); }
+
+  /* Technology */
+  .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(201,168,76,0.1); }
+  .tech-card { background: var(--black-2); padding: 52px 44px; position: relative; overflow: hidden; transition: background 0.3s; }
+  .tech-card:hover { background: var(--black-3); }
+  .tech-card-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 5px; color: var(--gold-dark); margin-bottom: 14px; }
+  .tech-card-title { font-size: 20px; font-weight: 500; color: var(--gold); letter-spacing: 3px; margin-bottom: 20px; }
+  .tech-card-desc { font-size: 13px; line-height: 2.2; color: var(--white-dim); font-weight: 300; letter-spacing: 1px; margin-bottom: 28px; }
+  .tech-feat { display: flex; align-items: flex-start; gap: 12px; font-size: 12px; color: var(--white-dim); line-height: 1.8; font-weight: 300; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .tech-feat-dot { width: 20px; height: 20px; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 6px; flex-shrink: 0; margin-top: 1px; }
+  .tech-bg-num { position: absolute; bottom: -20px; right: 20px; font-family: 'Cormorant Garamond', serif; font-size: 160px; font-weight: 300; color: rgba(201,168,76,0.03); line-height: 1; pointer-events: none; }
+
+  /* Leadership */
+  .leadership-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201,168,76,0.1); }
+  .leader-card { background: var(--black-2); padding: 44px 36px; transition: background 0.3s; position: relative; }
+  .leader-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
+  .leader-card:hover { background: var(--black-3); }
+  .leader-card:hover::after { opacity: 1; }
+  .leader-role { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; color: var(--gold-dark); margin-bottom: 8px; }
+  .leader-name { font-size: 26px; font-weight: 500; color: var(--gold); letter-spacing: 4px; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .bio-item { display: flex; gap: 8px; font-size: 12px; color: var(--white-dim); line-height: 1.8; font-weight: 300; margin-bottom: 8px; }
+  .bio-item::before { content: '·'; color: var(--gold); flex-shrink: 0; }
+
+  /* Strategy */
+  .strategy-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(201,168,76,0.1); }
+  .pillar-card { background: var(--black-2); padding: 52px 32px; transition: background 0.3s; }
+  .pillar-card:hover { background: var(--black-3); }
+  .pillar-index { font-family: 'Cormorant Garamond', serif; font-size: 68px; font-weight: 300; color: rgba(201,168,76,0.07); line-height: 1; margin-bottom: 18px; }
+  .pillar-title { font-size: 16px; font-weight: 500; color: var(--gold); letter-spacing: 3px; margin-bottom: 18px; }
+  .pillar-desc { font-size: 13px; line-height: 2; color: var(--white-dim); font-weight: 300; letter-spacing: 0.5px; }
+
+  /* Footer */
+  footer { background: var(--black-2); border-top: 1px solid rgba(201,168,76,0.15); padding: 80px 60px 40px; }
+  .footer-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto 60px; padding-bottom: 60px; border-bottom: 1px solid rgba(201,168,76,0.08); }
+  .footer-logo-main { font-size: 24px; font-weight: 500; color: var(--gold); letter-spacing: 8px; margin-bottom: 6px; }
+  .footer-logo-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px; color: var(--gold-dark); margin-bottom: 20px; }
+  .footer-motto { font-size: 14px; color: var(--white-dim); letter-spacing: 3px; font-weight: 300; }
+  .footer-col-title { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px; color: var(--gold); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .footer-links a { display: block; font-size: 12px; color: var(--white-dim); text-decoration: none; letter-spacing: 1px; font-weight: 300; margin-bottom: 10px; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: rgba(201,168,76,0.3); }
+  .footer-tagline { font-size: 12px; color: rgba(201,168,76,0.3); letter-spacing: 4px; font-weight: 300; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    nav, nav.scrolled { padding: 18px 30px; }
+    .sec { padding: 80px 30px; }
+    .sec-bg-inner { padding: 80px 30px; }
+    .about-grid, .map-intro { grid-template-columns: 1fr; gap: 40px; }
+    .segments-grid { grid-template-columns: 1fr 1fr; }
+    .regions-grid { grid-template-columns: 1fr 1fr; }
+    .leadership-grid { grid-template-columns: 1fr 1fr; }
+    .strategy-pillars { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .segments-grid, .tech-grid, .leadership-grid, .strategy-pillars, .regions-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">豐</div>
+    <div>
+      <span class="nav-logo-cn">丰麒集团</span>
+      <span class="nav-logo-en">FENGQI GROUP</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="#business">业务版块</a></li>
+    <li><a href="#global">全球布局</a></li>
+    <li><a href="#technology">科技平台</a></li>
+    <li><a href="#leadership">管理团队</a></li>
+    <li><a href="#contact">联系我们</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-corner tl"></div>
+  <div class="hero-corner tr"></div>
+  <div class="hero-corner bl"></div>
+  <div class="hero-corner br"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">ESTABLISHED 2014 · HONG KONG</p>
+    <h1 class="hero-title"><span>丰</span>麒<span>集</span>团</h1>
+    <p class="hero-subtitle">FENGQI GROUP LIMITED</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">农业全产业链数智化生态服务商</p>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="reveal">
+    <div class="section-label">ABOUT US</div>
+    <h2 class="section-title">关于<em>丰麒</em></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p class="about-text reveal d1">丰麒集团有限公司成立于2014年，深耕全球产业布局。集团在东南亚印尼投资建设物流产业园区，于非洲安哥拉布局农业产业园区，在南美古巴开发物流产业园区。</p>
+      <p class="about-text reveal d2">2024年集团于香港设立投资公司，正式布局大中华区农业领域，以"双碳目标＋乡村振兴"为战略引擎，打造"农业科技创新＋跨境物流网络＋供应链数智化管理＋国际贸易服务"四位一体产业生态体系，着力推动农业绿色转型与全球化流通体系建设。</p>
+      <div class="about-stats reveal d3">
+        <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">年全球运营经验</div></div>
+        <div class="stat-item"><div class="stat-number">20+</div><div class="stat-label">全球城市布局</div></div>
+        <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">核心业务板块</div></div>
+        <div class="stat-item"><div class="stat-number">36</div><div class="stat-label">项知识产权</div></div>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="about-card">
+        <div class="about-card-title">荣誉与资质</div>
+        <div class="about-card-text">集团持有供应链及农业相关软件著作权共36项、多项实用新型专利在申，技术实力深厚。</div>
+        <div class="honor-item">深圳市商业联合会副会长</div>
+        <div class="honor-item">全国城市农贸中心联合会理事单位</div>
+        <div class="honor-item">深圳市产业园区协会副会长单位（2025-2027）</div>
+        <div class="honor-item">供应链相关软件著作权 18 项</div>
+        <div class="honor-item">农业相关软件著作权 18 项</div>
+        <div class="honor-item">农业相关实用新型专利 4 项在申</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS -->
+<div class="sec-bg" id="business">
+  <div class="sec-bg-inner">
+    <div class="reveal">
+      <div class="section-label">BUSINESS SEGMENTS</div>
+      <h2 class="section-title">五大<em>业务</em>板块</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="segments-grid">
+      <div class="segment-card reveal d1">
+        <div class="segment-num">01</div>
+        <div class="segment-name">丰麒农业</div>
+        <div class="segment-en">FENGQI AGRICULTURE</div>
+        <div class="segment-desc">以"木本源技术＋生态康养＋智慧农业"三驱发展，打造"可循环、高价值、全链条"农业生态经济标杆。依托EnzyLoop酶能循环生态饲育系统与R-AIoT智能优化平台，构建立体农业生态闭环。</div>
+        <div class="segment-tags"><span class="tag">生态循环</span><span class="tag">智慧农业</span><span class="tag">文旅康养</span></div>
+      </div>
+      <div class="segment-card reveal d2">
+        <div class="segment-num">02</div>
+        <div class="segment-name">丰麒物流</div>
+        <div class="segment-en">FENGQI LOGISTICS</div>
+        <div class="segment-desc">构建"中国－东南亚"智慧物流网，聚焦冷链、城配及干线运输，形成东南亚仓配一体化网络。印尼丰捷物流在爪哇岛布局4大城市直营集散中心，辐射1.45亿人口。</div>
+        <div class="segment-tags"><span class="tag">冷链物流</span><span class="tag">仓配一体</span><span class="tag">东南亚</span></div>
+      </div>
+      <div class="segment-card reveal d3">
+        <div class="segment-num">03</div>
+        <div class="segment-name">丰麒科技</div>
+        <div class="segment-en">FENGQI TECHNOLOGY</div>
+        <div class="segment-desc">以IoT、区块链、AI为技术基底，搭建"产－供－销－管"一体化数字生态。旗下麒麟系列平台覆盖智慧农业物联网、溯源、智慧物流、智慧园区、金融等全场景。</div>
+        <div class="segment-tags"><span class="tag">IoT</span><span class="tag">区块链</span><span class="tag">AI驱动</span></div>
+      </div>
+      <div class="segment-card reveal d4">
+        <div class="segment-num">04</div>
+        <div class="segment-name">丰麒供应链</div>
+        <div class="segment-en">FENGQI SUPPLY CHAIN</div>
+        <div class="segment-desc">以"I＋P＋EPC＋O"全周期服务打通农产品"生产－流通－消费"链路，提供物流整合与数字化升级解决方案，致力成为农产品供应链数智化升级服务商。</div>
+        <div class="segment-tags"><span class="tag">I+P+EPC+O</span><span class="tag">全周期</span><span class="tag">数智化</span></div>
+      </div>
+      <div class="segment-card reveal d4">
+        <div class="segment-num">05</div>
+        <div class="segment-name">丰麒贸易</div>
+        <div class="segment-en">FENGQI TRADE</div>
+        <div class="segment-desc">搭建跨境双向贸易桥梁，进口海外特色农产品、出口国内优势农产品，提供供应链全托管服务。聚焦中巴贸易通道及东南亚农产品双向流通。</div>
+        <div class="segment-tags"><span class="tag">跨境贸易</span><span class="tag">双向流通</span><span class="tag">全托管</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GLOBAL -->
+<section id="global" class="sec">
+  <div class="reveal">
+    <div class="section-label">GLOBAL PRESENCE</div>
+    <h2 class="section-title">全球<em>版图</em></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="map-intro">
+    <div></div>
+    <p class="map-desc reveal d2">丰麒集团在全球20余座城市设有机构，覆盖中国大陆、香港、东北亚、东南亚、南亚及其他地区。以香港为集团总部，深圳为运营中心，构建辐射全球的农业与物流产业网络。</p>
+  </div>
+  <div class="regions-grid">
+    <div class="region-card reveal d1">
+      <div class="region-title">CHINA MAINLAND</div>
+      <div class="region-loc">深圳（运营总部）</div>
+      <div class="region-loc">广州 · 增城生态空间</div>
+      <div class="region-loc">厦门 · 跨境供应链</div>
+      <div class="region-loc">天津 · 国际供应链</div>
+      <div class="region-loc">上海 · 北京 · 杭州</div>
+      <div class="region-loc">重庆 · 成都 · 昆明</div>
+      <div class="region-loc">海南 · 青海 · 西藏 · 太原</div>
+    </div>
+    <div class="region-card reveal d2">
+      <div class="region-title">HONG KONG &amp; EAST ASIA</div>
+      <div class="region-loc">香港（集团投资公司）</div>
+      <div class="region-loc">日本东京 千代田区</div>
+    </div>
+    <div class="region-card reveal d3">
+      <div class="region-title">SOUTHEAST ASIA</div>
+      <div class="region-loc">印度尼西亚 · 丰捷物流</div>
+      <div class="region-loc">马来西亚 · 农业世界科技</div>
+      <div class="region-loc">柬埔寨 · 金边</div>
+      <div class="region-loc">泰国 · 曼谷</div>
+    </div>
+    <div class="region-card reveal d4">
+      <div class="region-title">SOUTH ASIA &amp; OTHERS</div>
+      <div class="region-loc">巴基斯坦 · 卡拉奇</div>
+      <div class="region-loc">非洲安哥拉（农业园区）</div>
+      <div class="region-loc">南美古巴（物流园区）</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<div class="sec-bg" id="technology">
+  <div class="sec-bg-inner">
+    <div class="reveal">
+      <div class="section-label">DIGITAL PLATFORMS</div>
+      <h2 class="section-title">麒麟<em>数字</em>平台</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card reveal d1">
+        <div class="tech-card-label">PRODUCTION · 生产端</div>
+        <div class="tech-card-title">麒麟智慧农业物联网平台</div>
+        <div class="tech-card-desc">整合土壤湿度、光照强度、病虫害监测等传感器数据，结合远红外生态波能优化土壤与微生物环境，AI数字模型实时生成种植养殖方案。</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>实时数据可视化，动态图表直观呈现</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>智能告警系统，异常数据秒级响应</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>AI数字模型实时生成精准管理方案</div>
+        <div class="tech-bg-num">01</div>
+      </div>
+      <div class="tech-card reveal d2">
+        <div class="tech-card-label">LOGISTICS · 流通端</div>
+        <div class="tech-card-title">麒麟智慧物流平台</div>
+        <div class="tech-card-desc">物流全链路数字化管理平台，联动园区、商户与物流多方协同，智能调度优化与高效仓储分拣，全链路温控监控与异常管理。</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>AI自动排线，实时监控运力与订单匹配</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>全程温控监控，适配清真标准</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>保质期预警、自动化设备、无纸化作业</div>
+        <div class="tech-bg-num">02</div>
+      </div>
+      <div class="tech-card reveal d3">
+        <div class="tech-card-label">TRACEABILITY · 溯源</div>
+        <div class="tech-card-title">麒麟溯源平台</div>
+        <div class="tech-card-desc">农产品全链路透明追溯与质量管控平台，融合IoT＋区块链可信存证能力，覆盖从生产到消费全链路追踪，提升品牌信任与市场竞争力。</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>IoT + 区块链双重可信存证</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>全链路透明追溯，消费者可查</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>品控数据闭环，强化品牌溢价</div>
+        <div class="tech-bg-num">03</div>
+      </div>
+      <div class="tech-card reveal d4">
+        <div class="tech-card-label">DECISION · 决策端</div>
+        <div class="tech-card-title">麒麟IOC智慧决策大屏</div>
+        <div class="tech-card-desc">整合核心系统数据，构建"全场景、全要素、全周期"可视化管理决策平台。三维数字孪生实现园区运营、仓储动线、物流轨迹的可视化建模。</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>三维数字孪生园区实时建模</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>异常指标三级预警自动处置</div>
+        <div class="tech-feat"><div class="tech-feat-dot">●</div>6大智能决策模型驾驶舱</div>
+        <div class="tech-bg-num">04</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<section id="leadership" class="sec">
+  <div class="reveal">
+    <div class="section-label">MANAGEMENT TEAM</div>
+    <h2 class="section-title">核心<em>管理</em>团队</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="leadership-grid">
+    <div class="leader-card reveal d1">
+      <div class="leader-role">CHAIRMAN · 董事局主席</div>
+      <div class="leader-name">卢 朋</div>
+      <div class="bio-item">管理学博士、应用经济学博士后</div>
+      <div class="bio-item">享受国务院政府特殊津贴</div>
+      <div class="bio-item">教授级高级工程师</div>
+      <div class="bio-item">中国物流与采购联合会食材供应链分会副会长</div>
+      <div class="bio-item">2021-2022冷链行业年度人物</div>
+    </div>
+    <div class="leader-card reveal d2">
+      <div class="leader-role">PRESIDENT & CIO · 总裁兼首席投资官</div>
+      <div class="leader-name">王 泽</div>
+      <div class="bio-item">高级工程师、注册一级建造师</div>
+      <div class="bio-item">商务部对外援建工程验收专家组组长</div>
+      <div class="bio-item">湖北省武汉市黄陂区政协常委</div>
+      <div class="bio-item">历任中国铁建山东京沪高速投资公司副总经理</div>
+    </div>
+    <div class="leader-card reveal d3">
+      <div class="leader-role">CHIEF CONSULTANT · 首席顾问</div>
+      <div class="leader-name">扎比德博士</div>
+      <div class="bio-item">马来西亚博特拉大学本科、艾克斯-马赛大学博士</div>
+      <div class="bio-item">英国特许管理学会 CMgr CCMI 认证</div>
+      <div class="bio-item">马来西亚"一带一路"协会副主席</div>
+      <div class="bio-item">敦阿都拉萨教育基金会首席执行官</div>
+    </div>
+    <div class="leader-card reveal d1">
+      <div class="leader-role">CHIEF SCIENTIST · 首席科学家</div>
+      <div class="leader-name">黄卫东</div>
+      <div class="bio-item">中国农业大学教授、博士生导师</div>
+      <div class="bio-item">2020-2023年爱思唯尔中国高被引学者</div>
+      <div class="bio-item">享受国务院特殊津贴，"百千万人才工程"专家</div>
+      <div class="bio-item">主持国家重点研发项目20余项，发表SCI论文80余篇</div>
+    </div>
+    <div class="leader-card reveal d2">
+      <div class="leader-role">VICE CHAIRMAN · 董事局副主席</div>
+      <div class="leader-name">罗斯利</div>
+      <div class="bio-item">公共政策荣誉学士（马来西亚国民大学）</div>
+      <div class="bio-item">哈佛商业管理高级证书（2018）</div>
+      <div class="bio-item">30年+ 马来西亚联邦政府行政经验</div>
+      <div class="bio-item">现任沙巴联邦秘书（2024年9月任职）</div>
+    </div>
+    <div class="leader-card reveal d3">
+      <div class="leader-role">CFO · 首席财务官</div>
+      <div class="leader-name">何蕾蕾</div>
+      <div class="bio-item">高级会计师、AIA国际会计师</div>
+      <div class="bio-item">浙江大学MBA硕士</div>
+      <div class="bio-item">高级职业经理-财务总监</div>
+      <div class="bio-item">曾任冷链公司财资中心副总监、央企省级公司财务部部长</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<div class="sec-bg">
+  <div class="sec-bg-inner">
+    <div class="reveal">
+      <div class="section-label">STRATEGIC VISION</div>
+      <h2 class="section-title">战略<em>愿景</em></h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="strategy-pillars">
+      <div class="pillar-card reveal d1">
+        <div class="pillar-index">01</div>
+        <div class="pillar-title">农业科技创新</div>
+        <div class="pillar-desc">以EnzyLoop酶能循环生态饲育系统与R-AIoT智能优化平台为核心，推动农业绿色转型，打造可循环、高价值、全链条的农业生态经济标杆。</div>
+      </div>
+      <div class="pillar-card reveal d2">
+        <div class="pillar-index">02</div>
+        <div class="pillar-title">跨境物流网络</div>
+        <div class="pillar-desc">构建"中国大陆－东南亚"智慧跨境物流通道，2029年前形成东南亚"仓干配"一体化网络，辐射泰国、越南等主要市场。</div>
+      </div>
+      <div class="pillar-card reveal d3">
+        <div class="pillar-index">03</div>
+        <div class="pillar-title">供应链数智化</div>
+        <div class="pillar-desc">以麒麟系列数字平台为载体，覆盖生产、流通、消费全链条主体，推动"从田间到餐桌"全链路智能化，助力乡村振兴与农业现代化。</div>
+      </div>
+      <div class="pillar-card reveal d4">
+        <div class="pillar-index">04</div>
+        <div class="pillar-title">国际贸易服务</div>
+        <div class="pillar-desc">搭建海外特色农产品引入与国内优势农产品输出的双向价值桥梁，依托全球产地直连网络与跨境供应链全托管能力，实现贸易生态闭环。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-main">丰麒集团</div>
+      <div class="footer-logo-en">FENGQI GROUP LIMITED</div>
+      <div class="footer-motto">丰行天下 · 麒通四海</div>
+    </div>
+    <div>
+      <div class="footer-col-title">BUSINESS SEGMENTS</div>
+      <div class="footer-links">
+        <a href="#business">丰麒农业 · FENGQI AGRICULTURE</a>
+        <a href="#business">丰麒物流 · FENGQI LOGISTICS</a>
+        <a href="#business">丰麒科技 · FENGQI TECHNOLOGY</a>
+        <a href="#business">丰麒供应链 · FENGQI SUPPLY CHAIN</a>
+        <a href="#business">丰麒贸易 · FENGQI TRADE</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">GLOBAL OFFICES</div>
+      <div class="footer-links">
+        <a href="#">香港新界青山公路403号汇城集团大厦12楼H室</a>
+        <a href="#">深圳市南山区香山东街香山村6栋301</a>
+        <a href="#">马来西亚吉隆坡 Residensi Trofi 33层</a>
+        <a href="#">日本东京千代田区 Sanno Park Tower</a>
+        <a href="#">印度尼西亚雅加达北区 Golf Island</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 FENGQI GROUP LIMITED · ALL RIGHTS RESERVED</div>
+    <div class="footer-tagline">丰行天下 · 麒通四海</div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function ani(){
+    cursor.style.left=mx+'px';cursor.style.top=my+'px';
+    rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(ani);
+  })();
+  document.querySelectorAll('a,button,.segment-card,.leader-card,.tech-card,.pillar-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.8)';ring.style.borderColor='rgba(201,168,76,0.8)';});
+    el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(201,168,76,0.5)';});
+  });
+
+  // Nav scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Scroll reveal
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
