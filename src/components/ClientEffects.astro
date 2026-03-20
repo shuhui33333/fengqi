@@ -1,0 +1,57 @@
+<script>
+  if (typeof window !== "undefined") {
+    const cursor = document.getElementById("cursor");
+    const ring = document.getElementById("cursorRing");
+
+    if (cursor && ring) {
+      let mx = 0, my = 0, rx = 0, ry = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+
+      const ani = () => {
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(ani);
+      };
+      ani();
+
+      document
+        .querySelectorAll("a,button,.segment-card,.leader-card,.tech-card,.pillar-card,.stat-item")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            ring.style.transform = "translate(-50%,-50%) scale(1.8)";
+            ring.style.borderColor = "rgba(201,168,76,0.8)";
+          });
+          el.addEventListener("mouseleave", () => {
+            ring.style.transform = "translate(-50%,-50%) scale(1)";
+            ring.style.borderColor = "rgba(201,168,76,0.5)";
+          });
+        });
+    }
+
+    const nav = document.getElementById("nav");
+    if (nav) {
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 60);
+      });
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+  }
+</script>
