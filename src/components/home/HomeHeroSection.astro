@@ -1,78 +1,86 @@
----
-const hero = {
-  brand: {
-    logo: "/logo.png",
-    alt: "Fengqi Group Limited",
-  },
-  eyebrow: "GLOBAL HALAL INDUSTRY PLATFORM",
-  title: {
-    line1: "The Infrastructure",
-    line2Prefix: "Behind",
-    line2Emphasis: "Global",
-    line3: "Halal Trade.",
-  },
-  description: {
-    prefix: "Fengqi connects",
-    highlight1: "China’s unmatched production capacity",
-    middle: "with",
-    highlight2: "Malaysia’s JAKIM certification authority",
-    suffix: "— delivering trusted halal food to 2 billion Muslims across 100+ markets.",
-  },
-  primaryCta: {
-    text: "EXPLORE OUR PLATFORM",
-    href: "/platforms",
-  },
-  secondaryCta: {
-    text: "PARTNER WITH US",
-    href: "/partnership",
-  },
-};
----
+<section class="hero" id="top">
+  <div class="geo-bg"></div>
 
-<section class="home-hero">
-  <div class="geo-bg" aria-hidden="true"></div>
-  <div class="home-hero__shade" aria-hidden="true"></div>
-
-  <div class="home-hero__inner">
-    <div class="home-hero__brand reveal d1">
-      <a href="/" class="home-hero__brand-link" aria-label="Fengqi Group Limited home">
-        <img
-          src={hero.brand.logo}
-          alt={hero.brand.alt}
-          class="home-hero__logo"
-          loading="eager"
-          decoding="async"
-        />
-      </a>
+  <div class="hero-left">
+    <div class="hero-overline">GLOBAL HALAL INDUSTRY PLATFORM</div>
+    <h1 class="hero-h1">
+      The Infrastructure<br />
+      Behind <em>Global</em><br />
+      <strong>Halal Trade.</strong>
+    </h1>
+    <p class="hero-body">
+      Fengqi connects <span>China&apos;s unmatched production capacity</span> with
+      <span>Malaysia&apos;s JAKIM certification authority</span> —
+      delivering trusted halal food to 2 billion Muslims across 100+ markets.
+    </p>
+    <div class="hero-actions">
+      <a href="#platform" class="btn-primary">Explore Our Platform</a>
+      <a href="#contact" class="btn-ghost">Partner With Us</a>
     </div>
+  </div>
 
-    <div class="home-hero__content">
-      <div class="home-hero__intro reveal d2">
-        <span class="gold-rule" aria-hidden="true"></span>
-        <p class="label">{hero.eyebrow}</p>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="hero-stat-card hsc-1">
+        <div class="hsc-num">$2T<span style="font-size:24px">+</span></div>
+        <div class="hsc-label">GLOBAL HALAL MARKET</div>
       </div>
-
-      <h1 class="heading home-hero__title reveal d3">
-        <span>{hero.title.line1}</span>
-        <span>
-          {hero.title.line2Prefix} <em>{hero.title.line2Emphasis}</em>
-        </span>
-        <span>{hero.title.line3}</span>
-      </h1>
-
-      <p class="home-hero__description reveal d4">
-        {hero.description.prefix} <strong>{hero.description.highlight1}</strong> {hero.description.middle}{" "}
-        <strong>{hero.description.highlight2}</strong> {hero.description.suffix}
-      </p>
-
-      <div class="home-hero__actions reveal d4">
-        <a href={hero.primaryCta.href} class="btn-primary">
-          {hero.primaryCta.text}
-        </a>
-        <a href={hero.secondaryCta.href} class="btn-ghost">
-          {hero.secondaryCta.text}
-        </a>
+      <div class="hero-stat-card hsc-2">
+        <div class="hsc-num">80<span style="font-size:24px">+</span></div>
+        <div class="hsc-label">JAKIM MUTUAL RECOGNITION COUNTRIES</div>
+      </div>
+      <div class="hero-stat-card hsc-3">
+        <div class="hsc-num">2B</div>
+        <div class="hsc-label">MUSLIM CONSUMERS SERVED</div>
       </div>
     </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hb-item">
+      <div class="hb-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+      <div class="hb-text">
+        <div class="hb-title">CHINA PRODUCTION</div>
+        <div class="hb-desc">World&apos;s largest poultry &amp; food manufacturing base</div>
+      </div>
+    </div>
+
+    <div class="hb-item">
+      <div class="hb-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 21s-6-4.35-8.5-7.09A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 8.5 7.91C18 16.65 12 21 12 21z"></path>
+        </svg>
+      </div>
+      <div class="hb-text">
+        <div class="hb-title">MALAYSIA + JAKIM</div>
+        <div class="hb-desc">Global trust anchor for premium halal certification</div>
+      </div>
+    </div>
+
+    <div class="hb-item">
+      <div class="hb-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18"></path>
+          <path d="M12 3a15 15 0 0 1 0 18"></path>
+          <path d="M12 3a15 15 0 0 0 0 18"></path>
+        </svg>
+      </div>
+      <div class="hb-text">
+        <div class="hb-title">GLOBAL DISTRIBUTION</div>
+        <div class="hb-desc">Serving Muslim consumers across 100+ international markets</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-bar"></div>
   </div>
 </section>
