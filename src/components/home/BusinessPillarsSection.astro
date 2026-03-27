@@ -1,46 +1,280 @@
-<div class="sec-bg" id="business">
-  <div class="sec-bg-inner">
-    <div class="reveal">
-      <div class="section-label">BUSINESS SEGMENTS</div>
-      <h2 class="section-title">五大<em>业务</em>板块</h2>
-      <div class="gold-line"></div>
+---
+const pillars = [
+  {
+    number: "01",
+    title: "Industrial Development",
+    eyebrow: "产业发展平台",
+    description:
+      "Building integrated industrial platforms around regional development opportunities, including industrial parks, resource coordination, project incubation and long-term operational planning.",
+    points: [
+      "Industrial park planning and development",
+      "Regional project structuring and incubation",
+      "Cross-border resource coordination",
+    ],
+  },
+  {
+    number: "02",
+    title: "Agriculture & Supply Chain",
+    eyebrow: "农业与供应链协同",
+    description:
+      "Connecting agricultural resources, food-related production capabilities and supply chain infrastructure to support stable upstream sourcing and downstream market delivery.",
+    points: [
+      "Agricultural resource integration",
+      "Food and cold-chain linkage",
+      "Supply chain collaboration capability",
+    ],
+  },
+  {
+    number: "03",
+    title: "Healthcare & Wellness",
+    eyebrow: "康养与健康服务",
+    description:
+      "Developing wellness-oriented business scenarios that combine health services, ecological resources and destination-based living experiences to create sustainable service value.",
+    points: [
+      "Wellness service scenarios",
+      "Health-oriented destination development",
+      "Integrated ecosystem-based experience design",
+    ],
+  },
+  {
+    number: "04",
+    title: "Digital & Smart Systems",
+    eyebrow: "数字化与智能系统",
+    description:
+      "Supporting business platforms with digital operations, smart systems and integrated management logic to improve efficiency, visibility and long-term scalability.",
+    points: [
+      "Digital management support",
+      "Smart operation systems",
+      "Scalable platform governance",
+    ],
+  },
+];
+---
+
+<section class="business-pillars-section">
+  <div class="business-pillars-section__inner">
+    <div class="business-pillars-section__header">
+      <div class="business-pillars-section__label">Core Business Pillars</div>
+
+      <div class="business-pillars-section__heading-wrap">
+        <h2 class="business-pillars-section__title">
+          A diversified business structure built around integrated development
+        </h2>
+        <p class="business-pillars-section__intro">
+          Fengqi Group develops its business around multiple interconnected pillars,
+          forming a coordinated platform across industry, agriculture, wellness and
+          digital capability. This structure strengthens long-term resilience,
+          execution efficiency and regional development value.
+        </p>
+      </div>
     </div>
-    <div class="segments-grid">
-      <div class="segment-card reveal d1">
-        <div class="segment-num">01</div>
-        <div class="segment-name">丰麒农业</div>
-        <div class="segment-en">FENGQI AGRICULTURE</div>
-        <div class="segment-desc">以"木本源技术＋生态康养＋智慧农业"三驱发展，打造"可循环、高价值、全链条"农业生态经济标杆。依托EnzyLoop酶能循环生态饲育系统与R-AIoT智能优化平台，构建立体农业生态闭环。</div>
-        <div class="segment-tags"><span class="tag">生态循环</span><span class="tag">智慧农业</span><span class="tag">文旅康养</span></div>
-      </div>
-      <div class="segment-card reveal d2">
-        <div class="segment-num">02</div>
-        <div class="segment-name">丰麒物流</div>
-        <div class="segment-en">FENGQI LOGISTICS</div>
-        <div class="segment-desc">构建"中国－东南亚"智慧物流网，聚焦冷链、城配及干线运输，形成东南亚仓配一体化网络。印尼丰捷物流在爪哇岛布局4大城市直营集散中心，辐射1.45亿人口。</div>
-        <div class="segment-tags"><span class="tag">冷链物流</span><span class="tag">仓配一体</span><span class="tag">东南亚</span></div>
-      </div>
-      <div class="segment-card reveal d3">
-        <div class="segment-num">03</div>
-        <div class="segment-name">丰麒科技</div>
-        <div class="segment-en">FENGQI TECHNOLOGY</div>
-        <div class="segment-desc">以IoT、区块链、AI为技术基底，搭建"产－供－销－管"一体化数字生态。旗下麒麟系列平台覆盖智慧农业物联网、溯源、智慧物流、智慧园区、金融等全场景。</div>
-        <div class="segment-tags"><span class="tag">IoT</span><span class="tag">区块链</span><span class="tag">AI驱动</span></div>
-      </div>
-      <div class="segment-card reveal d4">
-        <div class="segment-num">04</div>
-        <div class="segment-name">丰麒供应链</div>
-        <div class="segment-en">FENGQI SUPPLY CHAIN</div>
-        <div class="segment-desc">以"I＋P＋EPC＋O"全周期服务打通农产品"生产－流通－消费"链路，提供物流整合与数字化升级解决方案，致力成为农产品供应链数智化升级服务商。</div>
-        <div class="segment-tags"><span class="tag">I+P+EPC+O</span><span class="tag">全周期</span><span class="tag">数智化</span></div>
-      </div>
-      <div class="segment-card reveal d4">
-        <div class="segment-num">05</div>
-        <div class="segment-name">丰麒贸易</div>
-        <div class="segment-en">FENGQI TRADE</div>
-        <div class="segment-desc">搭建跨境双向贸易桥梁，进口海外特色农产品、出口国内优势农产品，提供供应链全托管服务。聚焦中巴贸易通道及东南亚农产品双向流通。</div>
-        <div class="segment-tags"><span class="tag">跨境贸易</span><span class="tag">双向流通</span><span class="tag">全托管</span></div>
-      </div>
+
+    <div class="business-pillars-section__grid">
+      {pillars.map((pillar) => (
+        <article class="pillar-card">
+          <div class="pillar-card__top">
+            <span class="pillar-card__number">{pillar.number}</span>
+            <span class="pillar-card__eyebrow">{pillar.eyebrow}</span>
+          </div>
+
+          <h3 class="pillar-card__title">{pillar.title}</h3>
+
+          <p class="pillar-card__description">{pillar.description}</p>
+
+          <ul class="pillar-card__list">
+            {pillar.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </div>
   </div>
-</div>
+</section>
+
+<style>
+  .business-pillars-section {
+    position: relative;
+    background:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
+      linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    padding: 96px 24px;
+  }
+
+  .business-pillars-section__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .business-pillars-section__header {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+
+  .business-pillars-section__label {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.05);
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .business-pillars-section__heading-wrap {
+    max-width: 760px;
+  }
+
+  .business-pillars-section__title {
+    margin: 0 0 16px;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+  }
+
+  .business-pillars-section__intro {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.9;
+    color: #475569;
+  }
+
+  .business-pillars-section__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .pillar-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 30px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+    backdrop-filter: blur(8px);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 28px 70px rgba(15, 23, 42, 0.1);
+  }
+
+  .pillar-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .pillar-card__number {
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #2563eb;
+  }
+
+  .pillar-card__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pillar-card__title {
+    margin: 0 0 14px;
+    font-size: 1.45rem;
+    line-height: 1.3;
+    font-weight: 750;
+    color: #0f172a;
+  }
+
+  .pillar-card__description {
+    margin: 0 0 20px;
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: #475569;
+  }
+
+  .pillar-card__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+
+  .pillar-card__list li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+  }
+
+  .pillar-card__list li::before {
+    content: "";
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #2563eb;
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: 960px) {
+    .business-pillars-section {
+      padding: 80px 20px;
+    }
+
+    .business-pillars-section__header {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .business-pillars-section__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pillar-card {
+      padding: 24px;
+      border-radius: 22px;
+    }
+
+    .business-pillars-section__title {
+      font-size: 2rem;
+    }
+
+    .business-pillars-section__intro {
+      font-size: 0.96rem;
+      line-height: 1.8;
+    }
+
+    .pillar-card__title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
