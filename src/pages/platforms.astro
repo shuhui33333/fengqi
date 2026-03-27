@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import PlatformsOverviewSection from "../components/platforms/PlatformsOverviewSection.astro";
+import PlatformMapSection from "../components/platforms/PlatformMapSection.astro";
+import PlatformCardsSection from "../components/platforms/PlatformCardsSection.astro";
+import PlatformLogicSection from "../components/platforms/PlatformLogicSection.astro";
+---
+
+<BaseLayout title="Platforms - FENGQI GROUP">
+  <PageHero 
+    title="Platform System"
+    subtitle="Integrated platforms connecting industry, resources and execution."
+  />
+
+  <PlatformsOverviewSection />
+  <PlatformMapSection />
+  <PlatformCardsSection />
+  <PlatformLogicSection />
+</BaseLayout>

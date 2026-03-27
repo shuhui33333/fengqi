@@ -1,30 +1,36 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import AboutSection from "../components/AboutSection.astro";
-import BusinessSection from "../components/BusinessSection.astro";
-import GlobalSection from "../components/GlobalSection.astro";
-import TechnologySection from "../components/TechnologySection.astro";
-import LeadershipSection from "../components/LeadershipSection.astro";
-import StrategySection from "../components/StrategySection.astro";
-import Footer from "../components/Footer.astro";
-import ClientEffects from "../components/ClientEffects.astro";
+
+import HomeHeroSection from "../components/home/HomeHeroSection.astro";
+import GroupOverviewSection from "../components/home/GroupOverviewSection.astro";
+import BusinessPillarsSection from "../components/home/BusinessPillarsSection.astro";
+import PlatformHighlightsSection from "../components/home/PlatformHighlightsSection.astro";
+import TechnologyPreviewSection from "../components/home/TechnologyPreviewSection.astro";
+import GlobalFootprintSection from "../components/home/GlobalFootprintSection.astro";
+import HomeCtaSection from "../components/home/HomeCtaSection.astro";
 ---
 
-<BaseLayout title="丰麒集团有限公司 | FENGQI GROUP">
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+<BaseLayout title="Fengqi Group | Global Halal Industry Platform">
 
-  <Header />
-  <Hero />
-  <AboutSection />
-  <BusinessSection />
-  <GlobalSection />
-  <TechnologySection />
-  <LeadershipSection />
-  <StrategySection />
-  <Footer />
+  <!-- 1️⃣ HERO -->
+  <HomeHeroSection />
 
-  <ClientEffects />
+  <!-- 2️⃣ 核心定位（你是谁） -->
+  <GroupOverviewSection />
+
+  <!-- 3️⃣ 三大产业结构 -->
+  <BusinessPillarsSection />
+
+  <!-- 4️⃣ 平台体系（最重要） -->
+  <PlatformHighlightsSection />
+
+  <!-- 5️⃣ 技术能力 -->
+  <TechnologyPreviewSection />
+
+  <!-- 6️⃣ 全球布局 -->
+  <GlobalFootprintSection />
+
+  <!-- 7️⃣ 转化 CTA -->
+  <HomeCtaSection />
+
 </BaseLayout>

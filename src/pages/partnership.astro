@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import CooperationModelSection from "../components/partnership/CooperationModelSection.astro";
+import PartnerTypesSection from "../components/partnership/PartnerTypesSection.astro";
+import PartnershipProcessSection from "../components/partnership/PartnershipProcessSection.astro";
+import CtaBanner from "../components/site/CtaBanner.astro";
+---
+
+<BaseLayout title="Partnership - FENGQI GROUP">
+  <PageHero 
+    title="Partnership"
+    subtitle="Building long-term cooperation through platform-based collaboration."
+  />
+
+  <CooperationModelSection />
+  <PartnerTypesSection />
+  <PartnershipProcessSection />
+
+  <CtaBanner 
+    title="Start a Partnership"
+    text="Connect with us to explore cooperation opportunities."
+    buttonText="Contact Us"
+    link="/contact"
+  />
+</BaseLayout>

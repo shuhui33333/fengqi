@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import TechnologyOverviewSection from "../components/technology/TechnologyOverviewSection.astro";
+import DigitalCapabilitiesSection from "../components/technology/DigitalCapabilitiesSection.astro";
+import SmartSystemsSection from "../components/technology/SmartSystemsSection.astro";
+---
+
+<BaseLayout title="Technology - FENGQI GROUP">
+  <PageHero 
+    title="Technology & Systems"
+    subtitle="Digital capabilities supporting scalable and efficient development."
+  />
+
+  <TechnologyOverviewSection />
+  <DigitalCapabilitiesSection />
+  <SmartSystemsSection />
+</BaseLayout>

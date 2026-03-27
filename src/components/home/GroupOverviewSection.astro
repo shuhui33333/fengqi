@@ -1,0 +1,371 @@
+---
+const capabilities = [
+  {
+    number: "01",
+    title: "Integrated Industrial Development",
+    text: "From strategic planning and resource integration to project execution, the Group builds coordinated industrial platforms across agriculture, healthcare, digital infrastructure and cross-border trade."
+  },
+  {
+    number: "02",
+    title: "Platform-Based Ecosystem Capability",
+    text: "Rather than operating as a single-project vehicle, Fengqi connects upstream resources, downstream applications, operational systems and partner networks into scalable business platforms."
+  },
+  {
+    number: "03",
+    title: "Cross-Border Execution Strength",
+    text: "With a China–Southeast Asia perspective, the Group combines local implementation capability with international coordination to support long-cycle industrial deployment and regional expansion."
+  },
+  {
+    number: "04",
+    title: "Digital and Operational Enablement",
+    text: "Digital systems, smart management tools and process standardisation are embedded into business development to improve efficiency, transparency and long-term operating quality."
+  }
+];
+---
+
+<section class="group-overview">
+  <div class="container">
+    <div class="overview-shell">
+      <div class="overview-heading">
+        <p class="eyebrow">GROUP OVERVIEW</p>
+
+        <div class="heading-grid">
+          <div class="heading-main">
+            <h2>
+              A diversified group platform
+              <span>built for industrial integration, long-term development and cross-border collaboration.</span>
+            </h2>
+          </div>
+
+          <div class="heading-side">
+            <p>
+              Fengqi Group is positioned as a comprehensive development platform
+              connecting industry resources, operational capability and strategic
+              partnerships across multiple sectors. The Group’s focus is not limited
+              to a single park or a single market, but to the creation of coordinated
+              business ecosystems with practical execution pathways.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="overview-intro">
+        <div class="intro-left">
+          <p class="lead">
+            By combining industrial planning, ecosystem organisation, digital support
+            and project-level execution, the Group forms a multi-sector development
+            framework capable of supporting both domestic expansion and international collaboration.
+          </p>
+        </div>
+
+        <div class="intro-right">
+          <div class="signal-box">
+            <div class="signal-label">Strategic Positioning</div>
+            <div class="signal-value">Multi-Sector · Platform-Led · Execution-Oriented</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="capability-grid">
+        {capabilities.map((item) => (
+          <article class="capability-card">
+            <div class="card-top">
+              <span class="card-number">{item.number}</span>
+              <div class="card-line"></div>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="overview-footer">
+        <div class="footer-left">
+          <p class="footer-kicker">Synergy Logic</p>
+          <h3>
+            Multiple business directions,
+            <span>one coordinated development logic.</span>
+          </h3>
+        </div>
+
+        <div class="footer-right">
+          <p>
+            Agriculture, healthcare, industrial infrastructure, digital systems and
+            international cooperation are not presented as isolated business lines,
+            but as interconnected capability layers that strengthen project resilience,
+            commercial depth and future scalability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.group-overview {
+  position: relative;
+  padding: 110px 0 40px;
+  background:
+    radial-gradient(circle at top left, rgba(201, 168, 76, 0.08), transparent 34%),
+    linear-gradient(180deg, #0b0b0b 0%, #111111 100%);
+}
+
+.overview-shell {
+  position: relative;
+  border: 1px solid rgba(201, 168, 76, 0.16);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%);
+  padding: 56px;
+  overflow: hidden;
+}
+
+.overview-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(201,168,76,0.06), transparent 18%),
+    linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.02) 100%);
+  pointer-events: none;
+}
+
+.overview-heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.heading-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.heading-main h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  line-height: 1.02;
+  font-weight: 500;
+  color: #f5f1e8;
+  letter-spacing: -0.02em;
+}
+
+.heading-main h2 span {
+  display: block;
+  margin-top: 10px;
+  color: rgba(245, 241, 232, 0.72);
+  font-size: 0.72em;
+  line-height: 1.08;
+}
+
+.heading-side p {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.68);
+  max-width: 460px;
+}
+
+.overview-intro {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  align-items: end;
+  padding: 28px 0 34px;
+  border-top: 1px solid rgba(201,168,76,0.12);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+
+.lead {
+  margin: 0;
+  max-width: 880px;
+  font-size: 19px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.86);
+}
+
+.intro-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signal-box {
+  min-width: 300px;
+  padding: 20px 22px;
+  border: 1px solid rgba(201,168,76,0.18);
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+}
+
+.signal-label {
+  margin-bottom: 10px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.signal-value {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #f3efe6;
+}
+
+.capability-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.capability-card {
+  position: relative;
+  min-height: 240px;
+  padding: 26px 24px 24px;
+  border: 1px solid rgba(201,168,76,0.12);
+  background: linear-gradient(180deg, rgba(255,255,255,0.026) 0%, rgba(255,255,255,0.01) 100%);
+  transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+}
+
+.capability-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,168,76,0.3);
+  background: linear-gradient(180deg, rgba(201,168,76,0.06) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.card-number {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.card-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201,168,76,0.45), rgba(201,168,76,0.02));
+}
+
+.capability-card h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #f5f1e8;
+}
+
+.capability-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.68);
+}
+
+.overview-footer {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 34px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(201,168,76,0.12);
+}
+
+.footer-kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.footer-left h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.08;
+  font-weight: 500;
+  color: #f5f1e8;
+}
+
+.footer-left h3 span {
+  display: block;
+  margin-top: 8px;
+  color: rgba(245, 241, 232, 0.68);
+  font-size: 0.76em;
+}
+
+.footer-right p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.95;
+  color: rgba(255,255,255,0.68);
+  max-width: 700px;
+}
+
+@media (max-width: 1100px) {
+  .heading-grid,
+  .overview-intro,
+  .overview-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-right {
+    justify-content: flex-start;
+  }
+
+  .signal-box {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .group-overview {
+    padding: 80px 0 20px;
+  }
+
+  .overview-shell {
+    padding: 28px 20px;
+  }
+
+  .capability-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heading-side p,
+  .footer-right p,
+  .capability-card p {
+    line-height: 1.8;
+  }
+
+  .lead {
+    font-size: 17px;
+  }
+
+  .capability-card {
+    min-height: unset;
+  }
+}
+</style>

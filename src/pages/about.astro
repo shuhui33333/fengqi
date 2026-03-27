@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import PageHero from "../components/site/PageHero.astro";
+
+import CompanyIntroSection from "../components/about/CompanyIntroSection.astro";
+import VisionMissionSection from "../components/about/VisionMissionSection.astro";
+import CoreValuesSection from "../components/about/CoreValuesSection.astro";
+import GroupCapabilitiesSection from "../components/about/GroupCapabilitiesSection.astro";
+import DevelopmentPathSection from "../components/about/DevelopmentPathSection.astro";
+---
+
+<BaseLayout title="About - FENGQI GROUP">
+  <PageHero 
+    title="About Fengqi Group"
+    subtitle="A platform-oriented group focused on integrated industrial development."
+  />
+
+  <CompanyIntroSection />
+  <VisionMissionSection />
+  <CoreValuesSection />
+  <GroupCapabilitiesSection />
+  <DevelopmentPathSection />
+</BaseLayout>

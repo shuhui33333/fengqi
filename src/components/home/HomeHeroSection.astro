@@ -1,0 +1,210 @@
+---
+const {
+  overline = "GLOBAL HALAL INFRASTRUCTURE",
+  title = "The Infrastructure Behind <em>Global Halal Trade</em>",
+  description = "Fengqi Group connects <span>China’s production capacity</span> with <span>Malaysia’s certification authority</span>, building the foundation for a new global halal economy.",
+  primaryCta = { label: "Explore Platform", href: "/platforms" },
+  secondaryCta = { label: "Partner With Us", href: "/partnership" },
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="geo-bg"></div>
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    
+    <div class="hero-overline">{overline}</div>
+
+    <h1 class="hero-h1" set:html={title} />
+
+    <p class="hero-body" set:html={description} />
+
+    <div class="hero-actions">
+      <a href={primaryCta.href} class="btn-primary">
+        {primaryCta.label}
+      </a>
+
+      <a href={secondaryCta.href} class="btn-ghost">
+        {secondaryCta.label}
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT FLOATING STATS -->
+  <div class="hero-right">
+    <div class="hero-right-inner">
+
+      <div class="hero-stat-card hsc-1">
+        <div class="hsc-num">2B+</div>
+        <div class="hsc-label">MUSLIM MARKET</div>
+      </div>
+
+      <div class="hero-stat-card hsc-2">
+        <div class="hsc-num">$3T</div>
+        <div class="hsc-label">HALAL ECONOMY</div>
+      </div>
+
+      <div class="hero-stat-card hsc-3">
+        <div class="hsc-num">3</div>
+        <div class="hsc-label">CORE PLATFORMS</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM STRIP -->
+  <div class="hero-bottom">
+    
+    <div class="hb-item">
+      <div class="hb-icon">01</div>
+      <div>
+        <div class="hb-title">CHINA</div>
+        <div class="hb-desc">Production & Supply Chain</div>
+      </div>
+    </div>
+
+    <div class="hb-item">
+      <div class="hb-icon">02</div>
+      <div>
+        <div class="hb-title">MALAYSIA</div>
+        <div class="hb-desc">Certification & Gateway</div>
+      </div>
+    </div>
+
+    <div class="hb-item">
+      <div class="hb-icon">03</div>
+      <div>
+        <div class="hb-title">GLOBAL</div>
+        <div class="hb-desc">Distribution Network</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+.hero {
+  height: 100vh;
+  min-height: 720px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #080808 0%, #111 100%);
+}
+
+.hero-left {
+  padding: 0 64px;
+  max-width: 720px;
+  z-index: 2;
+}
+
+.hero-overline {
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: #C9A84C;
+  margin-bottom: 24px;
+}
+
+.hero-h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.hero-h1 em {
+  color: #C9A84C;
+}
+
+.hero-body {
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 36px;
+}
+
+.hero-body span {
+  color: #C9A84C;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-primary {
+  background: #C9A84C;
+  color: #000;
+  padding: 14px 32px;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.btn-ghost {
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 14px 32px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+}
+
+/* RIGHT FLOAT */
+.hero-right {
+  position: absolute;
+  right: 8%;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.hero-stat-card {
+  background: #111;
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 24px;
+  position: absolute;
+}
+
+.hsc-num {
+  font-size: 40px;
+  color: #C9A84C;
+}
+
+.hsc-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+}
+
+.hsc-1 { top: 0; left: 0; }
+.hsc-2 { top: 80px; right: 0; }
+.hsc-3 { bottom: 40px; left: 40px; }
+
+/* BOTTOM */
+.hero-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  border-top: 1px solid rgba(201,168,76,0.2);
+}
+
+.hb-item {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid rgba(201,168,76,0.2);
+}
+
+.hb-title {
+  font-size: 10px;
+  color: #C9A84C;
+}
+
+.hb-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+</style>

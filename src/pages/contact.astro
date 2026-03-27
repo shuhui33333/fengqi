@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import ContactInfoSection from "../components/contact/ContactInfoSection.astro";
+import ContactFormSection from "../components/contact/ContactFormSection.astro";
+import OfficeLocationsSection from "../components/contact/OfficeLocationsSection.astro";
+---
+
+<BaseLayout title="Contact - FENGQI GROUP">
+  <PageHero 
+    title="Contact Us"
+    subtitle="Get in touch for business cooperation and project consultation."
+  />
+
+  <ContactInfoSection />
+  <ContactFormSection />
+  <OfficeLocationsSection />
+</BaseLayout>

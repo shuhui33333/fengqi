@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import BusinessOverviewSection from "../components/business/BusinessOverviewSection.astro";
+import BusinessMatrixSection from "../components/business/BusinessMatrixSection.astro";
+import BusinessSynergySection from "../components/business/BusinessSynergySection.astro";
+---
+
+<BaseLayout title="Business - FENGQI GROUP">
+  <PageHero 
+    title="Business Structure"
+    subtitle="Diversified sectors built on integration and long-term development."
+  />
+
+  <BusinessOverviewSection />
+  <BusinessMatrixSection />
+  <BusinessSynergySection />
+</BaseLayout>

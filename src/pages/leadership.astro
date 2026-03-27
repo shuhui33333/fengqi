@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/site/PageHero.astro";
+
+import LeadershipIntroSection from "../components/leadership/LeadershipIntroSection.astro";
+import LeadershipGridSection from "../components/leadership/LeadershipGridSection.astro";
+import AdvisorySection from "../components/leadership/AdvisorySection.astro";
+---
+
+<BaseLayout title="Leadership - FENGQI GROUP">
+  <PageHero 
+    title="Leadership"
+    subtitle="Experienced leadership guiding strategic development and execution."
+  />
+
+  <LeadershipIntroSection />
+  <LeadershipGridSection />
+  <AdvisorySection />
+</BaseLayout>

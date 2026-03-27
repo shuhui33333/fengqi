@@ -1,0 +1,280 @@
+---
+const ctaItems = [
+  {
+    label: "Business Cooperation",
+    text: "Explore cross-sector collaboration opportunities with Fengqi Group."
+  },
+  {
+    label: "Strategic Partnership",
+    text: "Connect on platform development, ecosystem building and long-term joint initiatives."
+  },
+  {
+    label: "Project Consultation",
+    text: "Discuss project planning, international expansion and implementation pathways."
+  }
+];
+---
+
+<section class="home-cta">
+  <div class="container">
+    <div class="cta-shell">
+      <div class="cta-bg"></div>
+
+      <div class="cta-content">
+        <div class="cta-top">
+          <p class="cta-eyebrow">START A CONVERSATION</p>
+
+          <h2>
+            Build with a group platform
+            <span>designed for integration, execution and long-term growth.</span>
+          </h2>
+
+          <p class="cta-description">
+            Fengqi Group welcomes dialogue with strategic partners, institutional
+            stakeholders, industry participants and project collaborators seeking
+            practical pathways for development, cooperation and cross-border expansion.
+          </p>
+        </div>
+
+        <div class="cta-middle">
+          <div class="cta-grid">
+            {ctaItems.map((item) => (
+              <article class="cta-card">
+                <h3>{item.label}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="cta-bottom">
+          <div class="cta-actions">
+            <a href="/contact" class="btn btn-primary">
+              Contact Us
+            </a>
+            <a href="/partnership" class="btn btn-secondary">
+              Explore Partnership
+            </a>
+          </div>
+
+          <div class="cta-note">
+            <p>
+              For cooperation enquiries, investment discussions or business introductions,
+              please connect with our team through the contact channel.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.home-cta {
+  position: relative;
+  padding: 60px 0 120px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(201, 168, 76, 0.08), transparent 30%),
+    linear-gradient(180deg, #101010 0%, #0b0b0b 100%);
+}
+
+.cta-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(201, 168, 76, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%),
+    linear-gradient(180deg, #111111 0%, #0d0d0d 100%);
+}
+
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(201, 168, 76, 0.14), transparent 28%),
+    linear-gradient(90deg, rgba(201,168,76,0.03), transparent 20%, transparent 80%, rgba(201,168,76,0.03));
+  pointer-events: none;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 1;
+  padding: 64px 56px 56px;
+}
+
+.cta-top {
+  max-width: 900px;
+}
+
+.cta-eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.cta-top h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  line-height: 1.02;
+  font-weight: 500;
+  color: #f5f1e8;
+  letter-spacing: -0.02em;
+}
+
+.cta-top h2 span {
+  display: block;
+  margin-top: 10px;
+  color: rgba(245, 241, 232, 0.7);
+  font-size: 0.72em;
+  line-height: 1.08;
+}
+
+.cta-description {
+  margin: 24px 0 0;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.95;
+  color: rgba(255,255,255,0.72);
+}
+
+.cta-middle {
+  margin-top: 40px;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.cta-card {
+  padding: 24px 22px;
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+}
+
+.cta-card h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: #f5f1e8;
+}
+
+.cta-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.65);
+}
+
+.cta-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  margin-top: 42px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #111111;
+  border: 1px solid var(--gold);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  color: #f5f1e8;
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+.cta-note {
+  max-width: 420px;
+}
+
+.cta-note p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.6);
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .cta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta-note p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-cta {
+    padding: 40px 0 90px;
+  }
+
+  .cta-content {
+    padding: 36px 20px 32px;
+  }
+
+  .cta-description {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .cta-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cta-note {
+    max-width: none;
+  }
+}
+</style>

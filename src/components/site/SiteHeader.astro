@@ -1,0 +1,150 @@
+---
+import navigation from "../../data/navigation";
+
+const navItems = navigation;
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a href="/" class="logo">
+      FENGQI
+    </a>
+
+    <!-- NAV -->
+    <nav class="nav">
+      {navItems.map((item) => (
+        <div class="nav-item">
+          <a href={item.href} class="nav-link">
+            {item.label}
+          </a>
+
+          {item.children && (
+            <div class="dropdown">
+              {item.children.map((sub) => (
+                <a href={sub.href} class="dropdown-item">
+                  {sub.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <!-- RIGHT -->
+    <div class="header-actions">
+      <a href="/contact" class="btn-ghost small">Contact</a>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 40) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+
+<style>
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: 0.3s;
+  padding: 20px 0;
+}
+
+.site-header.scrolled {
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LOGO */
+.logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.75);
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--gold);
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  background: #111;
+  border: 1px solid rgba(201,168,76,0.2);
+  min-width: 180px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: 0.25s;
+}
+
+.nav-item:hover .dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+.dropdown-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: var(--gold);
+}
+
+/* RIGHT */
+.header-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-ghost.small {
+  padding: 8px 18px;
+  font-size: 11px;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+</style>
