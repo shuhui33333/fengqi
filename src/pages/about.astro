@@ -1,0 +1,177 @@
+---
+// src/pages/about.astro  →  /about
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+
+const TEAM = [
+  {role:'Chairman, Board of Directors', name:'Dr. Lu Peng', bio:'PhD in Management, Postdoctoral in Applied Economics. State Council Special Allowance Expert. Vice President of ASEAN Retail-Chains & Franchise Federation (ARFF). 2021–2022 Cold Chain Industry Person of the Year. "China Enterprise Reform Medal for 40 Years of Reform and Opening Up."'},
+  {role:'Chief Advisor', name:"Dato' Sri Dr. Mohamed Zabid", bio:'PhD, Aix-Marseille University, France. CMgr CCMI (Chartered Management Institute, UK — highest level). CEO of Tun Abdul Razak Education Foundation. Vice Chairman, Malaysia One Belt One Road Association. Expert in transnational economic cooperation and cultural exchange.'},
+  {role:'Chief Scientist', name:'Prof. Huang Weidong', bio:'Professor and doctoral supervisor, China Agricultural University. Led 20+ national key R&D projects. "Hundred, Thousand and Ten Thousand Talents Project" selected. National and Beijing Municipal Science & Technology Progress Award recipient. Highly Cited Chinese Researcher (multiple years).'},
+  {role:'Vice Chairman, Board of Directors', name:"Dato' Sri Rosli Bin Isa", bio:"Senior government executive, Harvard Business School senior management credentials. 30+ years of administrative experience. Key positions in Malaysia's Ministry of Finance, Ministry of Education, Ministry of Energy & Natural Resources, and multiple state governments. Currently Federal Secretary of Sabah."},
+  {role:'Chairman, Decision-Making Committee', name:"Dato' Christopher M.Y. Woo", bio:'Engineering construction and cross-industry operations specialist. Outstanding experience in engineering technology, corporate management, investment and M&A. Provides core driving force for major strategic decisions and resource integration.'},
+  {role:'Chairman, Strategy Committee', name:'Jie Yaoquan', bio:'22+ years in capital markets. BSc Finance, Southern Illinois University Carbondale (SIUC). MBA, Malaysia. Former senior executive at top Malaysian financial institutions. Leads global strategic planning and capital deployment.'},
+  {role:'Chairman, Risk Management Committee', name:'Xie Shaoping', bio:'30+ years in risk management and auditing, formerly in political-legal and state-owned enterprise disciplinary inspection departments. Rigorous engineering mindset and compliance background — builds robust governance for multinational operations.'},
+  {role:'President & Chief Investment Officer', name:'Wang Ze', bio:'Senior engineer. Former head of Ministry of Commerce foreign aid project expert group. CPPCC Standing Committee member, Wuhan. Former senior executive at China Railway Construction Corporation. Leads infrastructure investment and major project implementation.'},
+  {role:'Chief Executive Officer', name:'Lu Ruoyu', bio:'Carnegie Mellon University (Public Policy Management) and Syracuse University (Economics). Expertise in data analysis and State Council ministerial data projects. Drives Fengqi\'s smart logistics and cross-border digital systems upgrade.'},
+]
+
+const MILESTONES = [
+  {year:'2014', title:'Founded — Agriculture & Industry', desc:'Fengqi Group established. Ecological agriculture, breeding and industrial chain development. Standardised demonstration bases launched in core production areas.'},
+  {year:'2018', title:'Southeast Asia Expansion', desc:'Expansion into Malaysian and Indonesian markets. Logistics, warehousing and regional supply chain construction commenced. Cross-border industrial synergy initiated.'},
+  {year:'2024', title:'International Resources & Hong Kong Base', desc:'Investment company established in Hong Kong. Kuantan Halal Park, Fengjie Logistics Indonesia and Zengcheng eco-agriculture projects advanced in coordination.'},
+  {year:'Future', title:'Regional Industrial Ecosystem', desc:'Deepening agricultural technology, logistics supply chain and digital systems synergy. Replicating the industrial model across regions to build a cross-border industrial ecosystem.'},
+]
+---
+<BaseLayout title="关于丰麒 / About Fengqi Group" description="Established in 2014, Fengqi Group connects China and Southeast Asia through agriculture, logistics, industrial parks, trade and digital systems.">
+  <Header active="/about" />
+  <main>
+
+    <section class="section ab-hero sec-dark">
+      <div class="geo-bg ab-geo"></div>
+      <div class="wrap">
+        <div class="ab-hero-c">
+          <div class="label">关于丰麒 · ABOUT US</div>
+          <h1 class="heading">An <em>Integrated</em> Cross-Border<br />Industrial Group.</h1>
+          <p class="body-text body-text--wide">Established in 2014 and headquartered in Hong Kong, Fengqi Group promotes industrial cooperation and resource flow between China and Southeast Asia — combining agricultural technology, logistics supply chain and digital collaboration into one unified platform.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview + stats -->
+    <section class="section" id="overview">
+      <div class="wrap">
+        <div class="ab-layout">
+          <div class="reveal">
+            <div class="label">GROUP OVERVIEW</div>
+            <h2 class="heading">A <em>Complete</em> Industrial Ecosystem.</h2>
+            <p class="body-text">The Group establishes a complete industrial system from breeding, agricultural production and warehousing through to trade circulation and market connection. In agriculture, it promotes modern broiler farming, ecological circular agriculture and health foods. In logistics, Fengjie Logistics builds a regional network across Southeast Asian markets.</p>
+            <p class="body-text" style="margin-bottom:0">Fengqi drives the Kuantan Digital Halal Industrial Park in Malaysia and the Zengcheng ecological space in Guangzhou — combining agriculture, wellness and educational experiences. Business currently spans China, Malaysia and Indonesia.</p>
+          </div>
+          <div class="reveal d2">
+            <div class="ab-stats cgrid">
+              {[{num:'2014',lbl:'Year Founded'},{num:'HK',lbl:'Headquarters'},{num:'3',lbl:'Countries Active'},{num:'6',lbl:'Business Segments'}].map(s=>(
+                <div class="ab-stat"><div class="ab-stat-num">{s.num}</div><div class="ab-stat-lbl">{s.lbl}</div></div>
+              ))}
+            </div>
+            <div class="ab-vision ctop">
+              <p class="ab-vis-lbl">VISION & MISSION</p>
+              <p class="ab-vis-txt">To become an industry platform connecting agriculture and global markets — restructuring the supply chain with technology, eliminating distribution barriers, and building a sustainable and scalable global industrial network.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Competencies -->
+    <section class="section comp-sec" id="competencies">
+      <div class="geo-bg" style="opacity:.3"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">CORE COMPETENCIES</div>
+          <h2 class="heading">What Makes Fengqi <em>Distinctive</em>.</h2>
+        </div>
+        <div class="comp-grid cgrid">
+          {[
+            {t:'Cross-Regional Industrial Integration', b:'Promoting coordinated development of agriculture, logistics, trade and industrial parks across China and Southeast Asia.'},
+            {t:'Logistics & Supply Chain Operations',   b:'Integrating warehousing, transportation and distribution — optimising costs and improving efficiency through intelligent digital scheduling.'},
+            {t:'Digital Collaboration Capabilities',    b:'Utilising IoT and smart systems to revitalise traditional industries through data — from farm management to port logistics and park operations.'},
+            {t:'Halal Market Connectivity',             b:'Connecting with the Southeast Asian halal industry, assisting partners in seizing the opportunities presented by RCEP and the growing halal economy.'},
+          ].map((c,i)=>(
+            <div class={`cc ctop cbar reveal d${i+1}`}>
+              <h3 class="cc-t">{c.t}</h3>
+              <p class="cc-b">{c.b}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Development Path -->
+    <section class="section" id="journey">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">DEVELOPMENT PATH</div>
+          <h2 class="heading">Our <em>Journey</em>.</h2>
+        </div>
+        <div class="path-grid cgrid">
+          {MILESTONES.map((m,i)=>(
+            <div class={`pm reveal d${i+1}`}>
+              <div class="pm-year">{m.year}</div>
+              <h3 class="pm-title">{m.title}</h3>
+              <p class="pm-desc">{m.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership Team -->
+    <section class="section team-sec" id="team">
+      <div class="geo-bg" style="opacity:.25"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">LEADERSHIP TEAM</div>
+          <h2 class="heading">Professional &amp; <em>International</em> Background.</h2>
+          <p class="body-text body-text--wide">Fengqi brings together professionals from agriculture, logistics, supply chain, technology and investment. Core members possess cross-industry and cross-regional experience spanning public policy, research institutions and international markets.</p>
+        </div>
+        <div class="team-grid cgrid">
+          {TEAM.map((m,i)=>(
+            <div class={`tc ctop reveal d${(i%3)+1}`}>
+              <div class="tc-photo"><div class="tc-ph-inner"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,.2)" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div></div>
+              <div class="tc-body">
+                <p class="tc-role">{m.role}</p>
+                <h3 class="tc-name">{m.name}</h3>
+                <p class="tc-bio">{m.bio}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.ab-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg);position:relative;overflow:hidden}
+.ab-geo{opacity:.5}
+.ab-hero-c{max-width:760px}
+.ab-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.ab-stats{grid-template-columns:1fr 1fr;margin-bottom:24px}
+.ab-stat{background:var(--bg-2);padding:28px 24px;transition:background .3s}
+.ab-stat:hover{background:var(--bg-3)}
+.ab-stat-num{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:6px}
+.ab-stat-lbl{font-family:var(--FL);font-size:17px;letter-spacing:2.5px;color:var(--text-3)}
+.ab-vision{background:var(--bg-3);border:1px solid var(--bg-4);padding:32px;position:relative}
+.ab-vis-lbl{font-family:var(--FL);font-size:17px;letter-spacing:4px;color:var(--gold);margin-bottom:14px}
+.ab-vis-txt{font-size:18px;color:var(--text-3);line-height:1.9;font-style:italic}
+.comp-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.comp-grid{grid-template-columns:repeat(4,1fr)}
+.cc{background:var(--bg-2);padding:44px 32px}
+.cc:hover{background:var(--bg-3)}
+.cc-t{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
+.cc-b{font-size:17px;line-height:2;color:var(--text-3)}
+.path-grid{grid-template-columns:repeat(4,1fr)}
+.pm{background:var(--bg-2);padding:48px 32px;position:relative}
+.pm::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.pm:hover::before{transform:scaleX(1)}
+.pm-year{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:14px}
+.pm-title{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--text);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);line-height:1.3}
+.pm-desc{font-size:17px;line-height:2;color:var(--text-3)}
+.team-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);position:relative;overflow:hidden}
+.team-grid{grid-template-columns:repeat(3,1fr)}
+.tc{background:var(--bg-2);display:flex;flex-direction:column}
+.tc-photo{width:100%;aspect-ratio:4/3;background:var(--bg-3);overflow:hidden;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center}
+.tc-ph-inner{width:80px;height:80px;border-radius:50%;border:1px dashed rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center}
+.tc-ph-inner svg{width:40px;height:40px}
+.tc-body{padding:26px 28px}
+.tc-role{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
+.tc-name{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}
+.tc-bio{font-size:18px;color:var(--text-3);line-height:1.8}
+@media(max-width:1100px){.ab-layout{grid-template-columns:1fr;gap:40px}.comp-grid,.path-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.comp-grid,.path-grid,.team-grid{grid-template-columns:1fr}}
+</style>

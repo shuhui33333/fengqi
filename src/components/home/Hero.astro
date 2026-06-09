@@ -1,0 +1,172 @@
+---
+// src/components/home/Hero.astro — White theme hero
+---
+
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <div class="geo-bg geo-bg--fade" style="opacity:.6"></div>
+  </div>
+
+  <div class="wrap hero-content">
+    <div class="hero-left">
+      <div class="label">CROSS-BORDER INDUSTRIAL GROUP</div>
+      <h1 class="hero-h1">
+        Connecting China<br />
+        &amp; <em>Southeast Asia</em><br />
+        <strong>Through Industry.</strong>
+      </h1>
+      <p class="hero-body">
+        Fengqi Group integrates <strong>agriculture, logistics, industrial parks, trade and digital systems</strong> — building a complete cross-border platform from production and supply chain to market access.
+      </p>
+      <div class="hero-actions">
+        <a href="/business"    class="btn btn--gold">Explore Our Business</a>
+        <a href="/partnership" class="btn btn--ghost">Partner With Us</a>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-cards">
+        <div class="hc hc-1">
+          <div class="hc-num">800<sup>ac</sup></div>
+          <div class="hc-lbl">KUANTAN HALAL PARK</div>
+        </div>
+        <div class="hc hc-2">
+          <div class="hc-num">145M</div>
+          <div class="hc-lbl">JAVA LOGISTICS REACH</div>
+        </div>
+        <div class="hc hc-3">
+          <div class="hc-num">2B<sup>+</sup></div>
+          <div class="hc-lbl">GLOBAL MUSLIM CONSUMERS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom highlights bar -->
+  <div class="hero-bar">
+    <div class="wrap hero-bar-inner">
+      {[
+        { title:'CHINA BASE',            desc:'Agriculture, technology & industrial resources' },
+        { title:'MALAYSIA HUB',          desc:'800-acre halal park · JAKIM certification gateway' },
+        { title:'INDONESIA NETWORK',     desc:'Fengjie Logistics · 4 depots · 145M people reached' },
+        { title:'CROSS-BORDER PLATFORM', desc:'Production → logistics → trade → market access' },
+      ].map(item => (
+        <div class="hb-item">
+          <div class="hb-dot"></div>
+          <div>
+            <p class="hb-title">{item.title}</p>
+            <p class="hb-desc">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Hero shell ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-top: 80px;  /* nav height */
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(135deg, rgba(184,145,42,.04) 0%, transparent 60%),
+              linear-gradient(225deg, rgba(184,145,42,.03) 0%, transparent 50%);
+}
+
+/* ── Content layout ── */
+.hero-content {
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 60px;
+  padding-top: 60px; padding-bottom: 100px;
+  position: relative; z-index: 2;
+}
+
+/* ── Left copy ── */
+.hero-h1 {
+  margin-bottom: 28px;
+  opacity: 0; animation: slideRight .9s ease .2s forwards;
+}
+.hero-h1 em     { color: var(--gold); }
+.hero-h1 strong { font-weight: 600; color: var(--text); }
+
+.hero-body {
+  font-size: 18px; color: var(--text-2); line-height: 1.85;
+  max-width: 520px; margin-bottom: 40px;
+  opacity: 0; animation: slideRight .9s ease .4s forwards;
+}
+.hero-body strong { color: var(--text); font-weight: 600; }
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0; animation: slideRight .9s ease .6s forwards;
+}
+
+/* ── Right stat cards ── */
+.hero-right {
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; animation: fadeIn 1s ease .8s forwards;
+}
+.hero-cards { position: relative; width: 360px; height: 340px; }
+
+.hc {
+  position: absolute;
+  background: var(--bg); border: 1px solid var(--bg-4);
+  padding: 24px 28px; min-width: 185px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--gold);
+}
+.hc-num {
+  font-family: var(--FD); font-size: 48px; font-weight: 300;
+  color: var(--gold); line-height: 1; margin-bottom: 6px;
+}
+.hc-num sup { font-size: 22px; }
+.hc-lbl { font-family: var(--FL); font-size: 10px; letter-spacing: 2px; color: var(--text-3); }
+
+.hc-1 { top: 0;    left: 0;    animation: floatA 5s   ease-in-out infinite; }
+.hc-2 { top: 60px; right: 0;   animation: floatB 6s   ease-in-out infinite .8s; }
+.hc-3 { bottom: 0; left: 40px; animation: floatA 5.5s ease-in-out infinite 1.4s; }
+
+/* ── Bottom bar ── */
+.hero-bar {
+  border-top: 1px solid var(--bg-4);
+  background: var(--bg-2);
+  position: relative; z-index: 2;
+}
+.hero-bar-inner {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 0;
+}
+.hb-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 20px 28px;
+  border-right: 1px solid var(--bg-4);
+}
+.hb-item:last-child { border-right: none; }
+.hb-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+}
+.hb-title { font-family:var(--FL); font-size:9px; letter-spacing:2.5px; color:var(--gold-dk); margin-bottom:4px; }
+.hb-desc  { font-size:13px; color:var(--text-3); line-height:1.5; }
+
+/* ── Scroll hint ── */
+@media (max-width: 1100px) {
+  .hero-content { grid-template-columns: 1fr; padding-bottom: 80px; }
+  .hero-right   { display: none; }
+  .hero-bar-inner { grid-template-columns: 1fr 1fr; }
+  .hb-item:nth-child(2) { border-right: none; }
+  .hb-item:nth-child(3) { border-top: 1px solid var(--bg-4); }
+}
+@media (max-width: 700px) {
+  .hero-h1 { font-size: 40px; }
+  .hero-actions { flex-direction: column; }
+  .hero-bar-inner { grid-template-columns: 1fr; }
+  .hb-item { border-right: none !important; border-bottom: 1px solid var(--bg-4); }
+}
+</style>

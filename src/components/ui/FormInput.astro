@@ -1,0 +1,52 @@
+---
+interface Props {
+  type?:     'text'|'email'|'tel'|'textarea'|'select'
+  name:      string
+  label:     string
+  placeholder?: string
+  required?: boolean
+  options?:  string[]
+}
+const { type='text', name, label, placeholder='', required=false, options=[] } = Astro.props
+---
+<div class="fi">
+  <label class="fi-lbl" for={name}>
+    {label}{required && <span class="fi-req" aria-hidden="true">*</span>}
+  </label>
+  {type==='textarea'
+    ? <textarea id={name} name={name} placeholder={placeholder} required={required} class="fi-inp fi-ta" rows={4}></textarea>
+    : type==='select'
+      ? <select id={name} name={name} required={required} class="fi-inp fi-sel">
+          <option value="">Select…</option>
+          {options.map(o => <option value={o}>{o}</option>)}
+        </select>
+      : <input id={name} type={type} name={name} placeholder={placeholder} required={required} class="fi-inp" />
+  }
+</div>
+
+<style>
+.fi { display:flex; flex-direction:column; gap:6px; }
+.fi-lbl {
+  font-family:var(--FL); font-size:10px; letter-spacing:3px;
+  color:var(--text-2); font-weight:500;
+}
+.fi-req { color:var(--gold); margin-left:3px; }
+.fi-inp {
+  background: var(--bg);
+  border: 1.5px solid var(--bg-4);
+  color: var(--text);
+  font-family: var(--FB); font-size: 15px; font-weight: 400;
+  padding: 13px 16px; width: 100%;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s;
+  -webkit-appearance: none;
+}
+.fi-inp::placeholder { color: var(--text-muted); }
+.fi-inp:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,145,42,.12);
+}
+.fi-ta  { resize: vertical; min-height: 120px; line-height: 1.6; }
+.fi-sel { cursor: pointer; }
+.fi-sel option { background: var(--bg); color: var(--text); }
+</style>

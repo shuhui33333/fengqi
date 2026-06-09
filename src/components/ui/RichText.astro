@@ -1,0 +1,57 @@
+---
+// src/components/ui/RichText.astro
+// Renders a Storyblok rich-text document as HTML.
+import type { StoryblokNode, StoryblokRichText } from '../../lib/storyblok'
+
+interface Props { doc: StoryblokRichText }
+const { doc } = Astro.props
+
+function renderNode(node: StoryblokNode): string {
+  const inner = () => node.content?.map(renderNode).join('') ?? ''
+  switch (node.type) {
+    case 'doc':          return inner()
+    case 'paragraph':    return `<p>${inner()}</p>`
+    case 'heading': {
+      const lvl = (node.attrs?.level as number) ?? 2
+      return `<h${lvl}>${inner()}</h${lvl}>`
+    }
+    case 'bullet_list':  return `<ul>${inner()}</ul>`
+    case 'ordered_list': return `<ol>${inner()}</ol>`
+    case 'list_item':    return `<li>${inner()}</li>`
+    case 'blockquote':   return `<blockquote>${inner()}</blockquote>`
+    case 'horizontal_rule': return '<hr>'
+    case 'hard_break':   return '<br>'
+    case 'code_block':   return `<pre><code>${inner()}</code></pre>`
+    case 'image': {
+      const src = String(node.attrs?.src ?? '')
+      const alt = String(node.attrs?.alt ?? '')
+      return src ? `<img src="${src}" alt="${alt}" loading="lazy" />` : ''
+    }
+    case 'text': {
+      let text = node.text ?? ''
+      // Escape HTML
+      text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      node.marks?.forEach(mark => {
+        switch (mark.type) {
+          case 'bold':      text = `<strong>${text}</strong>`; break
+          case 'italic':    text = `<em>${text}</em>`; break
+          case 'strike':    text = `<s>${text}</s>`; break
+          case 'underline': text = `<u>${text}</u>`; break
+          case 'code':      text = `<code>${text}</code>`; break
+          case 'link': {
+            const href   = String(mark.attrs?.href ?? '#')
+            const target = String(mark.attrs?.target ?? '_self')
+            text = `<a href="${href}" target="${target}" rel="noopener">${text}</a>`
+            break
+          }
+        }
+      })
+      return text
+    }
+    default: return inner()
+  }
+}
+
+const html = renderNode(doc as unknown as StoryblokNode)
+---
+<div class="prose" set:html={html} />

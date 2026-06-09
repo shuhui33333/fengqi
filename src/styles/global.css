@@ -1,0 +1,369 @@
+/* ================================================================
+   FENGQI GROUP · Design System v3
+   White theme · Refined gold · Unified typography
+   src/styles/global.css
+================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Refined gold palette — lighter, more elegant */
+  --gold:        #B8912A;
+  --gold-lt:     #D4A843;
+  --gold-pale:   #E8C97A;
+  --gold-dk:     #8A6A1A;
+  --gold-faint:  rgba(184,145,42,0.06);
+  --gold-border: rgba(184,145,42,0.20);
+  --gold-border-strong: rgba(184,145,42,0.45);
+
+  /* White theme backgrounds */
+  --bg:        #FFFFFF;
+  --bg-2:      #FAFAFA;
+  --bg-3:      #F5F4F1;
+  --bg-4:      #EEECE8;
+  --bg-dark:   #1A1814;   /* hero / footer dark sections */
+  --bg-dark-2: #242018;
+
+  /* Text */
+  --text:       #1A1814;
+  --text-2:     #3D3830;
+  --text-3:     #6B6358;
+  --text-muted: #9A9189;
+
+  /* Typography */
+  --FD: 'Cormorant Garamond', Georgia, serif;  /* Display / headings */
+  --FL: 'Cinzel', serif;                        /* Labels / nav */
+  --FB: 'Jost', system-ui, sans-serif;          /* Body */
+
+  /* Spacing rhythm */
+  --sv:  100px;   /* section vertical padding */
+  --ph:   64px;   /* page horizontal padding  */
+
+  /* Typography scale */
+  --t-xs:   11px;
+  --t-sm:   13px;
+  --t-base: 16px;
+  --t-lg:   18px;
+  --t-xl:   21px;
+  --t-2xl:  26px;
+  --t-3xl:  32px;
+  --t-4xl:  40px;
+  --t-5xl:  52px;
+  --t-6xl:  64px;
+  --t-7xl:  80px;
+
+  /* Heading scale (FD display font) */
+  --h1: clamp(40px, 5vw, 72px);
+  --h2: clamp(30px, 3.5vw, 52px);
+  --h3: clamp(20px, 2vw, 28px);
+  --h4: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,.06);
+  --shadow:    0 4px 20px rgba(0,0,0,.09);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,.14);
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--FB);
+  font-weight: 400;
+  font-size: var(--t-base);
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a   { color: inherit; text-decoration: none; }
+
+/* ── Custom Cursor ─────────────────────────────────────────────── */
+#fq-cur  { position:fixed; width:7px; height:7px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .15s; }
+#fq-ring { position:fixed; width:34px; height:34px; border:1.5px solid rgba(184,145,42,.4); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:transform .2s ease, border-color .2s; }
+
+/* ── Islamic Geometric Background ─────────────────────────────── */
+.geo-bg {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='rgba(184%2C145%2C42%2C0.08)' stroke-width='.7'%3E%3Cpolygon points='60%2C5 112%2C35 112%2C85 60%2C115 8%2C85 8%2C35'/%3E%3Cpolygon points='60%2C20 98%2C42 98%2C78 60%2C100 22%2C78 22%2C42'/%3E%3Cpolygon points='60%2C35 85%2C50 85%2C70 60%2C85 35%2C70 35%2C50'/%3E%3Cline x1='60' y1='5' x2='60' y2='35'/%3E%3Cline x1='112' y1='35' x2='85' y2='50'/%3E%3Cline x1='112' y1='85' x2='85' y2='70'/%3E%3Cline x1='60' y1='115' x2='60' y2='85'/%3E%3Cline x1='8' y1='85' x2='35' y2='70'/%3E%3Cline x1='8' y1='35' x2='35' y2='50'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+.geo-bg--fade {
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 75%);
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.wrap    { max-width: 1380px; margin: 0 auto; padding: 0 var(--ph); }
+.section { padding: var(--sv) 0; }
+
+/* ── TYPOGRAPHY SYSTEM ─────────────────────────────────────────── */
+/*
+  H1  — Page hero title         FD 300  var(--h1)  tracking -1px
+  H2  — Section title           FD 300  var(--h2)  tracking 0
+  H3  — Card / sub-section      FD 400  var(--h3)  tracking 0
+  H4  — Small heading           FL 500  var(--h4)  tracking 2px
+  .label  — Eyebrow label       FL 400  11px       tracking 5px  gold
+  .body-text  — Lead paragraph  FB 400  17px
+  p (prose)   — Body copy       FB 400  16px
+*/
+
+/* ── H1: Page hero ── */
+h1, .h1 {
+  font-family: var(--FD);
+  font-size: var(--h1);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+h1 em, .h1 em { color: var(--gold); font-style: italic; }
+h1 strong, .h1 strong { font-weight: 600; font-style: normal; }
+
+/* ── H2: Section titles ── */
+h2, .h2 {
+  font-family: var(--FD);
+  font-size: var(--h2);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+h2 em, .h2 em { color: var(--gold); font-style: italic; }
+h2 strong, .h2 strong { font-weight: 500; font-style: normal; }
+
+/* ── H3: Card / subsection ── */
+h3, .h3 {
+  font-family: var(--FD);
+  font-size: var(--h3);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+/* ── H4: Small headings ── */
+h4, .h4 {
+  font-family: var(--FL);
+  font-size: var(--h4);
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+/* ── Label / eyebrow ── */
+.label {
+  font-family: var(--FL);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-transform: uppercase;
+}
+.label::before { content: ''; width: 28px; height: 1.5px; background: var(--gold); flex-shrink: 0; }
+.label--c { justify-content: center; }
+.label--dark { color: var(--gold-pale); }
+.label--dark::before { background: var(--gold-pale); }
+
+/* ── Body text ── */
+.body-text {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text-2);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+.body-text--wide  { max-width: 820px; }
+.body-text--c     { text-align: center; margin-inline: auto; }
+.body-text--light { color: rgba(255,255,255,.75); }
+
+/* ── Gold divider ── */
+.gold-rule { width: 52px; height: 2px; background: var(--gold); margin-bottom: 40px; }
+
+/* ── Utility text sizes ── */
+.t-xs   { font-size: var(--t-xs);   }
+.t-sm   { font-size: var(--t-sm);   }
+.t-base { font-size: var(--t-base); }
+.t-lg   { font-size: var(--t-lg);   }
+.t-xl   { font-size: var(--t-xl);   }
+.t-2xl  { font-size: var(--t-2xl);  }
+.t-3xl  { font-size: var(--t-3xl);  }
+.t-4xl  { font-size: var(--t-4xl);  }
+.t-5xl  { font-size: var(--t-5xl);  }
+.t-6xl  { font-size: var(--t-6xl);  }
+.t-7xl  { font-size: var(--t-7xl);  }
+
+/* legacy aliases — keep working */
+.heading { font-family:var(--FD); font-size:var(--h2); font-weight:300; line-height:1.2; margin-bottom:20px; color:var(--text); }
+.heading em { color: var(--gold); font-style: italic; }
+.heading strong { font-weight: 500; font-style: normal; }
+.heading--c { text-align: center; }
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn {
+  font-family: var(--FL);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  padding: 15px 36px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .28s ease;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+.btn--gold {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+}
+.btn--gold:hover {
+  background: var(--gold-lt);
+  border-color: var(--gold-lt);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(184,145,42,.30);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: var(--gold-border-strong);
+  color: var(--gold-dk);
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-faint);
+}
+.btn--ghost-white {
+  background: transparent;
+  border-color: rgba(255,255,255,.5);
+  color: #fff;
+}
+.btn--ghost-white:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,.1);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────── */
+/* Gold-gap grid */
+.cgrid { display: grid; gap: 1px; background: var(--gold-border); }
+
+/* Card base — white background, subtle border */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--bg-4);
+  transition: box-shadow .28s, border-color .28s, transform .28s;
+}
+.card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--gold-border);
+  transform: translateY(-2px);
+}
+
+/* Hover bar top accent */
+.cbar {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  transition: box-shadow .28s, transform .28s, background .28s;
+}
+.cbar::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.cbar:hover::before { transform: scaleX(1); }
+.cbar:hover { box-shadow: var(--shadow); }
+
+/* Static gradient top */
+.ctop { position: relative; overflow: hidden; }
+.ctop::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), rgba(184,145,42,0));
+}
+
+/* Ghost number bg texture */
+.cidx {
+  font-family: var(--FD);
+  font-size: clamp(52px, 5.5vw, 72px);
+  font-weight: 300;
+  color: rgba(184,145,42,.09);
+  line-height: 1;
+  margin-bottom: 16px;
+  transition: color .35s;
+}
+.cbar:hover .cidx { color: rgba(184,145,42,.18); }
+
+/* Card image wrapper */
+.card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--bg-3);
+}
+.card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.card:hover .card-img img,
+.cbar:hover .card-img img { transform: scale(1.04); }
+
+/* Card image placeholder */
+.card-img-ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--bg-3) 0%, var(--bg-4) 100%);
+}
+.card-img-ph svg { width: 48px; height: 48px; opacity: .3; }
+
+/* ── Section variants ───────────────────────────────────────────── */
+.sec-white  { background: var(--bg);   }
+.sec-light  { background: var(--bg-2); }
+.sec-tint   { background: var(--bg-3); }
+.sec-warm   { background: var(--bg-4); }
+.sec-dark   { background: var(--bg-dark); color: #fff; }
+
+/* Text on dark sections */
+.sec-dark .label     { color: var(--gold-pale); }
+.sec-dark .label::before { background: var(--gold-pale); }
+.sec-dark h1, .sec-dark .h1,
+.sec-dark h2, .sec-dark .h2,
+.sec-dark h3, .sec-dark .h3 { color: #fff; }
+.sec-dark h1 em, .sec-dark h2 em, .sec-dark h3 em { color: var(--gold-pale); }
+.sec-dark .body-text { color: rgba(255,255,255,.72); }
+.sec-dark .btn--ghost { border-color: rgba(255,255,255,.45); color: #fff; }
+.sec-dark .btn--ghost:hover { border-color: rgba(255,255,255,.9); background: rgba(255,255,255,.1); }
+
+/* Divider */
+.gold-divider { height: 1px; background: var(--gold-border); }
+
+/* ── Scroll Reveal ─────────────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity:1; transform:none; }
+.d1{transition-delay:.08s} .d2{transition-delay:.16s}
+.d3{transition-delay:.24s} .d4{transition-delay:.32s}
+.d5{transition-delay:.40s}
+
+/* ── Keyframes ─────────────────────────────────────────────────── */
+@keyframes slideRight  { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:none} }
+@keyframes fadeIn      { from{opacity:0} to{opacity:1} }
+@keyframes floatA      { 0%,100%{transform:translateY(0)}    50%{transform:translateY(-10px)} }
+@keyframes floatB      { 0%,100%{transform:translateY(-6px)} 50%{transform:translateY(6px)} }
+@keyframes scrollPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* ── Responsive tokens ─────────────────────────────────────────── */
+@media (max-width:1100px) { :root { --sv:72px; --ph:28px; } }
+@media (max-width:700px)  { :root { --sv:56px; --ph:20px; } }

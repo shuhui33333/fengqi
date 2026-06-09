@@ -1,0 +1,224 @@
+---
+// src/pages/business.astro  →  /business
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+---
+<BaseLayout title="业务与平台 / Business & Platform | Fengqi Group" description="Six integrated business segments: industrial parks, logistics, healthcare, trade, agriculture and digital systems — connecting China and Southeast Asia.">
+  <Header active="/business" />
+  <main>
+
+    <section class="section b-hero sec-dark">
+      <div class="geo-bg b-geo"></div>
+      <div class="wrap">
+        <div class="b-hero-c">
+          <div class="label">业务与平台 · BUSINESS & PLATFORM</div>
+          <h1 class="heading"><em>Six Integrated</em> Industry Pillars.</h1>
+          <p class="body-text body-text--wide">Fengqi has established a multi-segment synergistic industrial system — industrial parks, logistics, healthcare, trade, agriculture and digital systems — forming a complete support structure from production and supply chain to market operations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seg 1: Parks -->
+    <section class="section bs" id="parks">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 01</div>
+            <h2 class="heading">Industrial Parks &amp;<br /><em>Cross-Border Platforms</em></h2>
+            <p class="body-text">Focused on helping businesses solve "difficulty in going global, establishing a presence, obtaining certifications, and managing logistics." The group integrates industrial parks, supply chains, logistics networks and market resources to help businesses efficiently enter ASEAN, Middle East and global halal markets.</p>
+            <p class="body-text" style="margin-bottom:0">The 800-acre Kuantan Digital Halal Food Industrial Park in Pahang, Malaysia — adjacent to MCKIP, ~10km from Kuantan Port with ECRL rail access — creates a cross-border ecosystem integrating industrial park + logistics + international trade + digital platform.</p>
+          </div>
+          <div class="bs-right reveal d2">
+            <div class="bs-kpis cgrid">
+              {[{n:'800ac',l:'Kuantan Park'},{n:'10–12d',l:'Halal cert fast-track'},{n:'~48h',l:'Customs clearance'},{n:'0–5%',l:'Tariff via RCEP'},{n:'80+',l:'JAKIM cert nations'},{n:'4',l:'Core industries'}].map(k=>(
+                <div class="bs-kpi"><div class="bs-kpi-n">{k.n}</div><div class="bs-kpi-l">{k.l}</div></div>
+              ))}
+            </div>
+            <div class="bs-adv">
+              <p class="bs-adv-t">Core Advantages</p>
+              <ul class="bs-adv-list">
+                <li>One-stop overseas support — from establishment through certification, supply chain to market</li>
+                <li>Malaysia JAKIM halal certification: 30+ days → 10–12 days</li>
+                <li>Customs clearance: ~72 hours → ~48 hours via Kuantan–Port Klang shipping route</li>
+                <li>0–5% tariff advantage via RCEP & Malaysia-EU FTA</li>
+                <li>Cross-industry collaborative system: park + logistics + certification + trade + digital</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="b-div"></div>
+
+    <!-- Seg 2: Logistics -->
+    <section class="section bs bs-alt" id="logistics">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 02</div>
+            <h2 class="heading">Logistics &amp;<br /><em>Supply Chain</em></h2>
+            <p class="body-text">Fengqi has established Fengjie Logistics in Indonesia and Malaysia — an integrated logistics network covering warehousing, transportation, distribution, cold chain and cross-border trade. It helps businesses solve how to store, transport and reliably deliver goods across Southeast Asia.</p>
+          </div>
+          <div class="bs-right reveal d2">
+            <div class="bs-kpis cgrid">
+              {[{n:'4',l:'Direct depots — Java Island'},{n:'80%',l:'Java logistics coverage'},{n:'145M',l:'People reached'},{n:'<8%',l:'Cold chain loss rate'},{n:'35%',l:'Inventory turnover uplift'},{n:'~20%',l:'Distribution cost saving'}].map(k=>(
+                <div class="bs-kpi"><div class="bs-kpi-n">{k.n}</div><div class="bs-kpi-l">{k.l}</div></div>
+              ))}
+            </div>
+            <div class="bs-adv">
+              <p class="bs-adv-t">Service Coverage</p>
+              <ul class="bs-adv-list">
+                <li>Integrated warehousing + distribution: ambient, refrigerated, regional</li>
+                <li>Smart cold chain logistics: real-time temperature monitoring</li>
+                <li>Cross-border supply chain: origin → warehousing → transport → end channel</li>
+                <li>Digital logistics management: order, WMS, transport and data systems</li>
+                <li>Customised solutions for chain restaurants, supermarkets, e-commerce & food enterprises</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="b-div"></div>
+
+    <!-- Seg 3: Healthcare -->
+    <section class="section bs" id="healthcare">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 03</div>
+            <h2 class="heading">Healthcare &amp;<br /><em>Wellness</em></h2>
+            <p class="body-text">Centred on healthy eating, functional agriculture and green living — Fengqi combines agricultural technology, health foods and ecological living to make agriculture an integral part of healthy lifestyle, extending from "eating healthier" to nutrition, chronic disease management and wellness experiences.</p>
+            <p class="body-text" style="margin-bottom:0">In Malaysia, Fengqi is building hemodialysis centres focusing on Selangor and Kuala Lumpur — a "standardised single-centre ≤20-bed + multi-centre distributed" model creating a scalable professional platform to meet growing chronic kidney disease demand.</p>
+          </div>
+          <div class="bs-right reveal d2">
+            <div class="bs-det-grid cgrid">
+              {[
+                {t:'Functional Agriculture & Health Foods', b:'Low-GI paper mulberry oat series: 200+ chronic disease management centres. 2024 single-product sales: RMB 80M+. Agricultural product value uplift >130%.'},
+                {t:'Wellness & Nutrition Systems',          b:'Combining "food and medicine from the same origin" — developing products for chronic disease management, elderly care and healthy living.'},
+                {t:'Ecological Wellness Experiences',       b:'Integrating ecological environment, nature education and wellness — developing the "agriculture + wellness + experience" model.'},
+                {t:'Hemodialysis Centres — Malaysia',       b:'Three-phase rollout: standardised pilot → multi-centre expansion → regional dialysis network with REIT capitalisation pathway.'},
+              ].map((d,i)=>(
+                <div class={`bd ctop cbar reveal d${i+1}`}><h3 class="bd-t">{d.t}</h3><p class="bd-b">{d.b}</p></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="b-div"></div>
+
+    <!-- Seg 4: Trade -->
+    <section class="section bs bs-alt" id="trade">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 04</div>
+            <h2 class="heading">Trade &amp;<br /><em>Distribution</em></h2>
+            <p class="body-text">Fengqi has established a trade system centred on global sourcing, cross-border circulation, regional distribution and compliance management — helping products from China and other origins enter ASEAN and international markets efficiently.</p>
+          </div>
+          <div class="reveal d2">
+            <div class="bs-adv">
+              <p class="bs-adv-t">What Fengqi Offers</p>
+              <ul class="bs-adv-list">
+                <li>Global procurement network: China, Southeast Asia, South America — beef, protein, frozen foods, functional agricultural products, fruits and halal foods</li>
+                <li>Cross-border cold chain: processed foods China → Malaysia quarantine standard → SE Asia market in ~15 days via cold chain sea freight</li>
+                <li>Two-way trade: international products into ASEAN; Chinese products into SE Asian and international markets</li>
+                <li>Distribution network: wholesale, supermarkets, F&amp;B, e-commerce and halal channels</li>
+                <li>Compliance: customs clearance, quarantine, food safety and JAKIM halal standards</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="b-div"></div>
+
+    <!-- Seg 5: Agriculture -->
+    <section class="section bs" id="agriculture">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 05</div>
+            <h2 class="heading">Agriculture &amp;<br /><em>Ecological Technology</em></h2>
+            <p class="body-text">Developing healthy, safe and sustainable modern agriculture — an integrated system from planting, feed and breeding through food processing to cold chain distribution. Fengqi is building a modern protein supply system in Malaysia and the Zengcheng ecological space in Guangzhou.</p>
+          </div>
+          <div class="bs-right reveal d2">
+            <div class="bs-det-grid cgrid">
+              {[
+                {t:'Wood-Based Agricultural System',    b:'Paper mulberry and forage mulberry + carbon-based wave energy planting. VC content +25%, dietary fibre retention 90%, fertiliser use -60%. Low-GI, selenium-rich, antibiotic-free products.'},
+                {t:'EnzyLoop Eco-Circular System',      b:'Fermentation technology converts agricultural waste into feed and organic fertiliser. "Planting–breeding–recycling" ecological model. Increases meat Omega-3 content.'},
+                {t:'R-AIoT Smart Agriculture Platform', b:'AI + IoT for 24/7 monitoring of soil, water quality and farming environment. Real-time precision management for production stability.'},
+                {t:'Modern Broiler Farming — Malaysia', b:'280-acre project; 1.824M birds/year target. Zero antibiotics, zero heavy metals, zero salmonella. Full JAKIM halal traceability.'},
+              ].map((d,i)=>(
+                <div class={`bd ctop cbar reveal d${i+1}`}><h3 class="bd-t">{d.t}</h3><p class="bd-b">{d.b}</p></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="b-div"></div>
+
+    <!-- Seg 6: Digital -->
+    <section class="section bs bs-alt" id="digital">
+      <div class="wrap">
+        <div class="bs-layout">
+          <div class="reveal">
+            <div class="label">SEGMENT 06</div>
+            <h2 class="heading">Digital <em>Systems</em></h2>
+            <p class="body-text">Fengqi leverages AI, IoT, blockchain and data systems to make complex production, logistics, trade and park management processes more transparent, efficient and manageable — helping businesses enter the digital era and improve decision-making speed.</p>
+          </div>
+          <div class="bs-right reveal d2">
+            <div class="bs-det-grid cgrid">
+              {[
+                {t:'R-AIoT Smart Management',          b:'IoT + data systems monitoring farm, cold chain and warehousing environments in real time — improving production and transport stability.'},
+                {t:'Intelligent Operations Centre',    b:'AI data analysis and risk warning integrating logistics, trade, cold chain and park data — rapid operational visibility and market insight.'},
+                {t:'Blockchain Traceability',          b:'Records product origin, logistics and transactions on blockchain. Combined with JAKIM digital authentication — strengthens compliance and market trust.'},
+                {t:'Smart Park & Logistics Systems',   b:'Unified park management (tenancy, energy, security) + integrated logistics (WMS, dispatch, delivery, real-time monitoring).'},
+              ].map((d,i)=>(
+                <div class={`bd ctop cbar reveal d${i+1}`}><h3 class="bd-t">{d.t}</h3><p class="bd-b">{d.b}</p></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.b-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.b-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.b-hero-c{max-width:760px}
+.b-div{height:1px;background:var(--gold-border)}
+.bs{background:var(--black)}.bs-alt{background:var(--bg-2)}
+.bs-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+.bs-kpis{grid-template-columns:repeat(3,1fr)}
+.bs-kpi{background:var(--bg-2);padding:26px 20px;text-align:center;transition:background .3s}
+.bs-alt .bs-kpi{background:var(--bg-3)}
+.bs-kpi:hover{background:var(--bg-3)}
+.bs-kpi-n{font-family:var(--FD);font-size:32px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:6px}
+.bs-kpi-l{font-size:14px;color:var(--text-3);letter-spacing:.5px}
+.bs-det-grid{grid-template-columns:1fr 1fr}
+.bd{background:var(--bg-2);padding:32px 28px}
+.bs-alt .bd{background:var(--bg-3)}
+.bd:hover{background:var(--bg-3)}
+.bd-t{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--gold);margin-bottom:12px;line-height:1.25}
+.bd-b{font-size:17px;line-height:2;color:var(--text-3)}
+.bs-adv{background:var(--bg-3);border:1px solid var(--bg-4);padding:32px;margin-top:24px;position:relative}
+.bs-alt .bs-adv{background:var(--bg-2)}
+.bs-adv::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),transparent)}
+.bs-adv-t{font-family:var(--FL);font-size:11px;letter-spacing:4px;color:var(--gold);margin-bottom:16px}
+.bs-adv-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.bs-adv-list li{font-size:17px;color:var(--text-3);padding-left:14px;position:relative;line-height:1.7}
+.bs-adv-list li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:18px}
+.bs-right{display:flex;flex-direction:column;gap:24px}
+@media(max-width:1100px){.bs-layout{grid-template-columns:1fr;gap:40px}.bs-kpis{grid-template-columns:1fr 1fr 1fr}.bs-det-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.bs-kpis{grid-template-columns:1fr 1fr}}
+</style>

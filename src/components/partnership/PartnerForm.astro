@@ -1,0 +1,168 @@
+---
+// src/components/partnership/PartnerForm.astro
+// Web3Forms integration.
+// Cloudflare env var name: Web3Forms  (holds the Web3Forms access key)
+// Access key is injected server-side so it's not exposed in client HTML.
+import FormInput from '../ui/FormInput.astro'
+const WEB3_KEY = import.meta.env.Web3Forms ?? ''
+---
+
+<section class="section pf-sec" id="partner-form">
+  <div class="wrap">
+    <div class="pf-header reveal">
+      <div class="label">INITIATE COLLABORATION</div>
+      <h2>Ready to <em>Work Together</em>?</h2>
+      <p class="body-text body-text--wide">Whether you're a government agency, enterprise partner, investor or channel partner — tell us about your interest and our team will respond within two business days.</p>
+    </div>
+
+    <div class="pf-layout">
+      <!-- Partner type guide -->
+      <div class="pf-types reveal d1">
+        {[
+          { t:'Government Agencies',  d:'Regional industry cooperation, industrial park development, logistics infrastructure and China–SE Asia resource connections.' },
+          { t:'Industry Partners',    d:'Market entry support, supply chain collaboration, halal certification, warehousing and distribution, joint market development.' },
+          { t:'Investors',            d:'Industrial park projects, agri-food development, logistics networks, healthcare. Long-term partnerships preferred.' },
+          { t:'Channel Partners',     d:'Stable product supply, cold chain logistics, halal market access, regional distribution and sales channel connections.' },
+        ].map(p => (
+          <div class="pf-type">
+            <h4>{p.t}</h4>
+            <p>{p.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Web3Forms form -->
+      <form id="partner-form-el" class="pf-form reveal d2" novalidate>
+        <!-- Web3Forms required hidden fields -->
+        <input type="hidden" name="access_key" value={WEB3_KEY} />
+        <input type="hidden" name="subject"    value="New Partnership Enquiry — Fengqi Group" />
+        <input type="hidden" name="from_name"  value="Fengqi Group Website" />
+        <input type="checkbox" name="botcheck" class="pf-bot" tabindex="-1" aria-hidden="true" />
+
+        <div class="pf-row">
+          <FormInput name="name"    label="Full Name"               placeholder="Your name"       required />
+          <FormInput name="company" label="Company / Organisation"  placeholder="Your company"         />
+        </div>
+        <div class="pf-row">
+          <FormInput type="email" name="email" label="Email Address"    placeholder="your@email.com" required />
+          <FormInput type="tel"   name="phone" label="Phone / WhatsApp" placeholder="+60 …"              />
+        </div>
+        <FormInput type="select" name="partner_type" label="Partnership Interest" required options={[
+          'Government Agency — Regional Industry Cooperation',
+          'Enterprise Partner — Market Entry & Supply Chain',
+          'Investor — Industrial Park / Agri-Food / Logistics',
+          'Channel Partner — Product Supply & Distribution',
+          'Media & Other Enquiry',
+        ]} />
+        <FormInput type="select" name="focus_area" label="Focus Area" options={[
+          'Industrial Parks & Cross-Border Platform',
+          'Logistics & Supply Chain',
+          'Agriculture & Ecological Technology',
+          'Healthcare & Wellness',
+          'Digital Systems',
+          'Trade & Distribution',
+          'General Enquiry',
+        ]} />
+        <FormInput type="textarea" name="message" label="Your Message"
+          placeholder="Tell us about your project, needs or questions…" required />
+
+        <!-- Submit button + status -->
+        <div class="pf-submit-row">
+          <button type="submit" class="btn btn--gold pf-btn" id="pf-submit">
+            <span class="pf-btn-text">Send Enquiry →</span>
+            <span class="pf-btn-loading" aria-hidden="true">Sending…</span>
+          </button>
+          <div id="pf-success" class="pf-success" aria-live="polite" hidden>
+            ✓ Thank you — your enquiry has been received. We'll be in touch within two business days.
+          </div>
+          <div id="pf-error" class="pf-error" aria-live="polite" hidden>
+            Something went wrong. Please email us directly at <a href="mailto:partnership@fengqi.com">partnership@fengqi.com</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+// Web3Forms submission
+const form      = document.getElementById('partner-form-el') as HTMLFormElement | null
+const submitBtn = document.getElementById('pf-submit') as HTMLButtonElement | null
+const successEl = document.getElementById('pf-success') as HTMLElement | null
+const errorEl   = document.getElementById('pf-error')   as HTMLElement | null
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+
+  submitBtn?.setAttribute('data-loading', '1')
+  submitBtn!.disabled = true
+
+  try {
+    const data = new FormData(form)
+    const res  = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body:   data,
+    })
+    const json = await res.json() as { success: boolean; message?: string }
+
+    if (json.success) {
+      form.reset()
+      successEl!.hidden = false
+      errorEl!.hidden   = true
+    } else {
+      throw new Error(json.message ?? 'submission failed')
+    }
+  } catch (err) {
+    console.error('Web3Forms error:', err)
+    errorEl!.hidden   = false
+    successEl!.hidden = true
+  } finally {
+    submitBtn?.removeAttribute('data-loading')
+    submitBtn!.disabled = false
+  }
+})
+</script>
+
+<style>
+.pf-sec { background: var(--bg-2); border-top: 1px solid var(--bg-4); }
+.pf-header { margin-bottom: 56px; }
+
+.pf-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+
+/* Partner types */
+.pf-types { display: flex; flex-direction: column; gap: 2px; }
+.pf-type {
+  background: var(--bg); border: 1px solid var(--bg-4);
+  padding: 24px 28px; transition: border-color .25s, box-shadow .25s;
+}
+.pf-type:hover { border-color: var(--gold-border); box-shadow: var(--shadow-sm); }
+.pf-type h4 { color: var(--gold-dk); margin-bottom: 8px; }
+.pf-type p  { font-size: 14px; color: var(--text-3); line-height: 1.75; }
+
+/* Form */
+.pf-form { display: flex; flex-direction: column; gap: 20px; }
+.pf-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.pf-bot  { display: none; }
+
+/* Submit */
+.pf-submit-row { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+.pf-btn { width: 100%; text-align: center; font-size: 12px; padding: 17px; position: relative; }
+.pf-btn-loading { display: none; }
+.pf-btn[data-loading] .pf-btn-text    { display: none; }
+.pf-btn[data-loading] .pf-btn-loading { display: inline; }
+.pf-btn[data-loading] { opacity: .7; cursor: wait; }
+
+.pf-success {
+  background: #EFF8F2; border: 1px solid #2D7A3C;
+  color: #1D5229; padding: 16px 20px; font-size: 15px; line-height: 1.6;
+}
+.pf-error {
+  background: #FDF2F2; border: 1px solid #C53030;
+  color: #742A2A; padding: 16px 20px; font-size: 15px; line-height: 1.6;
+}
+.pf-error a { color: #C53030; text-decoration: underline; }
+
+@media (max-width: 1100px) { .pf-layout { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 700px)  { .pf-row { grid-template-columns: 1fr; } }
+</style>

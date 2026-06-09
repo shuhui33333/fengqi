@@ -1,0 +1,170 @@
+---
+// src/pages/insights/[...slug].astro  (Storyblok)
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import RichText      from '../../components/ui/RichText.astro'
+import { getAllInsights, getInsightBySlug } from '../../lib/storyblok'
+
+export async function getStaticPaths() {
+  const insights = await getAllInsights().catch(() => [])
+  return insights.map(a => ({ params: { slug: a.slug }, props: { slug: a.slug } }))
+}
+
+const { slug }  = Astro.props
+const post = await getInsightBySlug(slug)
+if (!post) return Astro.redirect('/insights')
+
+const { title, date, category, summary, body, image } = post
+const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'
+const imgSrc = image ?? DEFAULT_IMG
+---
+<BaseLayout title={`${title} | Fengqi Group`} description={summary}>
+  <Header active="/insights" />
+  <main>
+
+    <!-- Hero with image -->
+    <section class="id-hero">
+      <div class="id-hero-img">
+        <img src={imgSrc} alt={title} />
+        <div class="id-hero-overlay"></div>
+      </div>
+      <div class="id-hero-content wrap">
+        <a href="/insights" class="id-back">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All Insights
+        </a>
+        <span class="id-cat">{category}</span>
+        <h1 class="id-title">{title}</h1>
+        <p class="id-date">{date.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}</p>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <section class="section id-body-sec">
+      <div class="wrap id-layout">
+
+        <div class="reveal">
+          <p class="id-summary">{summary}</p>
+          <div class="id-divider"></div>
+          <RichText doc={body} />
+        </div>
+
+        <aside class="id-aside reveal d2">
+          <div class="id-cta-box">
+            <p class="id-cta-title">Explore Partnership</p>
+            <p class="id-cta-body">Interested in Fengqi's projects or platform? Our team is ready to connect.</p>
+            <a href="/partnership" class="btn btn--gold" style="display:block;text-align:center;margin-top:18px">Partnership</a>
+            <a href="/contact"     class="btn btn--ghost" style="display:block;text-align:center;margin-top:12px">Contact Us</a>
+          </div>
+          <div class="id-quick">
+            <p class="id-quick-title">QUICK LINKS</p>
+            <nav>
+              <a href="/projects">Flagship Projects</a>
+              <a href="/business">Business Segments</a>
+              <a href="/about">About Fengqi</a>
+              <a href="/insights">All Insights</a>
+            </nav>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+/* ── Hero ── */
+.id-hero {
+  position: relative; height: clamp(360px, 50vw, 560px);
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+.id-hero-img {
+  position: absolute; inset: 0;
+}
+.id-hero-img img { width:100%; height:100%; object-fit:cover; }
+.id-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.3) 60%, rgba(0,0,0,.1) 100%);
+}
+.id-hero-content {
+  position: relative; z-index: 2;
+  padding-bottom: 52px; padding-top: calc(80px + 40px);
+  max-width: 920px !important;
+}
+.id-back {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--FL); font-size: 10px; letter-spacing: 2px;
+  color: rgba(255,255,255,.7); margin-bottom: 20px;
+  text-decoration: none; transition: color .25s;
+}
+.id-back:hover { color: #fff; }
+.id-cat {
+  font-family: var(--FL); font-size: 9px; letter-spacing: 3px;
+  color: rgba(255,255,255,.7); background: rgba(0,0,0,.4);
+  padding: 4px 12px; display: inline-block; margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+.id-title {
+  font-family: var(--FD); font-size: clamp(28px, 4vw, 52px); font-weight: 300;
+  color: #fff; line-height: 1.2; margin-bottom: 16px; max-width: 820px;
+}
+.id-date {
+  font-family: var(--FL); font-size: 10px; letter-spacing: 2px;
+  color: rgba(255,255,255,.6);
+}
+
+/* ── Body ── */
+.id-body-sec { background: var(--bg); }
+.id-layout { display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: start; }
+
+.id-summary {
+  font-size: 19px; font-style: italic; color: var(--text-2);
+  line-height: 1.75; margin-bottom: 28px;
+}
+.id-divider { height: 2px; background: var(--gold); width: 52px; margin-bottom: 32px; }
+
+/* Prose */
+:global(.prose) { /* scoped via set:html */ }
+:global(.prose h2) { font-family:var(--FD); font-size:var(--h2); font-weight:300; color:var(--text); margin:44px 0 16px; line-height:1.2; }
+:global(.prose h3) { font-family:var(--FD); font-size:var(--h3); font-weight:400; color:var(--text); margin:32px 0 12px; }
+:global(.prose h4) { font-family:var(--FL); font-size:11px; letter-spacing:3px; color:var(--gold-dk); margin:24px 0 10px; }
+:global(.prose p)  { font-size:17px; line-height:2; color:var(--text-2); margin-bottom:22px; }
+:global(.prose ul), :global(.prose ol) { padding-left:24px; margin-bottom:22px; }
+:global(.prose li) { font-size:16px; line-height:2; color:var(--text-2); margin-bottom:7px; }
+:global(.prose strong) { color:var(--text); font-weight:600; }
+:global(.prose em)     { color:var(--text-2); font-style:italic; }
+:global(.prose a)      { color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+:global(.prose a:hover){ color:var(--gold-dk); }
+:global(.prose blockquote) {
+  border-left: 3px solid var(--gold); padding:0 0 0 24px; margin:28px 0;
+  font-style:italic; color:var(--text-3); font-size:18px;
+}
+:global(.prose hr)   { border:none; border-top:1px solid var(--bg-4); margin:36px 0; }
+:global(.prose code) { background:var(--bg-3); padding:2px 7px; font-size:14px; border-radius:3px; color:var(--text-2); }
+:global(.prose img)  { max-width:100%; margin:24px 0; border:1px solid var(--bg-4); }
+
+/* Aside */
+.id-aside { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 20px; }
+.id-cta-box {
+  background: var(--bg-2); border: 1px solid var(--bg-4);
+  padding: 28px; border-top: 3px solid var(--gold);
+}
+.id-cta-title { font-family:var(--FD); font-size:22px; font-weight:400; color:var(--text); margin-bottom:10px; }
+.id-cta-body  { font-size:14px; color:var(--text-3); line-height:1.75; }
+.id-quick { background: var(--bg-2); border: 1px solid var(--bg-4); padding: 24px; }
+.id-quick-title { font-family:var(--FL); font-size:10px; letter-spacing:4px; color:var(--gold-dk); margin-bottom:14px; }
+.id-quick nav { display:flex; flex-direction:column; }
+.id-quick nav a {
+  font-size:14px; color:var(--text-2); padding:9px 0;
+  border-bottom:1px solid var(--bg-3); transition:color .25s;
+}
+.id-quick nav a:hover { color:var(--gold); }
+
+@media (max-width:1100px) { .id-layout { grid-template-columns:1fr; } .id-aside { position:static; } }
+</style>

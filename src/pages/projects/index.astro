@@ -1,0 +1,41 @@
+---
+// src/pages/projects/index.astro  →  /projects
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import ProjectCard   from '../../components/shared/ProjectCard.astro'
+import { getCollection } from 'astro:content'
+
+const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order)
+---
+<BaseLayout title="旗舰项目 / Flagship Projects | Fengqi Group" description="Key projects in China, Malaysia and Indonesia — practical platforms for enterprise market entry, certification, logistics and distribution.">
+  <Header active="/projects" />
+  <main>
+    <section class="section pj-hero sec-dark">
+      <div class="geo-bg pj-geo"></div>
+      <div class="wrap">
+        <div class="label">旗舰项目 · FLAGSHIP PROJECTS</div>
+        <h1 class="heading">Where Strategy Meets <em>Execution</em>.</h1>
+        <p class="body-text body-text--wide">Fengqi Group drives key projects in China, Malaysia and Indonesia — practical platforms helping enterprises land, certify, distribute and sell across ASEAN and global markets.</p>
+      </div>
+    </section>
+    <section class="section" id="all-projects">
+      <div class="wrap">
+        <div class="pj-grid cgrid">
+          {projects.map(p=>(
+            <ProjectCard title={p.data.title} subtitle={p.data.subtitle} location={p.data.location} status={p.data.status} highlights={p.data.highlights} category={p.data.category} href={`/projects/${p.slug}`} />
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pj-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.pj-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.pj-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1100px){.pj-grid{grid-template-columns:1fr}}
+</style>

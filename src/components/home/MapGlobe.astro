@@ -1,0 +1,97 @@
+---
+// src/components/home/MapGlobe.astro — three region cards, white theme
+---
+<section class="section mc-sec" id="global-footprint">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="label">GLOBAL FOOTPRINT</div>
+      <h2>Three Strategic Regions.<br />One <em>Connected</em> Platform.</h2>
+      <p class="body-text">
+        Fengqi uses China as its industrial base, Malaysia as its Southeast Asian core hub, and is progressively expanding in Indonesia — building a cross-border network covering production, logistics, trade and industrial synergy.
+      </p>
+    </div>
+
+    <div class="mc-grid">
+      {[
+        { flag:'🇨🇳', region:'CHINA', role:'Industrial Base & Technology', hl:false,
+          items:['Agricultural ecological technology & digital systems','Zengcheng 530-acre eco-agriculture space','Broiler farming, functional food & health products','Supply chain integration & cross-border export'],
+          stat:'Production & technology hub',
+          img:'https://images.unsplash.com/photo-1508189860359-777d945909ef?w=800&q=80' },
+        { flag:'🇲🇾', region:'MALAYSIA', role:'ASEAN Hub & Halal Gateway', hl:true,
+          items:['800-acre Kuantan Digital Halal Industrial Park','JAKIM certification — recognised in 80+ countries','Kuantan Port & East Coast Rail Link access','RCEP & Malaysia-EU FTA trade advantages'],
+          stat:'Global halal gateway',
+          img:'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80' },
+        { flag:'🇮🇩', region:'INDONESIA', role:'Regional Logistics Network', hl:false,
+          items:['Fengjie Logistics: 4 depots across Java Island','Covers ~80% of Java logistics demand','Serves ~145M people in core economic areas','Cold chain, urban distribution & trunk transport'],
+          stat:'145M people reached',
+          img:'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&q=80' },
+      ].map((n,i) => (
+        <div class={`mc-card reveal d${i+1}${n.hl?' mc-card--hl':''}`}>
+          <div class="mc-img">
+            <img src={n.img} alt={n.region} loading="lazy" />
+            <div class="mc-img-badge">{n.flag} {n.region}</div>
+          </div>
+          <div class="mc-body">
+            <h3 class="mc-role">{n.role}</h3>
+            <ul class="mc-items">
+              {n.items.map(item => <li>{item}</li>)}
+            </ul>
+            <p class="mc-stat">{n.stat}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Corridors -->
+    <div class="mc-corridors reveal d2">
+      {[
+        { lbl:'CORRIDOR I',   text:'China production → Malaysia JAKIM certification → ASEAN & Middle East markets' },
+        { lbl:'CORRIDOR II',  text:'China supply chain → Fengjie Logistics Indonesia → Java Island distribution'   },
+        { lbl:'CORRIDOR III', text:'Cross-border trade → Malaysia hub → Africa & global Muslim markets'            },
+      ].map(c => (
+        <div class="mc-cor">
+          <span class="mc-cor-lbl">{c.lbl}</span>
+          <p class="mc-cor-txt">{c.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.mc-sec { background: var(--bg-2); border-top: 1px solid var(--bg-4); border-bottom: 1px solid var(--bg-4); }
+.mc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:24px; }
+
+.mc-card {
+  background: var(--bg); border: 1px solid var(--bg-4);
+  overflow: hidden;
+  transition: box-shadow .28s, border-color .28s, transform .28s;
+}
+.mc-card:hover { box-shadow: var(--shadow); border-color: var(--gold-border); transform: translateY(-3px); }
+.mc-card--hl   { border-top: 3px solid var(--gold); }
+
+.mc-img { width:100%; aspect-ratio:16/9; overflow:hidden; position:relative; background:var(--bg-3); }
+.mc-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+.mc-card:hover .mc-img img { transform:scale(1.05); }
+.mc-img-badge {
+  position:absolute; bottom:0; left:0; right:0; padding:10px 16px;
+  background:linear-gradient(transparent,rgba(0,0,0,.55));
+  font-family:var(--FL); font-size:10px; letter-spacing:3px; color:#fff;
+}
+
+.mc-body { padding:24px 26px; }
+.mc-role { font-family:var(--FD); font-size:18px; font-weight:400; color:var(--text); margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--bg-4); line-height:1.3; }
+.mc-card:hover .mc-role { color:var(--gold); }
+.mc-items { list-style:none; margin-bottom:16px; }
+.mc-items li { font-size:14px; color:var(--text-3); padding:6px 0 6px 14px; position:relative; border-bottom:1px solid var(--bg-3); line-height:1.5; }
+.mc-items li::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:5px; height:1.5px; background:var(--gold); }
+.mc-stat { font-family:var(--FD); font-size:14px; font-style:italic; color:var(--gold-dk); }
+
+/* Corridors */
+.mc-corridors { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--bg-4); }
+.mc-cor { background:var(--bg); padding:22px 24px; }
+.mc-cor-lbl { font-family:var(--FL); font-size:9px; letter-spacing:3px; color:var(--gold-dk); display:block; margin-bottom:8px; }
+.mc-cor-txt { font-size:14px; color:var(--text-3); line-height:1.7; }
+
+@media (max-width:1100px) { .mc-grid,.mc-corridors { grid-template-columns:1fr; } }
+</style>

@@ -1,0 +1,160 @@
+---
+// src/components/Header.astro
+// White header on white pages — becomes solid white + shadow on scroll.
+interface Props { active?: string }
+const { active = '' } = Astro.props
+const NAV = [
+  { label:'About',       href:'/about'       },
+  { label:'Business',    href:'/business'    },
+  { label:'Projects',    href:'/projects'    },
+  { label:'Insights',    href:'/insights'    },
+  { label:'Partnership', href:'/partnership' },
+]
+---
+
+<header id="hdr">
+  <a href="/" class="logo" aria-label="Fengqi Group">
+    <img src="/images/logo/logo-circle.png" alt="Fengqi" class="logo-img" />
+    <div class="logo-text">
+      <span class="logo-name">FENGQI</span>
+      <span class="logo-sub">GROUP · 丰麒集团</span>
+    </div>
+  </a>
+
+  <nav aria-label="Main navigation">
+    <ul class="nav-list">
+      {NAV.map(({label,href}) => (
+        <li>
+          <a href={href} class={`nav-a${active===href?' is-on':''}`}>{label}</a>
+        </li>
+      ))}
+      <li>
+        <a href="/contact" class="nav-a nav-cta">Contact</a>
+      </li>
+    </ul>
+  </nav>
+
+  <button id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div id="nav-drawer" aria-hidden="true">
+  <ul>
+    {NAV.map(({label,href}) => (
+      <li><a href={href}>{label}</a></li>
+    ))}
+    <li><a href="/contact" class="drawer-cta">Contact Us</a></li>
+  </ul>
+</div>
+
+<style>
+/* ── Shell ── */
+#hdr {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 var(--ph);
+  height: 80px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0);
+  transition: background .35s, box-shadow .35s, height .35s;
+}
+#hdr.solid {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--gold-border), var(--shadow-sm);
+  height: 66px;
+}
+
+/* ── Logo ── */
+.logo { display:flex; align-items:center; gap:16px; text-decoration:none; flex-shrink:0; }
+.logo-img {
+  width: 54px; height: 54px;
+  object-fit: contain;
+  transition: transform .3s;
+}
+.logo:hover .logo-img { transform: scale(1.05); }
+.logo-text { display:flex; flex-direction:column; line-height:1; }
+.logo-name {
+  font-family: var(--FL); font-size: 16px; font-weight: 600;
+  color: var(--gold); letter-spacing: 4px;
+}
+.logo-sub {
+  font-family: var(--FL); font-size: 8.5px;
+  color: var(--gold-dk); letter-spacing: 3px; margin-top: 5px;
+}
+
+/* ── Nav links ── */
+.nav-list { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-a {
+  font-family: var(--FL); font-size: 11px; font-weight: 400;
+  color: var(--text-2); text-decoration: none; letter-spacing: 2.5px;
+  position: relative; transition: color .25s;
+  padding-bottom: 3px;
+}
+.nav-a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 1.5px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+}
+.nav-a:hover, .nav-a.is-on { color: var(--gold); }
+.nav-a:hover::after, .nav-a.is-on::after { transform: scaleX(1); }
+
+/* Contact CTA */
+.nav-cta {
+  border: 1.5px solid var(--gold);
+  padding: 8px 20px;
+  color: var(--gold) !important;
+  transition: background .25s, color .25s !important;
+  border-radius: 1px;
+}
+.nav-cta:hover { background: var(--gold); color: #fff !important; }
+.nav-cta::after { display: none !important; }
+
+/* ── Hamburger ── */
+#nav-burger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+#nav-burger span {
+  display: block; width: 26px; height: 1.5px;
+  background: var(--gold-dk); transition: all .3s;
+}
+
+/* ── Mobile drawer ── */
+#nav-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 300px;
+  background: var(--bg); border-left: 1px solid var(--gold-border);
+  z-index: 999; padding: 90px 36px 40px;
+  transform: translateX(100%); transition: transform .4s ease;
+  box-shadow: -8px 0 32px rgba(0,0,0,.08);
+}
+#nav-drawer.open { transform: translateX(0); }
+#nav-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+#nav-drawer a {
+  font-family: var(--FL); font-size: 12px; letter-spacing: 3px;
+  color: var(--text-2); text-decoration: none; padding: 12px 0;
+  display: block; border-bottom: 1px solid var(--bg-3);
+  transition: color .25s;
+}
+#nav-drawer a:hover { color: var(--gold); }
+.drawer-cta {
+  margin-top: 20px; color: var(--gold) !important;
+  border: 1.5px solid var(--gold) !important;
+  padding: 12px 20px !important;
+  text-align: center; border-radius: 1px;
+  border-bottom: 1.5px solid var(--gold) !important;
+}
+.drawer-cta:hover { background: var(--gold); color: #fff !important; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  nav { display: none; }
+  #nav-burger { display: flex; }
+  #hdr { height: 68px; }
+}
+@media (max-width: 480px) {
+  .logo-img { width: 44px; height: 44px; }
+  .logo-name { font-size: 14px; }
+}
+</style>

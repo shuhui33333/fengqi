@@ -1,0 +1,230 @@
+---
+// src/pages/index.astro  →  /
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+import Hero          from '../components/home/Hero.astro'
+import FeatureSlider from '../components/home/FeatureSlider.astro'
+import MapGlobe      from '../components/home/MapGlobe.astro'
+import BusinessCard  from '../components/shared/BusinessCard.astro'
+import ProjectCard   from '../components/shared/ProjectCard.astro'
+import { getCollection } from 'astro:content'
+import { getAllInsights } from '../lib/storyblok'
+
+const projects = (await getCollection('projects')).filter(p=>p.data.featured).sort((a,b)=>a.data.order-b.data.order)
+const ctfInsights = await getAllInsights().catch(() => [])
+const latest = ctfInsights.slice(0, 3)
+
+const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+---
+<BaseLayout title="Fengqi Group | Cross-Border Industrial Platform">
+  <Header active="/" />
+  <main>
+
+    <Hero />
+    <FeatureSlider />
+
+    <!-- ── Business Segments ── -->
+    <section class="section biz-sec" id="business">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">CORE BUSINESS SEGMENTS</div>
+          <h2>Six Integrated <em>Industry</em> Pillars.</h2>
+          <p class="body-text">From production and logistics to certification, trade and digital management — Fengqi's six segments form a complete industrial system connecting China and Southeast Asian markets.</p>
+        </div>
+        <div class="biz-grid">
+          <BusinessCard num="01" en="INDUSTRIAL PARKS & CROSS-BORDER PLATFORM" name="Industrial Parks"
+            href="/business#parks" tags={['Halal Park','JAKIM Cert','Cross-Border']}
+            body="The 800-acre Kuantan Digital Halal Park connects China and global halal markets. One-stop: establishment, certification, logistics and market channels." />
+          <BusinessCard num="02" en="LOGISTICS & SUPPLY CHAIN" name="Logistics & Supply Chain"
+            href="/business#logistics" tags={['Cold Chain','Warehousing','SE Asia']}
+            body="Fengjie Logistics in Indonesia and Malaysia — integrated warehousing, transport, cold chain and cross-border supply chain for faster market entry." />
+          <BusinessCard num="03" en="HEALTHCARE & WELLNESS" name="Healthcare & Wellness"
+            href="/business#healthcare" tags={['Functional Food','Dialysis','ESG']}
+            body="Functional agriculture, health foods, wellness experiences and hemodialysis centres in Malaysia — extending agriculture into healthy living." />
+          <BusinessCard num="04" en="TRADE & DISTRIBUTION" name="Trade & Distribution"
+            href="/business#trade" tags={['Halal Import','Export','Channels']}
+            body="Global sourcing, cross-border circulation and regional distribution — efficient access to ASEAN and international markets for agricultural products." />
+          <BusinessCard num="05" en="AGRICULTURE & ECOLOGICAL TECHNOLOGY" name="Agriculture & Eco-Tech"
+            href="/business#agriculture" tags={['Broiler Farming','EnzyLoop','Sustainable']}
+            body="Modern broiler farming, eco-circular agriculture and the EnzyLoop system — building a healthier, safer and more sustainable agricultural foundation." />
+          <BusinessCard num="06" en="DIGITAL SYSTEMS" name="Digital Systems"
+            href="/business#digital" tags={['AI','IoT','Blockchain']}
+            body="AI, IoT, blockchain and integrated digital platforms across agriculture, logistics and supply chain — improving operational efficiency and coordination." />
+        </div>
+        <div class="reveal d2" style="margin-top:36px">
+          <a href="/business" class="btn btn--ghost">Explore All Segments →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Flagship Projects ── -->
+    <section class="section proj-sec" id="projects">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">FLAGSHIP PROJECTS</div>
+          <h2>Where Strategy Meets <em>Execution</em>.</h2>
+          <p class="body-text">Key projects in China, Malaysia and Indonesia — practical platforms for enterprise market entry, halal certification, logistics and distribution.</p>
+        </div>
+        <div class="proj-grid">
+          {projects.map(p => (
+            <ProjectCard title={p.data.title} subtitle={p.data.subtitle} location={p.data.location}
+              status={p.data.status} highlights={p.data.highlights} category={p.data.category}
+              href={`/projects/${p.slug}`} />
+          ))}
+        </div>
+        <div class="reveal d2" style="margin-top:36px">
+          <a href="/projects" class="btn btn--ghost">All Projects →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 280 Acres Agricultural Land ── -->
+    <section class="section sec-tint ag-sec" id="agricultural-land">
+      <div class="wrap">
+        <div class="ag-layout">
+          <div class="ag-img reveal">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" alt="280 Acres Agricultural Land" loading="lazy" />
+          </div>
+          <div class="ag-text reveal d2">
+            <div class="label">AGRICULTURAL LAND — MALAYSIA</div>
+            <h2><em>280 Acres</em> of Agricultural Land.</h2>
+            <p class="body-text">
+              The total project area spans approximately 280 acres, of which 56 acres are designated for commercial use.
+              Of this, 40 acres are planned for the development of four modern broiler chicken houses and one breeding house,
+              with a projected annual output capacity of 1.824 million birds.
+            </p>
+            <p class="body-text" style="margin-bottom:0">
+              The project establishes an integrated system from breeding stock, hatching and rearing through to food processing
+              and cold chain distribution — combining modern closed-loop farming with intelligent management systems to achieve
+              stable, efficient and scalable production.
+            </p>
+            <div class="ag-stats">
+              {[
+                {n:'280', l:'Total Acres'},
+                {n:'56',  l:'Commercial Use'},
+                {n:'40',  l:'Broiler Farming'},
+                {n:'1.82M',l:'Birds / Year'},
+              ].map(s => (
+                <div class="ag-stat">
+                  <div class="ag-stat-n">{s.n}</div>
+                  <div class="ag-stat-l">{s.l}</div>
+                </div>
+              ))}
+            </div>
+            <a href="/projects/broiler-chicken-malaysia" class="btn btn--ghost" style="margin-top:8px">View Full Project →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <MapGlobe />
+
+    <!-- ── Latest Insights ── -->
+    {latest.length > 0 && (
+      <section class="section ins-sec" id="insights">
+        <div class="wrap">
+          <div class="reveal">
+            <div class="label">LATEST INSIGHTS</div>
+            <h2>News &amp; <em>Updates</em>.</h2>
+          </div>
+          <div class="ins-grid">
+            {latest.map((a, i) => {
+              const imgSrc = a.image ?? DEFAULT_NEWS_IMG
+              return (
+                <a href={`/insights/${a.slug}`} class={`ins-card reveal d${i+1}`}>
+                  <div class="ins-card-img">
+                    <img src={imgSrc} alt={a.title} loading="lazy" />
+                    <span class="ins-card-cat">{a.category}</span>
+                  </div>
+                  <div class="ins-card-body">
+                    <p class="ins-card-date">{a.date.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}</p>
+                    <h3 class="ins-card-title">{a.title}</h3>
+                    <p class="ins-card-sum">{a.summary}</p>
+                    <span class="ins-card-arr">Read more →</span>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+          <div class="reveal d2" style="margin-top:36px">
+            <a href="/insights" class="btn btn--ghost">All Insights →</a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ── CTA ── -->
+    <section class="section sec-dark cta-sec" id="cta">
+      <div class="geo-bg geo-bg--fade" style="opacity:.5"></div>
+      <div class="wrap cta-wrap">
+        <div class="label label--dark reveal">OPEN FOR PARTNERSHIP</div>
+        <h2 class="reveal d1">Build Together Across <em>China &amp; Southeast Asia</em>.</h2>
+        <p class="body-text body-text--light reveal d2">Fengqi welcomes government agencies, enterprise partners, investors and channel distributors to jointly develop regional industry, supply chains and market opportunities.</p>
+        <div class="cta-acts reveal d3">
+          <a href="/partnership" class="btn btn--gold">Explore Partnership</a>
+          <a href="/contact"     class="btn btn--ghost-white">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+/* Business */
+.biz-sec { background:var(--bg); border-top:1px solid var(--bg-4); }
+.biz-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+
+/* Projects */
+.proj-sec { background:var(--bg-2); border-top:1px solid var(--bg-4); }
+.proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+
+/* 280 Acres */
+.ag-sec { }
+.ag-layout { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+.ag-img { border-radius:2px; overflow:hidden; box-shadow:var(--shadow-lg); aspect-ratio:4/3; }
+.ag-img img { width:100%; height:100%; object-fit:cover; }
+.ag-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--bg-4); margin:32px 0 24px; }
+.ag-stat { background:var(--bg); padding:20px 16px; text-align:center; }
+.ag-stat-n { font-family:var(--FD); font-size:32px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:5px; }
+.ag-stat-l { font-family:var(--FL); font-size:9px; letter-spacing:2px; color:var(--text-3); }
+
+/* Insights */
+.ins-sec { background:var(--bg); border-top:1px solid var(--bg-4); }
+.ins-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.ins-card { background:var(--bg); border:1px solid var(--bg-4); text-decoration:none; color:inherit; display:flex; flex-direction:column; overflow:hidden; transition:box-shadow .28s,border-color .28s,transform .28s; }
+.ins-card:hover { box-shadow:var(--shadow); border-color:var(--gold-border); transform:translateY(-3px); }
+.ins-card-img { width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--bg-3); position:relative; flex-shrink:0; }
+.ins-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.ins-card:hover .ins-card-img img { transform:scale(1.05); }
+.ins-card-cat { position:absolute; top:12px; left:12px; font-family:var(--FL); font-size:9px; letter-spacing:2.5px; background:rgba(0,0,0,.55); color:#fff; padding:4px 10px; backdrop-filter:blur(4px); }
+.ins-card-body { padding:22px 22px 20px; display:flex; flex-direction:column; flex:1; }
+.ins-card-date { font-family:var(--FL); font-size:9px; letter-spacing:2px; color:var(--text-muted); margin-bottom:10px; }
+.ins-card-title { font-family:var(--FD); font-size:20px; font-weight:400; color:var(--text); margin-bottom:10px; line-height:1.3; }
+.ins-card:hover .ins-card-title { color:var(--gold); }
+.ins-card-sum { font-size:14px; color:var(--text-3); line-height:1.75; flex:1; margin-bottom:14px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.ins-card-arr { font-family:var(--FL); font-size:10px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-6px); transition:opacity .3s,transform .3s; }
+.ins-card:hover .ins-card-arr { opacity:1; transform:translateX(0); }
+
+/* CTA */
+.cta-sec { position:relative; overflow:hidden; text-align:center; }
+.cta-wrap { position:relative; z-index:2; }
+.cta-sec h2 { color:#fff; margin-bottom:20px; }
+.cta-sec h2 em { color:var(--gold-pale); }
+.cta-acts { display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+
+@media(max-width:1100px) {
+  .biz-grid,.ins-grid { grid-template-columns:1fr 1fr; }
+  .proj-grid { grid-template-columns:1fr; }
+  .ag-layout { grid-template-columns:1fr; gap:40px; }
+}
+@media(max-width:700px) {
+  .biz-grid,.ins-grid { grid-template-columns:1fr; }
+  .cta-acts { flex-direction:column; }
+  .ag-stats { grid-template-columns:repeat(2,1fr); }
+}
+</style>

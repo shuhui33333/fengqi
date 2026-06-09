@@ -1,0 +1,108 @@
+---
+// src/pages/partnership.astro  →  /partnership
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+import PartnerForm   from '../components/partnership/PartnerForm.astro'
+---
+<BaseLayout title="合作伙伴关系 / Partnership | Fengqi Group" description="Partner with Fengqi to access Southeast Asian markets, halal certification channels, logistics networks and industrial park resources.">
+  <Header active="/partnership" />
+  <main>
+
+    <section class="section pn-hero sec-dark">
+      <div class="geo-bg pn-geo"></div>
+      <div class="wrap">
+        <div class="pn-hero-c">
+          <div class="label">合作伙伴关系 · PARTNERSHIP</div>
+          <h1 class="heading">Build Together Across <em>China &amp; Southeast Asia</em>.</h1>
+          <p class="body-text body-text--wide">Fengqi aims to be a long-term cooperation platform connecting Chinese and Southeast Asian markets. For us, partnership means genuinely solving your market entry, supply chain, logistics, regional resource connection and long-term operations challenges.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four partner types -->
+    <section class="section pn-types-sec" id="partner-types">
+      <div class="geo-bg" style="opacity:.3"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">WHO WE WORK WITH</div>
+          <h2 class="heading">Four <em>Partnership</em> Models.</h2>
+          <p class="body-text">Whether you're a government agency, enterprise, investor or channel partner — Fengqi builds long-term, stable and practically effective cooperation.</p>
+        </div>
+        <div class="pn-grid cgrid">
+          {[
+            {idx:'01',t:'Government Agencies',    sub:'Regional Industry & Project Cooperation',
+             b:'Beyond attracting investment — Fengqi focuses on long-term project viability, employment creation and building complete industrial and supply chain foundations. We collaborate with government agencies, local development organisations and industrial parks to jointly promote regional industrial development.',
+             li:['Industrial park development & planning','Agricultural and food industry projects','Logistics, warehousing and infrastructure','China–Southeast Asia resource and market connections']},
+            {idx:'02',t:'Industry Partners',       sub:'Business & Industry Collaboration',
+             b:'Companies entering Southeast Asia find the real challenge is warehousing, transport, supply chain, local partnerships and market operations — not sales. Fengqi helps enterprises enter regional markets smoothly via its network across China, Malaysia and Indonesia.',
+             li:['Park entry and establishment support','Supply chain setup and management','Halal certification and compliance assistance','Joint market development and distribution channels']},
+            {idx:'03',t:'Investors',              sub:'Long-Term Industry Cooperation',
+             b:'Fengqi focuses on projects that can operate sustainably over the long term, with stable supply chains and genuine industrial development capability. The group prioritises long-term operation and sustained growth over short-term transactions.',
+             li:['Industrial park projects (Kuantan & future)','Agricultural and food industry development','Logistics and warehousing networks','Healthcare and wellness sectors']},
+            {idx:'04',t:'Channel Partners',       sub:'Market & Channel Cooperation',
+             b:'As the Southeast Asian market grows, demand for stable supply, logistics efficiency and local market cooperation increases. Fengqi helps channel partners build stable product supply and reduces pressure on logistics, inventory and distribution.',
+             li:['Product supply and inventory management','Regional cold chain and distribution support','Halal market resource connections','Local market channels and sales networks']},
+          ].map((p,i)=>(
+            <div class={`pn-card ctop cbar reveal d${i+1}`}>
+              <div class="cidx">{p.idx}</div>
+              <h3 class="pn-card-t">{p.t}</h3>
+              <p class="pn-card-sub">{p.sub}</p>
+              <p class="pn-card-b">{p.b}</p>
+              <ul class="pn-card-li">{p.li.map(l=><li>{l}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Fengqi -->
+    <section class="section pn-why" id="why-fengqi">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">WHY PARTNER WITH FENGQI</div>
+          <h2 class="heading">More Than a Service Provider —<br />A <em>Long-Term</em> Platform Partner.</h2>
+        </div>
+        <div class="pn-why-grid cgrid">
+          {[
+            {t:'Regional Presence & Local Knowledge', b:'Long-term operation in Malaysia and Indonesia gives Fengqi deep familiarity with local business environments, government policies, regulatory frameworks and market dynamics — reducing your entry risk and time.'},
+            {t:'Integrated Cross-Industry System',     b:'From industrial parks and certification to logistics, supply chain and digital management — a connected system rather than isolated services, reducing fragmentation in cross-border operations.'},
+            {t:'Halal Market Connectivity',            b:"Fengqi's established relationships with Malaysia's JAKIM certification system and regional halal networks provide partners with direct access to one of the world's fastest-growing consumer segments."},
+            {t:'Long-Term Operational Commitment',     b:'Fengqi emphasises stability, transparency and long-term partnerships — focused on sustained market presence and operational success, not just project completion.'},
+          ].map((w,i)=>(
+            <div class={`pn-w ctop cbar reveal d${i+1}`}><h3 class="pn-w-t">{w.t}</h3><p class="pn-w-b">{w.b}</p></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <PartnerForm />
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pn-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.pn-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.pn-hero-c{max-width:760px}
+.pn-types-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.pn-grid{grid-template-columns:repeat(4,1fr)}
+.pn-card{background:var(--bg-2);padding:44px 28px}
+.pn-card:hover{background:var(--bg-3)}
+.pn-card-t{font-family:var(--FD);font-size:22px;font-weight:400;color:var(--gold);margin-bottom:6px;line-height:1.2}
+.pn-card-sub{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--gold-border)}
+.pn-card-b{font-size:17px;line-height:2;color:var(--text-3);margin-bottom:20px}
+.pn-card-li{list-style:none}
+.pn-card-li li{font-size:18px;color:var(--text-3);padding-left:12px;position:relative;margin-bottom:8px;line-height:1.7}
+.pn-card-li li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:1px;background:var(--gold-dk)}
+.pn-why{background:var(--black)}
+.pn-why-grid{grid-template-columns:repeat(4,1fr)}
+.pn-w{background:var(--bg-2);padding:40px 28px}
+.pn-w:hover{background:var(--bg-3)}
+.pn-w-t{font-family:var(--FD);font-size:19px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
+.pn-w-b{font-size:17px;line-height:2;color:var(--text-3)}
+@media(max-width:1100px){.pn-grid,.pn-why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.pn-grid,.pn-why-grid{grid-template-columns:1fr}}
+</style>

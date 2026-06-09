@@ -1,0 +1,94 @@
+---
+// src/pages/projects/[...slug].astro
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import { getCollection, render } from 'astro:content'
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects')
+  return projects.map(p=>({params:{slug:p.slug},props:{project:p}}))
+}
+const {project} = Astro.props
+const {Content}  = await render(project)
+const {title,subtitle,location,category,status,highlights} = project.data
+const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rgba(201,168,76,.6)',Planned:'rgba(201,168,76,.3)'}
+---
+<BaseLayout title={`${title} | Fengqi Group`} description={subtitle}>
+  <Header active="/projects" />
+  <main>
+    <section class="section pd-hero sec-dark">
+      <div class="geo-bg pd-geo"></div>
+      <div class="wrap">
+        <a href="/projects" class="pd-back">← All Projects</a>
+        <div class="pd-hdr">
+          <div>
+            <span class="pd-cat">{category}</span>
+            <h1 class="pd-title">{title}</h1>
+            <p class="pd-sub">{subtitle}</p>
+            <p class="pd-loc">📍 {location}</p>
+          </div>
+          <div class="pd-status">
+            <p class="pd-st-lbl">Project Status</p>
+            <p class="pd-st-val" style={`color:${sc[status]??'var(--gold)'}`}>⬤ {status}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section pd-body">
+      <div class="wrap pd-layout">
+        <div class="pd-prose prose reveal"><Content /></div>
+        <aside class="pd-aside reveal d2">
+          <div class="pd-hl">
+            <p class="pd-hl-t">Key Highlights</p>
+            <ul class="pd-hl-list">{highlights.map(h=><li>{h}</li>)}</ul>
+          </div>
+          <div class="pd-cta-box">
+            <p class="pd-cta-t">Interested in This Project?</p>
+            <p class="pd-cta-b">Contact our team to explore partnership and investment opportunities.</p>
+            <a href="/partnership" class="btn btn--gold" style="display:block;text-align:center;margin-top:16px">Explore Partnership</a>
+            <a href="/contact"     class="btn btn--ghost" style="display:block;text-align:center;margin-top:12px">Contact Us</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pd-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg);position:relative;overflow:hidden}
+.pd-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.pd-back{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);text-decoration:none;display:block;margin-bottom:32px;transition:color .3s}
+.pd-back:hover{color:var(--gold)}
+.pd-hdr{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+.pd-cat{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);border:1px solid var(--bg-4);padding:4px 12px;display:inline-block;margin-bottom:16px}
+.pd-title{font-family:var(--FD);font-size:clamp(28px,4vw,52px);font-weight:300;color:var(--text);margin-bottom:12px;line-height:1.2}
+.pd-sub{font-size:18px;color:var(--text-3);margin-bottom:12px;font-style:italic}
+.pd-loc{font-size:18px;color:var(--gold-dk)}
+.pd-status{background:var(--bg-3);border:1px solid var(--bg-4);padding:24px 28px;white-space:nowrap;text-align:right}
+.pd-st-lbl{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
+.pd-st-val{font-family:var(--FD);font-size:18px}
+.pd-body{background:var(--black)}
+.pd-layout{display:grid;grid-template-columns:1fr 320px;gap:60px;align-items:start}
+.prose h2{font-family:var(--FD);font-size:clamp(22px,2.5vw,32px);font-weight:300;color:var(--text);margin:40px 0 16px;line-height:1.2}
+.prose h3{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 12px}
+.prose p{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:20px}
+.prose ul,.prose ol{padding-left:20px;margin-bottom:20px}
+.prose li{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:6px}
+.prose strong{color:var(--text);font-weight:500}
+.prose table{width:100%;border-collapse:collapse;margin:24px 0}
+.prose th{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold);border-bottom:1px solid var(--gold-border);padding:10px 14px;text-align:left}
+.prose td{font-size:17px;color:var(--text-3);border-bottom:1px solid rgba(201,168,76,.08);padding:10px 14px}
+.pd-hl{background:var(--bg-2);border:1px solid var(--bg-4);padding:28px;margin-bottom:20px;position:relative}
+.pd-hl::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),transparent)}
+.pd-hl-t{font-family:var(--FL);font-size:17px;letter-spacing:4px;color:var(--gold);margin-bottom:16px}
+.pd-hl-list{list-style:none}
+.pd-hl-list li{font-size:17px;color:var(--text-3);padding-left:14px;position:relative;margin-bottom:9px;line-height:1.6}
+.pd-hl-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:1px;background:var(--gold)}
+.pd-cta-box{background:var(--bg-3);border:1px solid var(--bg-4);padding:28px}
+.pd-cta-t{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--gold);margin-bottom:10px}
+.pd-cta-b{font-size:17px;color:var(--text-3);line-height:1.8}
+@media(max-width:1100px){.pd-hdr,.pd-layout{grid-template-columns:1fr}.pd-status{text-align:left}}
+</style>
