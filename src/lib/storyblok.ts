@@ -23,6 +23,9 @@
 const TOKEN  = import.meta.env.storyblock as string   // Cloudflare var name: storyblock
 const BASE   = 'https://api.storyblok.com/v2/cdn'
 const CV     = Date.now()   // cache busting
+const url = `${BASE}/stories/insights?token=${TOKEN}&version=published&cv=${CV}`;
+const response = await fetch(url);
+
 
 export interface InsightEntry {
   slug:     string
