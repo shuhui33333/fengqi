@@ -26,19 +26,21 @@
 
     <!-- Stat cards -->
     <div class="hero-right" aria-hidden="true">
-      <div class="hero-cards">
-        <div class="hc hc-1">
-          <div class="hc-num">800<sup>ac</sup></div>
-          <div class="hc-lbl">KUANTAN HALAL PARK</div>
-        </div>
-        <div class="hc hc-2">
-          <div class="hc-num">145M</div>
-          <div class="hc-lbl">JAVA LOGISTICS REACH</div>
-        </div>
-        <div class="hc hc-3">
-          <div class="hc-num">2B<sup>+</sup></div>
-          <div class="hc-lbl">GLOBAL MUSLIM CONSUMERS</div>
-        </div>
+      <div class="hero-biz-list">
+        {[
+          { num:'01', name:'Industrial Parks',      href:'/business#parks'       },
+          { num:'02', name:'Logistics & Supply Chain', href:'/business#logistics' },
+          { num:'03', name:'Healthcare & Wellness', href:'/business#healthcare'  },
+          { num:'04', name:'Trade & Distribution',  href:'/business#trade'       },
+          { num:'05', name:'Agriculture & Eco-Tech',href:'/business#agriculture' },
+          { num:'06', name:'Digital Systems',       href:'/business#digital'     },
+        ].map((b, i) => (
+          <a href={b.href} class={`hbiz reveal d${i}`}>
+            <span class="hbiz-num">{b.num}</span>
+            <span class="hbiz-name">{b.name}</span>
+            <span class="hbiz-arr">→</span>
+          </a>
+        ))}
       </div>
     </div>
   </div>
@@ -114,23 +116,38 @@
 }
 .hero-cards { position: relative; width: 360px; height: 340px; }
 
-.hc {
-  position: absolute;
+.hero-biz-list {
+  display: flex; flex-direction: column; gap: 2px;
+  width: 100%; max-width: 380px;
+}
+.hbiz {
+  display: flex; align-items: center; gap: 14px;
   background: var(--bg); border: 1px solid var(--bg-4);
-  padding: 24px 28px; min-width: 185px;
-  box-shadow: var(--shadow);
-  border-top: 3px solid var(--gold);
+  padding: 16px 20px;
+  text-decoration: none; color: inherit;
+  border-left: 3px solid transparent;
+  transition: border-color .25s, box-shadow .25s, background .25s;
 }
-.hc-num {
-  font-family: var(--FD); font-size: 48px; font-weight: 300;
-  color: var(--gold); line-height: 1; margin-bottom: 6px;
+.hbiz:hover {
+  border-left-color: var(--gold);
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-2);
 }
-.hc-num sup { font-size: 22px; }
-.hc-lbl { font-family: var(--FL); font-size: 10px; letter-spacing: 2px; color: var(--text-3); }
-
-.hc-1 { top: 0;    left: 0;    animation: floatA 5s   ease-in-out infinite; }
-.hc-2 { top: 60px; right: 0;   animation: floatB 6s   ease-in-out infinite .8s; }
-.hc-3 { bottom: 0; left: 40px; animation: floatA 5.5s ease-in-out infinite 1.4s; }
+.hbiz-num {
+  font-family: var(--FL); font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); font-weight: 600; flex-shrink: 0; width: 24px;
+}
+.hbiz-name {
+  font-family: var(--FL); font-size: 11px; letter-spacing: 1.5px;
+  color: var(--text-2); font-weight: 500; flex: 1;
+}
+.hbiz:hover .hbiz-name { color: var(--text); }
+.hbiz-arr {
+  font-size: 13px; color: var(--gold);
+  opacity: 0; transform: translateX(-4px);
+  transition: opacity .25s, transform .25s;
+}
+.hbiz:hover .hbiz-arr { opacity: 1; transform: translateX(0); }
 
 /* ── Bottom bar ── */
 .hero-bar {

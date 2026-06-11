@@ -12,7 +12,7 @@ const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.da
 <BaseLayout title="旗舰项目 / Flagship Projects | Fengqi Group" description="Key projects in China, Malaysia and Indonesia — practical platforms for enterprise market entry, certification, logistics and distribution.">
   <Header active="/projects" />
   <main>
-    <section class="section pj-hero sec-dark">
+    <section class="section pj-hero">
       <div class="geo-bg pj-geo"></div>
       <div class="wrap">
         <div class="label">旗舰项目 · FLAGSHIP PROJECTS</div>
@@ -34,8 +34,16 @@ const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.da
   <ClientEffects />
 </BaseLayout>
 <style>
-.pj-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.pj-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
 .pj-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
 .pj-grid{grid-template-columns:repeat(2,1fr)}
 @media(max-width:1100px){.pj-grid{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.pj-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.pj-hero h1 { color:var(--text); }
+.pj-hero h1 em { color:var(--gold); }
+.pj-hero .label { color:var(--gold); }
+.pj-hero .body-text { color:var(--text-2); }
+.pj-hero-wrap { position:relative; z-index:2; max-width:900px; }
 </style>

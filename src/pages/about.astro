@@ -28,7 +28,7 @@ const MILESTONES = [
   <Header active="/about" />
   <main>
 
-    <section class="section ab-hero sec-dark">
+    <section class="section ab-hero">
       <div class="geo-bg ab-geo"></div>
       <div class="wrap">
         <div class="ab-hero-c">
@@ -137,7 +137,7 @@ const MILESTONES = [
 </BaseLayout>
 
 <style>
-.ab-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg);position:relative;overflow:hidden}
+.ab-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg);position:relative;overflow:hidden}
 .ab-geo{opacity:.5}
 .ab-hero-c{max-width:760px}
 .ab-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
@@ -174,4 +174,12 @@ const MILESTONES = [
 .tc-bio{font-size:18px;color:var(--text-3);line-height:1.8}
 @media(max-width:1100px){.ab-layout{grid-template-columns:1fr;gap:40px}.comp-grid,.path-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.comp-grid,.path-grid,.team-grid{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.ab-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.ab-hero h1 { color:var(--text); }
+.ab-hero h1 em { color:var(--gold); }
+.ab-hero .label { color:var(--gold); }
+.ab-hero .body-text { color:var(--text-2); }
+.ab-hero-wrap { position:relative; z-index:2; max-width:900px; }
 </style>

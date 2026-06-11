@@ -4,14 +4,13 @@ import BaseLayout    from '../layouts/BaseLayout.astro'
 import Header        from '../components/Header.astro'
 import Footer        from '../components/Footer.astro'
 import ClientEffects from '../components/ClientEffects.astro'
-import FormInput     from '../components/ui/FormInput.astro'
-const WEB3_KEY = import.meta.env.Web3Forms ?? ''
+import FormInput from '../components/ui/FormInput.astro'
 ---
 <BaseLayout title="联系我们 / Contact | Fengqi Group" description="Contact Fengqi Group — offices in Hong Kong, Malaysia, Indonesia and China. Open for partnership enquiries across all business segments.">
   <Header active="/contact" />
   <main>
 
-    <section class="section ct-hero sec-dark">
+    <section class="section ct-hero">
       <div class="geo-bg ct-geo"></div>
       <div class="wrap">
         <div class="ct-hero-c">
@@ -38,7 +37,7 @@ const WEB3_KEY = import.meta.env.Web3Forms ?? ''
             </div>
             <div class="ct-row">
               <FormInput type="email" name="email" label="Email Address" placeholder="your@email.com" required />
-              <FormInput type="tel"   name="phone" label="Phone / WhatsApp" placeholder="+60 …"       />
+              <FormInput type="tel"   name="phone" label="Phone / WhatsApp" placeholder="+60 / +86 …"       />
             </div>
             <FormInput type="select" name="enquiry_type" label="Enquiry Type" required options={[
               'Partnership — Government Agency',
@@ -49,14 +48,14 @@ const WEB3_KEY = import.meta.env.Web3Forms ?? ''
               'Media & Press',
             ]} />
             <FormInput type="textarea" name="message" label="Message" placeholder="Tell us how we can help…" required />
-            <input type="hidden" name="_subject" value="New Enquiry — Fengqi Group" />
+
             <div class="ct-submit-row">
           <button type="submit" id="ct-submit" class="btn btn--gold ct-btn">
             <span class="ct-btn-text">Send Message →</span>
             <span class="ct-btn-loading" aria-hidden="true">Sending…</span>
           </button>
           <div id="ct-success" class="ct-success" aria-live="polite" hidden>✓ Message received — we'll be in touch within two business days.</div>
-          <div id="ct-error"   class="ct-err"     aria-live="polite" hidden>Something went wrong. Email us at <a href="mailto:info@fengqi.com">info@fengqi.com</a></div>
+          <div id="ct-error"   class="ct-err"     aria-live="polite" hidden>Something went wrong. Email us at <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a></div>
         </div>
           </form>
         </div>
@@ -85,11 +84,11 @@ const WEB3_KEY = import.meta.env.Web3Forms ?? ''
 
           <div class="ct-email reveal d3">
             <p class="ct-email-lbl">GENERAL ENQUIRIES</p>
-            <a href="mailto:info@fengqi.com" class="ct-email-val">info@fengqi.com</a>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
           </div>
           <div class="ct-email reveal d3">
             <p class="ct-email-lbl">PARTNERSHIP</p>
-            <a href="mailto:partnership@fengqi.com" class="ct-email-val">partnership@fengqi.com</a>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
           </div>
         </aside>
 
@@ -110,7 +109,7 @@ form?.addEventListener('submit', async e => {
   if (!form.checkValidity()) { form.reportValidity(); return }
   btn.setAttribute('data-loading','1'); btn.disabled = true
   try {
-    const res  = await fetch('https://api.web3forms.com/submit', { method:'POST', body:new FormData(form) })
+    const res  = await fetch('/api/contact', { method:'POST', body:new FormData(form) })
     const json = await res.json()
     if (json.success) { form.reset(); ok.hidden=false; err.hidden=true }
     else throw new Error(json.message)
@@ -120,7 +119,7 @@ form?.addEventListener('submit', async e => {
 </script>
 </BaseLayout>
 <style>
-.ct-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.ct-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
 .ct-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
 .ct-hero-c{max-width:760px}
 .ct-body{background:var(--black)}
@@ -141,4 +140,12 @@ form?.addEventListener('submit', async e => {
 .ct-email-val:hover{color:var(--gold-lt)}
 @media(max-width:1100px){.ct-layout{grid-template-columns:1fr;gap:52px}}
 @media(max-width:700px){.ct-row{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.ct-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.ct-hero h1 { color:var(--text); }
+.ct-hero h1 em { color:var(--gold); }
+.ct-hero .label { color:var(--gold); }
+.ct-hero .body-text { color:var(--text-2); }
+.ct-hero-wrap { position:relative; z-index:2; max-width:900px; }
 </style>

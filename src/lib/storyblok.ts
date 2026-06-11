@@ -1,77 +1,100 @@
-// src/lib/storyblok.ts
-// Storyblok Content Delivery API — Insights (news articles).
-//
-// ── CLOUDFLARE PAGES ENV VAR ─────────────────────────────────────
-//   Variable name: Web3Forms        ← as named in Cloudflare
-//   (Note: this var holds the Storyblok token despite the name)
-//
-// ── STORYBLOK CONTENT TYPE SETUP ────────────────────────────────
-// Create a Content Type called "insight" with these fields:
-//   title       Text
-//   slug        Text  (set as URL path, unique)
-//   date        Date/time
-//   summary     Textarea
-//   category    Text  (e.g. Project / Logistics / Agriculture / Media)
-//   featured    Boolean
-//   image       Asset  (featured image)
-//   body        Richtext
-// ────────────────────────────────────────────────────────────────
+/**
+ * src/lib/storyblok.ts
+ * Storyblok Content Delivery API — Insights (news articles).
+ *
+ * Cloudflare Secret name : storyblock  (do NOT rename)
+ * Content path           : insights/
+ * Storyblok fields       : Title · Date · Richtext · Image
+ *                          (Storyblok normalises field names to lowercase in the API response)
+ *
+ * Environments:
+ *   Production  → published=1   (default CDN, public token)
+ *   Preview     → version=draft (same token works; Storyblok uses the same
+ *                                Public Token for both draft + published reads)
+ *   The token is stored in Cloudflare Secret "storyblock" and injected via
+ *   import.meta.env.storyblock at build time for both preview and production
+ *   deployments.
+ */
 
-// Cloudflare Pages exposes the env var named "Web3Forms"
-// We read it here; if it's a Storyblok token it works as-is.
-// The var name in import.meta.env uses the Cloudflare variable name.
-const TOKEN  = import.meta.env.storyblock as string   // Cloudflare var name: storyblock
-const BASE   = 'https://api.storyblok.com/v2/cdn'
-const CV     = Date.now()   // cache busting
-const url = `${BASE}/stories/insights?token=${TOKEN}&version=published&cv=${CV}`;
-const response = await fetch(url);
+const TOKEN = (import.meta.env.storyblock ?? '') as string
+const BASE  = 'https://api.storyblok.com/v2/cdn'
 
+// Use draft in non-production builds so preview deploys show unpublished content
+const VERSION: 'published' | 'draft' =
+  import.meta.env.MODE === 'production' ? 'published' : 'draft'
+
+const CV = Date.now()   // cache-bust token
+
+// ── Types ─────────────────────────────────────────────────────────────────
 
 export interface InsightEntry {
   slug:     string
   title:    string
   date:     Date
-  summary:  string
+  summary:  string   // first paragraph of Richtext, or a "Summary" text field if added later
   category: string
   featured: boolean
-  image:    string | null   // URL or null
-  body:     StoryblokRichText
+  image:    string | null
+  body:     SBRichText
 }
 
-export interface StoryblokRichText {
+export interface SBRichText {
   type:    string
-  content: StoryblokNode[]
+  content: SBNode[]
 }
-export interface StoryblokNode {
-  type:    string
-  attrs?:  Record<string,unknown>
-  content?: StoryblokNode[]
-  text?:   string
-  marks?:  { type:string; attrs?:Record<string,unknown> }[]
+export interface SBNode {
+  type:     string
+  attrs?:   Record<string, unknown>
+  content?: SBNode[]
+  text?:    string
+  marks?:   { type: string; attrs?: Record<string, unknown> }[]
 }
 
 interface SBStory {
-  slug:     string
-  content:  Record<string, unknown>
-  published_at: string
+  slug:         string
+  published_at: string | null
+  content:      Record<string, unknown>
 }
 
-/** Fetch all published insight stories, newest-first */
+// ── Fetch helpers ─────────────────────────────────────────────────────────
+
+/** All published (or draft in preview) insight stories, newest-first */
 export async function getAllInsights(): Promise<InsightEntry[]> {
-  const url = `${BASE}/stories?token=${TOKEN}&starts_with=insights/&sort_by=content.date:desc&cv=${CV}`
-  const res  = await fetch(url)
-  if (!res.ok) throw new Error(`Storyblok: ${res.status} ${res.statusText}`)
+  if (!TOKEN) {
+    console.warn('[storyblok] Token missing — check Cloudflare Secret "storyblock"')
+    return []
+  }
+  const url =
+    `${BASE}/stories` +
+    `?token=${TOKEN}` +
+    `&starts_with=insights/` +
+    `&version=${VERSION}` +
+    `&sort_by=first_published_at:desc` +
+    `&per_page=100` +
+    `&cv=${CV}`
+
+  const res = await fetch(url)
+  if (!res.ok) {
+    console.error(`[storyblok] ${res.status} ${res.statusText}`)
+    return []
+  }
   const data = await res.json() as { stories: SBStory[] }
-  return data.stories.map(mapStory)
+  return (data.stories ?? []).map(mapStory)
 }
 
-/** Fetch a single insight by slug */
+/** Single story by slug — returns null if not found */
 export async function getInsightBySlug(slug: string): Promise<InsightEntry | null> {
-  const url = `${BASE}/stories/insights/${slug}?token=${TOKEN}&cv=${CV}`
-  const res  = await fetch(url)
+  if (!TOKEN) return null
+  const url =
+    `${BASE}/stories/insights/${slug}` +
+    `?token=${TOKEN}` +
+    `&version=${VERSION}` +
+    `&cv=${CV}`
+
+  const res = await fetch(url)
   if (!res.ok) return null
   const data = await res.json() as { story: SBStory }
-  return mapStory(data.story)
+  return data.story ? mapStory(data.story) : null
 }
 
 /** All slugs — for getStaticPaths */
@@ -79,26 +102,59 @@ export async function getAllInsightSlugs(): Promise<string[]> {
   return (await getAllInsights()).map(i => i.slug)
 }
 
+// ── Mapper ────────────────────────────────────────────────────────────────
+//
+// Storyblok lowercases field names in the JSON response.
+// Your content type fields:  Title · Date · Richtext · Image
+// API response keys:         title · date · richtext · image
+//
 function mapStory(story: SBStory): InsightEntry {
   const c = story.content
-  return {
-    slug:     story.slug,
-    title:    String(c.title    ?? ''),
-    date:     new Date(String(c.date ?? story.published_at ?? new Date().toISOString())),
-    summary:  String(c.summary  ?? ''),
-    category: String(c.category ?? 'Insight'),
-    featured: Boolean(c.featured),
-    image:    extractImageUrl(c.image),
-    body:     (c.body as StoryblokRichText) ?? { type:'doc', content:[] },
-  }
+
+  // Title  → c.title  (Text field)
+  const title = String(c.title ?? c.Title ?? '')
+
+  // Date  → c.date  (Date/time field)
+  const rawDate = (c.date ?? c.Date ?? story.published_at ?? new Date().toISOString()) as string
+  const date = new Date(String(rawDate))
+
+  // Image  → c.image  (Asset field — Storyblok returns { filename, alt, … })
+  const image = extractImageUrl(c.image ?? c.Image)
+
+  // Richtext  → c.richtext  (Rich-Text field)
+  const body = (c.richtext ?? c.Richtext ?? c.body ?? c.Body) as SBRichText | undefined
+    ?? { type: 'doc', content: [] }
+
+  // Summary — derive from first paragraph if no explicit field
+  const summary = String(
+    c.summary ?? c.Summary ?? c.excerpt ?? c.Excerpt ?? extractSummary(body) ?? ''
+  )
+
+  // Category / Featured — optional convenience fields
+  const category = String(c.category ?? c.Category ?? 'Insight')
+  const featured  = Boolean(c.featured ?? c.Featured ?? false)
+
+  return { slug: story.slug, title, date, summary, category, featured, image, body }
+}
+
+/** Pull the text content of the first paragraph as a summary fallback */
+function extractSummary(doc: SBRichText): string {
+  const para = doc.content?.find(n => n.type === 'paragraph')
+  if (!para) return ''
+  return (para.content ?? [])
+    .filter(n => n.type === 'text')
+    .map(n => n.text ?? '')
+    .join('')
+    .slice(0, 200)
 }
 
 function extractImageUrl(img: unknown): string | null {
   if (!img) return null
   if (typeof img === 'string') return img || null
   if (typeof img === 'object') {
-    const o = img as Record<string,unknown>
-    return String(o.filename ?? o.url ?? '') || null
+    const o = img as Record<string, unknown>
+    const url = String(o.filename ?? o.url ?? o.src ?? '')
+    return url || null
   }
   return null
 }

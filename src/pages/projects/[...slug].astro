@@ -18,7 +18,7 @@ const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rg
 <BaseLayout title={`${title} | Fengqi Group`} description={subtitle}>
   <Header active="/projects" />
   <main>
-    <section class="section pd-hero sec-dark">
+    <section class="section pd-hero">
       <div class="geo-bg pd-geo"></div>
       <div class="wrap">
         <a href="/projects" class="pd-back">← All Projects</a>
@@ -58,7 +58,7 @@ const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rg
   <ClientEffects />
 </BaseLayout>
 <style>
-.pd-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg);position:relative;overflow:hidden}
+.pd-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg);position:relative;overflow:hidden}
 .pd-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
 .pd-back{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);text-decoration:none;display:block;margin-bottom:32px;transition:color .3s}
 .pd-back:hover{color:var(--gold)}

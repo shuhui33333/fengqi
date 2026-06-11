@@ -10,7 +10,7 @@ import PartnerForm   from '../components/partnership/PartnerForm.astro'
   <Header active="/partnership" />
   <main>
 
-    <section class="section pn-hero sec-dark">
+    <section class="section pn-hero">
       <div class="geo-bg pn-geo"></div>
       <div class="wrap">
         <div class="pn-hero-c">
@@ -84,7 +84,7 @@ import PartnerForm   from '../components/partnership/PartnerForm.astro'
   <ClientEffects />
 </BaseLayout>
 <style>
-.pn-hero{padding-top:calc(var(--sv) + 80px);background:var(--bg-dark);position:relative;overflow:hidden}
+.pn-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
 .pn-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
 .pn-hero-c{max-width:760px}
 .pn-types-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
@@ -105,4 +105,12 @@ import PartnerForm   from '../components/partnership/PartnerForm.astro'
 .pn-w-b{font-size:17px;line-height:2;color:var(--text-3)}
 @media(max-width:1100px){.pn-grid,.pn-why-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.pn-grid,.pn-why-grid{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.pn-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.pn-hero h1 { color:var(--text); }
+.pn-hero h1 em { color:var(--gold); }
+.pn-hero .label { color:var(--gold); }
+.pn-hero .body-text { color:var(--text-2); }
+.pn-hero-wrap { position:relative; z-index:2; max-width:900px; }
 </style>

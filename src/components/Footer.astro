@@ -1,9 +1,12 @@
 ---
 // src/components/Footer.astro
+// Light gold background · black / deep brown / gold text
 ---
 <footer id="site-footer">
   <div class="ft-top">
     <div class="wrap ft-top-inner">
+
+      <!-- Brand -->
       <div class="ft-brand">
         <a href="/" class="ft-logo" aria-label="Fengqi Group">
           <img src="/images/logo/logo-circle.png" alt="Fengqi" class="ft-logo-img" />
@@ -17,6 +20,7 @@
         <a href="/documents/public-infopack.pdf" class="ft-dl" download>⬇ Download Company Profile</a>
       </div>
 
+      <!-- Business -->
       <div>
         <p class="ft-col-title">BUSINESS</p>
         <nav class="ft-links">
@@ -29,6 +33,7 @@
         </nav>
       </div>
 
+      <!-- Projects + Company -->
       <div>
         <p class="ft-col-title">PROJECTS</p>
         <nav class="ft-links">
@@ -37,7 +42,7 @@
           <a href="/projects/zengcheng-ecological-space">Zengcheng Eco Space</a>
           <a href="/projects/broiler-chicken-malaysia">Agricultural Land — Malaysia</a>
         </nav>
-        <p class="ft-col-title" style="margin-top:32px">COMPANY</p>
+        <p class="ft-col-title" style="margin-top:28px">COMPANY</p>
         <nav class="ft-links">
           <a href="/about">About Fengqi</a>
           <a href="/about#team">Leadership</a>
@@ -47,6 +52,7 @@
         </nav>
       </div>
 
+      <!-- Offices -->
       <div>
         <p class="ft-col-title">GLOBAL OFFICES</p>
         <nav class="ft-links">
@@ -55,74 +61,90 @@
           <a href="/contact">Indonesia · Jakarta</a>
           <a href="/contact">China · Guangzhou</a>
         </nav>
-        <div class="ft-badge">
-          <p class="ft-badge-lbl">ESTABLISHED</p>
-          <p class="ft-badge-val">2014 · Hong Kong</p>
+        <div class="ft-contact">
+          <p class="ft-col-title" style="margin-top:28px">CONTACT</p>
+          <a href="mailto:info@fengqi-global.com" class="ft-email">info@fengqi-global.com</a>
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="ft-bottom">
     <div class="wrap ft-bottom-inner">
       <span class="ft-copy">© 2025 Fengqi Group Limited · All Rights Reserved</span>
-      <span class="ft-legal">Cross-Border Industrial Platform · Est. 2014</span>
     </div>
   </div>
 </footer>
 
 <style>
-#site-footer { background: var(--bg-dark); color: rgba(255,255,255,.75); }
+/* ── Light gold palette for footer ── */
+:root {
+  --ft-bg:       #F5EDD6;   /* warm pale gold */
+  --ft-bg-2:     #EEE0BA;   /* slightly deeper for bottom bar */
+  --ft-border:   rgba(184,145,42,.25);
+  --ft-text:     #1A1814;   /* near-black — strong contrast */
+  --ft-text-2:   #3D3020;   /* dark brown body */
+  --ft-text-3:   #6B5832;   /* mid-brown muted */
+  --ft-gold:     #8A5F10;   /* deep gold on pale bg — readable */
+}
 
-.ft-top { border-top: 1px solid rgba(184,145,42,.25); padding: 72px 0 56px; }
+#site-footer { background: var(--ft-bg); border-top: 2px solid var(--ft-border); }
+
+.ft-top { padding: 64px 0 52px; }
 .ft-top-inner {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 56px;
+  gap: 52px;
 }
 
 /* Brand */
 .ft-logo { display:flex; align-items:center; gap:16px; text-decoration:none; margin-bottom:20px; }
-.ft-logo-img { width: 52px; height: 52px; object-fit:contain; }
-.ft-logo-name { font-family:var(--FL); font-size:15px; color:var(--gold-pale); letter-spacing:3px; }
-.ft-logo-cn   { font-family:var(--FD); font-size:12px; color:var(--gold-dk); letter-spacing:2px; display:block; margin-top:4px; font-style:italic; }
-.ft-desc  { font-size:14px; color:rgba(255,255,255,.6); line-height:1.85; margin-bottom:18px; }
-.ft-motto { font-family:var(--FD); font-size:14px; font-style:italic; color:var(--gold-pale); letter-spacing:2px; margin-bottom:18px; }
+.ft-logo-img { width:52px; height:52px; object-fit:contain; }
+.ft-logo-name { font-family:var(--FL); font-size:15px; color:var(--ft-text); letter-spacing:3px; font-weight:600; }
+.ft-logo-cn   { font-family:var(--FD); font-size:12px; color:var(--ft-gold); letter-spacing:2px; display:block; margin-top:4px; font-style:italic; }
+.ft-desc  { font-family:var(--FB); font-size:14px; color:var(--ft-text-2); line-height:1.85; margin-bottom:16px; }
+.ft-motto { font-family:var(--FD); font-size:15px; font-style:italic; color:var(--ft-gold); letter-spacing:2px; margin-bottom:18px; }
 .ft-dl {
   font-family:var(--FL); font-size:10px; letter-spacing:2px;
-  color:rgba(255,255,255,.5); border:1px solid rgba(255,255,255,.2);
+  color:var(--ft-gold); border:1.5px solid var(--ft-border);
   padding:9px 16px; display:inline-block; transition:all .25s;
+  font-weight:500;
 }
-.ft-dl:hover { border-color:var(--gold-pale); color:var(--gold-pale); }
+.ft-dl:hover { border-color:var(--ft-gold); background:rgba(184,145,42,.1); }
 
 /* Column titles */
 .ft-col-title {
   font-family:var(--FL); font-size:10px; letter-spacing:4px;
-  color:var(--gold-pale); margin-bottom:16px; padding-bottom:10px;
-  border-bottom:1px solid rgba(184,145,42,.25);
+  color:var(--ft-text); margin-bottom:14px; padding-bottom:10px;
+  border-bottom:1.5px solid var(--ft-border); font-weight:600;
 }
+
+/* Links */
 .ft-links { display:flex; flex-direction:column; }
 .ft-links a {
-  font-size:13px; color:rgba(255,255,255,.55);
+  font-family:var(--FB); font-size:13.5px; color:var(--ft-text-2);
   padding:6px 0; transition:color .25s; line-height:1.5;
-  border-bottom: 1px solid rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(184,145,42,.12);
 }
-.ft-links a:hover { color:var(--gold-pale); }
+.ft-links a:hover { color:var(--ft-gold); }
 
-/* Badge */
-.ft-badge { margin-top:28px; padding:18px 20px; border:1px solid rgba(184,145,42,.25); }
-.ft-badge-lbl { font-family:var(--FL); font-size:9px; letter-spacing:3px; color:var(--gold-pale); margin-bottom:6px; }
-.ft-badge-val { font-family:var(--FD); font-size:16px; color:rgba(255,255,255,.7); }
+/* Contact email */
+.ft-email {
+  display:block; font-family:var(--FL); font-size:11px; letter-spacing:1px;
+  color:var(--ft-gold); font-weight:500; margin-top:6px; text-decoration:none;
+  transition:color .25s;
+}
+.ft-email:hover { color:var(--ft-text); }
 
 /* Bottom bar */
-.ft-bottom { border-top:1px solid rgba(255,255,255,.08); padding:24px 0; }
-.ft-bottom-inner { display:flex; justify-content:space-between; align-items:center; }
-.ft-copy  { font-family:var(--FL); font-size:10px; letter-spacing:2px; color:rgba(255,255,255,.3); }
-.ft-legal { font-size:12px; color:rgba(255,255,255,.3); }
+.ft-bottom { background:var(--ft-bg-2); border-top:1px solid var(--ft-border); padding:20px 0; }
+.ft-bottom-inner { display:flex; justify-content:center; align-items:center; }
+.ft-copy { font-family:var(--FL); font-size:10px; letter-spacing:2px; color:var(--ft-text-3); }
 
 @media (max-width:1100px) { .ft-top-inner { grid-template-columns:1fr 1fr; gap:36px; } }
 @media (max-width:700px)  {
   .ft-top-inner { grid-template-columns:1fr; }
-  .ft-bottom-inner { flex-direction:column; gap:10px; text-align:center; }
+  .ft-bottom-inner { text-align:center; }
 }
 </style>
