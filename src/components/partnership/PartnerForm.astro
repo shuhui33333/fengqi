@@ -100,17 +100,28 @@ form?.addEventListener('submit', async (e) => {
 
   try {
     const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) })
-    const json = await res.json() as { success: boolean; message?: string }
+    const text = await res.text()
+    let json: { success: boolean; message?: string }
+    try {
+      json = JSON.parse(text)
+    } catch {
+      json = { success: false, message: text.slice(0, 300) || 'Unexpected server response' }
+    }
 
     if (json.success) {
       form.reset()
       ok!.hidden  = false
       err!.hidden = true
     } else {
-      throw new Error(json.message ?? 'Submission failed')
+      const msg = json.message ?? 'Submission failed'
+      console.error('Form error:', msg)
+      const errLink = err!.querySelector('a')
+      if (errLink) errLink.textContent = 'info@fengqi-global.com'
+      err!.hidden = false
+      ok!.hidden  = true
     }
   } catch (e) {
-    console.error(e)
+    console.error('Network error:', e)
     err!.hidden = false
     ok!.hidden  = true
   } finally {

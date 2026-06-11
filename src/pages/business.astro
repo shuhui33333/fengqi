@@ -9,7 +9,7 @@ import ClientEffects from '../components/ClientEffects.astro'
   <Header active="/business" />
   <main>
 
-    <section class="section b-hero">
+    <section class="section b-hero page-hero">
       <div class="geo-bg b-geo"></div>
       <div class="wrap">
         <div class="b-hero-c">
@@ -22,17 +22,20 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 1: Parks -->
     <section class="section bs" id="parks">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1565043666747-69f6646db940?w=1200&q=80" alt="parks segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
             <div class="label">SEGMENT 01</div>
             <h2 class="heading">Industrial Parks &amp;<br /><em>Cross-Border Platforms</em></h2>
             <p class="body-text">Focused on helping businesses solve "difficulty in going global, establishing a presence, obtaining certifications, and managing logistics." The group integrates industrial parks, supply chains, logistics networks and market resources to help businesses efficiently enter ASEAN, Middle East and global halal markets.</p>
-            <p class="body-text" style="margin-bottom:0">The 800-acre Kuantan Digital Halal Food Industrial Park in Pahang, Malaysia — adjacent to MCKIP, ~10km from Kuantan Port with ECRL rail access — creates a cross-border ecosystem integrating industrial park + logistics + international trade + digital platform.</p>
+            <p class="body-text" style="margin-bottom:0">The Kuantan Digital Halal Food Industrial Park (HALAL Industria Hub) in Pahang, Malaysia comprises two zones: a 730-acre park in Gebeng and a 100-acre park in Gambang — both adjacent to MCKIP, ~10km from Kuantan Port with ECRL rail access — creating a cross-border ecosystem integrating industrial park + logistics + international trade + digital platform.</p>
           </div>
           <div class="bs-right reveal d2">
             <div class="bs-kpis cgrid">
-              {[{n:'800ac',l:'Kuantan Park'},{n:'10–12d',l:'Halal cert fast-track'},{n:'~48h',l:'Customs clearance'},{n:'0–5%',l:'Tariff via RCEP'},{n:'80+',l:'JAKIM cert nations'},{n:'4',l:'Core industries'}].map(k=>(
+              {[{n:'830ac',l:'Gebeng 730 + Gambang 100'},{n:'10–12d',l:'Halal cert fast-track'},{n:'~48h',l:'Customs clearance'},{n:'0–5%',l:'Tariff via RCEP'},{n:'80+',l:'JAKIM cert nations'},{n:'4',l:'Core industries'}].map(k=>(
                 <div class="bs-kpi"><div class="bs-kpi-n">{k.n}</div><div class="bs-kpi-l">{k.l}</div></div>
               ))}
             </div>
@@ -54,6 +57,9 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 2: Logistics -->
     <section class="section bs bs-alt" id="logistics">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80" alt="logistics segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
@@ -85,13 +91,16 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 3: Healthcare -->
     <section class="section bs" id="healthcare">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=1200&q=80" alt="healthcare segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
             <div class="label">SEGMENT 03</div>
             <h2 class="heading">Healthcare &amp;<br /><em>Wellness</em></h2>
             <p class="body-text">Centred on healthy eating, functional agriculture and green living — Fengqi combines agricultural technology, health foods and ecological living to make agriculture an integral part of healthy lifestyle, extending from "eating healthier" to nutrition, chronic disease management and wellness experiences.</p>
-            <p class="body-text" style="margin-bottom:0">In Malaysia, Fengqi is building hemodialysis centres focusing on Selangor and Kuala Lumpur — a "standardised single-centre ≤20-bed + multi-centre distributed" model creating a scalable professional platform to meet growing chronic kidney disease demand.</p>
+            <p class="body-text" style="margin-bottom:0">In Malaysia, Fengqi is building hemodialysis centres focusing on high-demand areas such as Selangor and Kuala Lumpur — operating on a standardised model of 18 beds per centre, scalable to 15–20 beds, with a "standardised centre + multi-centre distributed" model to create a professional, scalable platform for chronic kidney disease patients.</p>
           </div>
           <div class="bs-right reveal d2">
             <div class="bs-det-grid cgrid">
@@ -112,6 +121,9 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 4: Trade -->
     <section class="section bs bs-alt" id="trade">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?w=1200&q=80" alt="trade segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
@@ -138,6 +150,9 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 5: Agriculture -->
     <section class="section bs" id="agriculture">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="agriculture segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
@@ -164,6 +179,9 @@ import ClientEffects from '../components/ClientEffects.astro'
 
     <!-- Seg 6: Digital -->
     <section class="section bs bs-alt" id="digital">
+      <div class="bs-feat-img">
+        <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1200&q=80" alt="digital segment" loading="lazy" />
+      </div>
       <div class="wrap">
         <div class="bs-layout">
           <div class="reveal">
@@ -229,4 +247,17 @@ import ClientEffects from '../components/ClientEffects.astro'
 .b-hero .label { color:var(--gold); }
 .b-hero .body-text { color:var(--text-2); }
 .b-hero-wrap { position:relative; z-index:2; max-width:900px; }
+
+/* Segment featured images */
+.bs-feat-img {
+  width: 100%; aspect-ratio: 21/9; overflow: hidden;
+  background: var(--bg-3);
+  margin-bottom: 0;
+}
+.bs-feat-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.bs:hover .bs-feat-img img { transform: scale(1.02); }
+
 </style>

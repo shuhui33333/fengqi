@@ -1,58 +1,67 @@
 ---
-// src/components/home/Hero.astro — White theme hero
+// src/components/home/Hero.astro
+// White theme. Right side: 3 floating stat cards (original style).
 ---
 
 <section class="hero" id="top">
-  <div class="hero-bg">
-    <div class="geo-bg geo-bg--fade" style="opacity:.6"></div>
-  </div>
+  <div class="hero-bg"></div>
 
   <div class="wrap hero-content">
+
+    <!-- ── Left: copy ── -->
     <div class="hero-left">
-      <div class="label">CROSS-BORDER INDUSTRIAL GROUP</div>
+      <p class="hero-over">CROSS-BORDER INDUSTRIAL GROUP</p>
+
       <h1 class="hero-h1">
         Connecting China<br />
         &amp; <em>Southeast Asia</em><br />
         <strong>Through Industry.</strong>
       </h1>
+
       <p class="hero-body">
-        Fengqi Group integrates <strong>agriculture, logistics, industrial parks, trade and digital systems</strong> — building a complete cross-border platform from production and supply chain to market access.
+        Fengqi Group integrates <strong>agriculture, logistics, industrial parks,
+        trade and digital systems</strong> — a complete cross-border platform from
+        production and supply chain to market access.
       </p>
+
       <div class="hero-actions">
         <a href="/business"    class="btn btn--gold">Explore Our Business</a>
         <a href="/partnership" class="btn btn--ghost">Partner With Us</a>
       </div>
     </div>
 
-    <!-- Stat cards -->
+    <!-- ── Right: floating stat cards ── -->
     <div class="hero-right" aria-hidden="true">
-      <div class="hero-biz-list">
-        {[
-          { num:'01', name:'Industrial Parks',      href:'/business#parks'       },
-          { num:'02', name:'Logistics & Supply Chain', href:'/business#logistics' },
-          { num:'03', name:'Healthcare & Wellness', href:'/business#healthcare'  },
-          { num:'04', name:'Trade & Distribution',  href:'/business#trade'       },
-          { num:'05', name:'Agriculture & Eco-Tech',href:'/business#agriculture' },
-          { num:'06', name:'Digital Systems',       href:'/business#digital'     },
-        ].map((b, i) => (
-          <a href={b.href} class={`hbiz reveal d${i}`}>
-            <span class="hbiz-num">{b.num}</span>
-            <span class="hbiz-name">{b.name}</span>
-            <span class="hbiz-arr">→</span>
-          </a>
-        ))}
+      <div class="hero-cards">
+
+        <div class="hc hc-1">
+          <div class="hc-num">800<sup>ac</sup></div>
+          <div class="hc-lbl">KUANTAN HALAL PARK</div>
+        </div>
+
+        <div class="hc hc-2">
+          <div class="hc-num">145M</div>
+          <div class="hc-lbl">JAVA LOGISTICS REACH</div>
+        </div>
+
+        <div class="hc hc-3">
+          <div class="hc-num">2B<sup>+</sup></div>
+          <div class="hc-lbl">GLOBAL MUSLIM CONSUMERS</div>
+        </div>
+
       </div>
     </div>
+
   </div>
 
-  <!-- Bottom highlights bar -->
+  <!-- ── Bottom highlights bar ── -->
   <div class="hero-bar">
     <div class="wrap hero-bar-inner">
       {[
-        { title:'CHINA BASE',            desc:'Agriculture, technology & industrial resources' },
-        { title:'MALAYSIA HUB',          desc:'800-acre halal park · JAKIM certification gateway' },
+        { title:'CHINA BASE',            desc:'Agriculture, technology & industrial resources'       },
+        { title:'MALAYSIA HUB',          desc:'Kuantan halal parks (830 acres) · JAKIM certification' },
         { title:'INDONESIA NETWORK',     desc:'Fengjie Logistics · 4 depots · 145M people reached' },
-        { title:'CROSS-BORDER PLATFORM', desc:'Production → logistics → trade → market access' },
+        { title:'CROSS-BORDER PLATFORM', desc:'Production → logistics → trade → market access'     },
       ].map(item => (
         <div class="hb-item">
           <div class="hb-dot"></div>
@@ -67,40 +76,49 @@
 </section>
 
 <style>
-/* ── Hero shell ── */
+/* ── Shell ── */
 .hero {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
   position: relative; overflow: hidden;
   background: var(--bg);
-  padding-top: 80px;  /* nav height */
+  padding-top: 80px;
 }
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(135deg, rgba(184,145,42,.04) 0%, transparent 60%),
-              linear-gradient(225deg, rgba(184,145,42,.03) 0%, transparent 50%);
+  background:
+    linear-gradient(135deg, rgba(184,145,42,.05) 0%, transparent 55%),
+    linear-gradient(225deg, rgba(184,145,42,.03) 0%, transparent 45%);
 }
 
-/* ── Content layout ── */
+/* ── Content grid ── */
 .hero-content {
   display: grid; grid-template-columns: 1fr 1fr;
   align-items: center; gap: 60px;
-  padding-top: 60px; padding-bottom: 100px;
+  padding-top: 60px; padding-bottom: 120px;
   position: relative; z-index: 2;
 }
 
 /* ── Left copy ── */
-.hero-h1 {
-  margin-bottom: 28px;
-  opacity: 0; animation: slideRight .9s ease .2s forwards;
+.hero-over {
+  font-family: var(--FL); font-size: 10px; letter-spacing: 7px;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0; animation: slideRight .9s ease .15s forwards;
 }
-.hero-h1 em     { color: var(--gold); }
-.hero-h1 strong { font-weight: 600; color: var(--text); }
+.hero-over::before { content:''; width:28px; height:1.5px; background:var(--gold); flex-shrink:0; }
+
+.hero-h1 {
+  margin-bottom: 24px;
+  opacity: 0; animation: slideRight .9s ease .3s forwards;
+}
+.hero-h1 em     { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
+.hero-h1 strong { font-weight:600; color:var(--text); }
 
 .hero-body {
-  font-size: 18px; color: var(--text-2); line-height: 1.85;
-  max-width: 520px; margin-bottom: 40px;
-  opacity: 0; animation: slideRight .9s ease .4s forwards;
+  font-size: 16px; line-height: 1.85;
+  color: var(--text-2); max-width: 520px; margin-bottom: 36px;
+  opacity: 0; animation: slideRight .9s ease .45s forwards;
 }
 .hero-body strong { color: var(--text); font-weight: 600; }
 
@@ -109,45 +127,40 @@
   opacity: 0; animation: slideRight .9s ease .6s forwards;
 }
 
-/* ── Right stat cards ── */
+/* ── Floating stat cards ── */
 .hero-right {
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; animation: fadeIn 1s ease .8s forwards;
+  opacity: 0; animation: fadeIn 1s ease .75s forwards;
 }
-.hero-cards { position: relative; width: 360px; height: 340px; }
+.hero-cards { position: relative; width: 360px; height: 360px; }
 
-.hero-biz-list {
-  display: flex; flex-direction: column; gap: 2px;
-  width: 100%; max-width: 380px;
+.hc {
+  position: absolute;
+  background: var(--bg);
+  border: 1px solid var(--bg-4);
+  border-top: 3px solid var(--gold);
+  padding: 26px 30px;
+  min-width: 185px;
+  box-shadow: var(--shadow);
+  transition: box-shadow .3s, transform .3s;
 }
-.hbiz {
-  display: flex; align-items: center; gap: 14px;
-  background: var(--bg); border: 1px solid var(--bg-4);
-  padding: 16px 20px;
-  text-decoration: none; color: inherit;
-  border-left: 3px solid transparent;
-  transition: border-color .25s, box-shadow .25s, background .25s;
+.hc:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+.hc-num {
+  font-family: var(--FL); font-size: 44px; font-weight: 600;
+  color: var(--gold); line-height: 1; margin-bottom: 8px;
+  letter-spacing: -1px;
 }
-.hbiz:hover {
-  border-left-color: var(--gold);
-  box-shadow: var(--shadow-sm);
-  background: var(--bg-2);
+.hc-num sup { font-size: 20px; font-weight: 500; }
+.hc-lbl {
+  font-family: var(--FL); font-size: 9.5px; letter-spacing: 2.5px;
+  color: var(--text-3); font-weight: 400;
 }
-.hbiz-num {
-  font-family: var(--FL); font-size: 10px; letter-spacing: 2px;
-  color: var(--gold); font-weight: 600; flex-shrink: 0; width: 24px;
-}
-.hbiz-name {
-  font-family: var(--FL); font-size: 11px; letter-spacing: 1.5px;
-  color: var(--text-2); font-weight: 500; flex: 1;
-}
-.hbiz:hover .hbiz-name { color: var(--text); }
-.hbiz-arr {
-  font-size: 13px; color: var(--gold);
-  opacity: 0; transform: translateX(-4px);
-  transition: opacity .25s, transform .25s;
-}
-.hbiz:hover .hbiz-arr { opacity: 1; transform: translateX(0); }
+
+/* Card positions + animations */
+.hc-1 { top: 0;    left: 0;    animation: floatA 5s   ease-in-out infinite; }
+.hc-2 { top: 65px; right: 0;   animation: floatB 6s   ease-in-out infinite .8s; }
+.hc-3 { bottom: 0; left: 40px; animation: floatA 5.5s ease-in-out infinite 1.4s; }
 
 /* ── Bottom bar ── */
 .hero-bar {
@@ -157,31 +170,30 @@
 }
 .hero-bar-inner {
   display: grid; grid-template-columns: repeat(4,1fr);
-  gap: 0;
 }
 .hb-item {
-  display: flex; align-items: flex-start; gap: 14px;
+  display: flex; align-items: flex-start; gap: 12px;
   padding: 20px 28px;
   border-right: 1px solid var(--bg-4);
 }
 .hb-item:last-child { border-right: none; }
 .hb-dot {
   width: 6px; height: 6px; border-radius: 50%;
-  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+  background: var(--gold); flex-shrink: 0; margin-top: 5px;
 }
-.hb-title { font-family:var(--FL); font-size:9px; letter-spacing:2.5px; color:var(--gold-dk); margin-bottom:4px; }
-.hb-desc  { font-size:13px; color:var(--text-3); line-height:1.5; }
+.hb-title { font-family:var(--FL); font-size:9px; letter-spacing:2.5px; color:var(--gold-dk); margin-bottom:4px; font-weight:600; }
+.hb-desc  { font-size:12px; color:var(--text-3); line-height:1.5; }
 
-/* ── Scroll hint ── */
+/* ── Responsive ── */
 @media (max-width: 1100px) {
-  .hero-content { grid-template-columns: 1fr; padding-bottom: 80px; }
+  .hero-content { grid-template-columns: 1fr; padding-bottom: 72px; }
   .hero-right   { display: none; }
   .hero-bar-inner { grid-template-columns: 1fr 1fr; }
   .hb-item:nth-child(2) { border-right: none; }
-  .hb-item:nth-child(3) { border-top: 1px solid var(--bg-4); }
+  .hb-item:nth-child(n+3) { border-top: 1px solid var(--bg-4); }
 }
 @media (max-width: 700px) {
-  .hero-h1 { font-size: 40px; }
+  .hero-h1 { font-size: 36px; }
   .hero-actions { flex-direction: column; }
   .hero-bar-inner { grid-template-columns: 1fr; }
   .hb-item { border-right: none !important; border-bottom: 1px solid var(--bg-4); }

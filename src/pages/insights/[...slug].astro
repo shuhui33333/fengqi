@@ -16,11 +16,11 @@ const { slug }  = Astro.props
 const post = await getInsightBySlug(slug)
 if (!post) return Astro.redirect('/insights')
 
-const { title, date, category, summary, body, image } = post
+const { title, date, summary, image, body } = post
 const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'
 const imgSrc = image ?? DEFAULT_IMG
 ---
-<BaseLayout title={`${title} | Fengqi Group`} description={summary}>
+<BaseLayout title={`${title} | Fengqi Group`} description={summary} ogImage={image ?? undefined}>
   <Header active="/insights" />
   <main>
 
@@ -35,8 +35,7 @@ const imgSrc = image ?? DEFAULT_IMG
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           All Insights
         </a>
-        <span class="id-cat">{category}</span>
-        <h1 class="id-title">{title}</h1>
+<h1 class="id-title">{title}</h1>
         <p class="id-date">{date.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}</p>
       </div>
     </section>

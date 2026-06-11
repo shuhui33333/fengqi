@@ -19,9 +19,10 @@
 
   /* White theme backgrounds */
   --bg:        #FFFFFF;
-  --bg-2:      #FAFAFA;
-  --bg-3:      #F5F4F1;
-  --bg-4:      #EEECE8;
+  --bg-2:      #F7F5F0;
+  --bg-3:      #EDE9E0;
+  --bg-4:      #E2DDD4;
+  --bg-hero:   #EDEBE5;  /* interior hero bg — visibly off-white */
   --bg-dark:   #1A1814;   /* hero / footer dark sections */
   --bg-dark-2: #242018;
 
@@ -72,7 +73,7 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--FB);
+  font-family: var(--FL);
   font-weight: 400;
   font-size: var(--t-base);
   line-height: 1.7;
@@ -176,7 +177,7 @@ h4, .h4 {
 
 /* ── Body text (lead paragraphs) ── */
 .body-text {
-  font-family: var(--FB);
+  font-family: var(--FL);
   font-size: 17px;
   font-weight: 400;
   line-height: 1.9;
@@ -189,7 +190,7 @@ h4, .h4 {
 .body-text--light { color: rgba(255,255,255,.78); }
 
 /* ── Prose paragraphs ── */
-p { font-family: var(--FB); }
+p { font-family: var(--FL); }
 
 /* ── Gold divider ── */
 .gold-rule { width: 52px; height: 2px; background: var(--gold); margin-bottom: 40px; }
@@ -357,3 +358,9 @@ p { font-family: var(--FB); }
 /* ── Responsive tokens ─────────────────────────────────────────── */
 @media (max-width:1100px) { :root { --sv:72px; --ph:28px; } }
 @media (max-width:700px)  { :root { --sv:56px; --ph:20px; } }
+
+/* ── Interior page hero background — visibly tinted, not plain white ── */
+.page-hero {
+  background: var(--bg-hero) !important;
+  border-bottom: 2px solid var(--bg-4) !important;
+}

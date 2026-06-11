@@ -21,7 +21,7 @@ Chicken has long accounted for over 60% of Malaysia's meat supply, with stable a
 
 ## Project Scale
 
-- Total land: approximately 280 acres (56 acres farming area)
+- Total land: approximately 280 acres (56 acres commercial use; 40 acres planned for broiler houses)
 - 4 modern closed-loop broiler chicken houses
 - 1 breeding stock house
 - Projected annual output: 1.824 million birds

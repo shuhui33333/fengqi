@@ -36,7 +36,7 @@ const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886
         <div class="biz-grid">
           <BusinessCard num="01" en="INDUSTRIAL PARKS & CROSS-BORDER PLATFORM" name="Industrial Parks"
             href="/business#parks" tags={['Halal Park','JAKIM Cert','Cross-Border']}
-            body="The 800-acre Kuantan Digital Halal Park connects China and global halal markets. One-stop: establishment, certification, logistics and market channels." />
+            body="Kuantan Digital Halal Food Industrial Park: 730 acres in Gebeng + 100 acres in Gambang (830 acres total). One-stop platform: establishment, JAKIM certification, logistics and market channels." />
           <BusinessCard num="02" en="LOGISTICS & SUPPLY CHAIN" name="Logistics & Supply Chain"
             href="/business#logistics" tags={['Cold Chain','Warehousing','SE Asia']}
             body="Fengjie Logistics in Indonesia and Malaysia — integrated warehousing, transport, cold chain and cross-border supply chain for faster market entry." />
@@ -91,9 +91,7 @@ const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886
             <div class="label">AGRICULTURAL LAND — MALAYSIA</div>
             <h2><em>280 Acres</em> of Agricultural Land.</h2>
             <p class="body-text">
-              The total project area spans approximately 280 acres, of which 56 acres are designated for commercial use.
-              Of this, 40 acres are planned for the development of four modern broiler chicken houses and one breeding house,
-              with a projected annual output capacity of 1.824 million birds.
+              The total project area spans approximately 280 acres, of which 56 acres are designated for commercial use. Of this, 40 acres are planned for the construction of four modern broiler chicken houses and one breeding house, with a projected annual output capacity of 1.824 million birds.
             </p>
             <p class="body-text" style="margin-bottom:0">
               The project establishes an integrated system from breeding stock, hatching and rearing through to food processing
@@ -156,15 +154,15 @@ const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886
     )}
 
     <!-- ── CTA ── -->
-    <section class="section sec-dark cta-sec" id="cta">
-      <div class="geo-bg geo-bg--fade" style="opacity:.5"></div>
+    <section class="section cta-sec" id="cta">
+      <div class="geo-bg geo-bg--fade" style="opacity:.3"></div>
       <div class="wrap cta-wrap">
-        <div class="label label--dark reveal">OPEN FOR PARTNERSHIP</div>
+        <div class="label reveal">OPEN FOR PARTNERSHIP</div>
         <h2 class="reveal d1">Build Together Across <em>China &amp; Southeast Asia</em>.</h2>
         <p class="body-text body-text--light reveal d2">Fengqi welcomes government agencies, enterprise partners, investors and channel distributors to jointly develop regional industry, supply chains and market opportunities.</p>
         <div class="cta-acts reveal d3">
           <a href="/partnership" class="btn btn--gold">Explore Partnership</a>
-          <a href="/contact"     class="btn btn--ghost-white">Contact Us</a>
+          <a href="/contact"     class="btn btn--ghost">Contact Us</a>
         </div>
       </div>
     </section>
@@ -211,10 +209,10 @@ const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886
 .ins-card:hover .ins-card-arr { opacity:1; transform:translateX(0); }
 
 /* CTA */
-.cta-sec { position:relative; overflow:hidden; text-align:center; }
+.cta-sec { background:var(--bg-3); border-top:1px solid var(--bg-4); position:relative; overflow:hidden; text-align:center; }
 .cta-wrap { position:relative; z-index:2; }
-.cta-sec h2 { color:#fff; margin-bottom:20px; }
-.cta-sec h2 em { color:var(--gold-pale); }
+.cta-sec h2 { color:var(--text); margin-bottom:20px; }
+.cta-sec h2 em { color:var(--gold); }
 .cta-acts { display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
 
 @media(max-width:1100px) {

@@ -9,10 +9,10 @@ import { getCollection } from 'astro:content'
 
 const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order)
 ---
-<BaseLayout title="旗舰项目 / Flagship Projects | Fengqi Group" description="Key projects in China, Malaysia and Indonesia — practical platforms for enterprise market entry, certification, logistics and distribution.">
+<BaseLayout title="旗舰项目 / Flagship Projects | Fengqi Group" description="Key projects in China, Malaysia and Indonesia — including the Kuantan Halal Park, Fengjie Logistics, Zengcheng Ecological Space, agricultural development and the Achievers World cultural media brand.">
   <Header active="/projects" />
   <main>
-    <section class="section pj-hero">
+    <section class="section pj-hero page-hero">
       <div class="geo-bg pj-geo"></div>
       <div class="wrap">
         <div class="label">旗舰项目 · FLAGSHIP PROJECTS</div>

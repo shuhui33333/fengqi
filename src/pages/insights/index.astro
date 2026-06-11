@@ -6,27 +6,27 @@ import Footer        from '../../components/Footer.astro'
 import ClientEffects from '../../components/ClientEffects.astro'
 import { getAllInsights } from '../../lib/storyblok'
 
-const posts = await getAllInsights().catch(() => [])
-
+const posts = await getAllInsights()
 const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
 ---
 <BaseLayout title="Insights | Fengqi Group" description="Latest news, project updates and industry perspectives from Fengqi Group.">
   <Header active="/insights" />
   <main>
 
-    <!-- Hero -->
-    <section class="ins-hero sec-dark section">
-      <div class="geo-bg geo-bg--fade" style="opacity:.4"></div>
-      <div class="wrap ins-hero-wrap">
-        <div class="label label--dark">INSIGHTS</div>
-        <h1>News &amp; <em>Updates</em>.</h1>
-        <p class="body-text body-text--light body-text--wide">
-          Latest developments, project milestones and industry perspectives from Fengqi Group.
-        </p>
+    <!-- ── Page Hero — same style as all other interior pages ── -->
+    <section class="section ins-hero page-hero">
+      <div class="wrap">
+        <div class="ins-hero-content">
+          <div class="label">INSIGHTS</div>
+          <h1>News &amp; <em>Updates</em>.</h1>
+          <p class="body-text body-text--wide">
+            Latest developments, project milestones and industry perspectives from Fengqi Group.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- Grid -->
+    <!-- ── Article Grid ── -->
     <section class="section sec-light" id="all-insights">
       <div class="wrap">
         {posts.length === 0 ? (
@@ -37,12 +37,9 @@ const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5
               const imgSrc = a.image ?? DEFAULT_IMG
               return (
                 <a href={`/insights/${a.slug}`} class={`ins-card reveal d${(i % 3) + 1}`}>
-                  <!-- Image -->
                   <div class="ins-card-img">
                     <img src={imgSrc} alt={a.title} loading="lazy" />
-                    <span class="ins-card-cat">{a.category}</span>
                   </div>
-                  <!-- Content -->
                   <div class="ins-card-body">
                     <p class="ins-card-date">
                       {a.date.toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' })}
@@ -68,17 +65,15 @@ const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5
 </BaseLayout>
 
 <style>
-/* Hero */
-.ins-hero {
-  padding-top: calc(var(--sv) + 80px);
-  background: var(--bg-dark);
-  position: relative; overflow: hidden;
-}
-.ins-hero-wrap { position: relative; z-index: 2; max-width: 760px; }
-.ins-hero h1 { color: #fff; margin-bottom: 20px; }
-.ins-hero h1 em { color: var(--gold-pale); }
+/* ── Hero — same visual weight as other interior pages ── */
+.ins-hero { /* .page-hero provides background + border via global.css */ }
+.ins-hero-content { max-width: 760px; }
+.ins-hero h1   { color: var(--text); }
+.ins-hero h1 em { color: var(--gold); }
+.ins-hero .label { color: var(--gold); }
+.ins-hero .body-text { color: var(--text-2); }
 
-/* Grid */
+/* ── Article grid ── */
 .ins-empty { font-size:17px; color:var(--text-3); padding:80px 0; text-align:center; }
 .ins-grid {
   display: grid;
@@ -86,7 +81,6 @@ const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5
   gap: 28px;
 }
 
-/* Card */
 .ins-card {
   background: var(--bg);
   border: 1px solid var(--bg-4);
@@ -101,32 +95,24 @@ const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5
   transform: translateY(-3px);
 }
 
-/* Image */
 .ins-card-img {
-  width: 100%; aspect-ratio: 16/9; overflow: hidden;
-  background: var(--bg-3); position: relative; flex-shrink: 0;
+  width: 100%; aspect-ratio: 16/9;
+  overflow: hidden; background: var(--bg-3); flex-shrink: 0;
 }
 .ins-card-img img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform .5s ease;
 }
 .ins-card:hover .ins-card-img img { transform: scale(1.05); }
-.ins-card-cat {
-  position: absolute; top: 12px; left: 12px;
-  font-family: var(--FL); font-size: 9px; letter-spacing: 2.5px;
-  background: rgba(0,0,0,.55); color: #fff;
-  padding: 4px 10px; backdrop-filter: blur(4px);
-}
 
-/* Body */
-.ins-card-body { padding: 24px 24px 22px; display: flex; flex-direction: column; flex: 1; }
+.ins-card-body { padding: 24px 22px 20px; display: flex; flex-direction: column; flex: 1; }
 .ins-card-date {
   font-family: var(--FL); font-size: 9px; letter-spacing: 2px;
   color: var(--text-muted); margin-bottom: 10px;
 }
 .ins-card-title {
-  font-family: var(--FD); font-size: 20px; font-weight: 400;
-  color: var(--text); margin-bottom: 10px; line-height: 1.3;
+  font-family: var(--FL); font-size: 16px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.4;
 }
 .ins-card:hover .ins-card-title { color: var(--gold); }
 .ins-card-sum {
