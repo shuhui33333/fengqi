@@ -1,6 +1,5 @@
 ---
 // src/components/home/Hero.astro
-// White theme. Right side: 3 floating stat cards (original style).
 ---
 
 <section class="hero" id="top">
@@ -10,17 +9,17 @@
 
     <!-- ── Left: copy ── -->
     <div class="hero-left">
-      <p class="hero-over">CROSS-BORDER INDUSTRIAL GROUP</p>
+      <p class="hero-over">Cross-Border Industrial Group</p>
 
       <h1 class="hero-h1">
         Connecting China<br />
         &amp; <em>Southeast Asia</em><br />
-        <strong>Through Industry.</strong>
+        Through Industry.
       </h1>
 
       <p class="hero-body">
-        Fengqi Group integrates <strong>agriculture, logistics, industrial parks,
-        trade and digital systems</strong> — a complete cross-border platform from
+        Fengqi Group integrates agriculture, logistics, industrial parks,
+        trade and digital systems — a complete cross-border platform from
         production and supply chain to market access.
       </p>
 
@@ -30,25 +29,23 @@
       </div>
     </div>
 
-    <!-- ── Right: floating stat cards ── -->
+    <!-- ── Right: 6 business segment cards (2 col × 3 row) ── -->
     <div class="hero-right" aria-hidden="true">
-      <div class="hero-cards">
-
-        <div class="hc hc-1">
-          <div class="hc-num">800<sup>ac</sup></div>
-          <div class="hc-lbl">KUANTAN HALAL PARK</div>
-        </div>
-
-        <div class="hc hc-2">
-          <div class="hc-num">145M</div>
-          <div class="hc-lbl">JAVA LOGISTICS REACH</div>
-        </div>
-
-        <div class="hc hc-3">
-          <div class="hc-num">2B<sup>+</sup></div>
-          <div class="hc-lbl">GLOBAL MUSLIM CONSUMERS</div>
-        </div>
-
+      <div class="hero-segs">
+        {[
+          { num:'01', name:'Industrial Parks &\nCross-Border Platforms', href:'/business#parks'       },
+          { num:'02', name:'Logistics &\nSupply Chain',               href:'/business#logistics'    },
+          { num:'03', name:'Healthcare\n& Wellness',                  href:'/business#healthcare'   },
+          { num:'04', name:'Trade &\nDistribution',                   href:'/business#trade'        },
+          { num:'05', name:'Agriculture &\nEcological Technology',    href:'/business#agriculture'  },
+          { num:'06', name:'Digital\nSystems',                        href:'/business#digital'      },
+        ].map((s, i) => (
+          <a href={s.href} class={`hseg anim-d${i}`}>
+            <span class="hseg-num">{s.num}</span>
+            <span class="hseg-name">{s.name}</span>
+            <span class="hseg-arr">→</span>
+          </a>
+        ))}
       </div>
     </div>
 
@@ -58,10 +55,10 @@
   <div class="hero-bar">
     <div class="wrap hero-bar-inner">
       {[
-        { title:'CHINA BASE',            desc:'Agriculture, technology & industrial resources'       },
-        { title:'MALAYSIA HUB',          desc:'Kuantan halal parks (830 acres) · JAKIM certification' },
-        { title:'INDONESIA NETWORK',     desc:'Fengjie Logistics · 4 depots · 145M people reached' },
-        { title:'CROSS-BORDER PLATFORM', desc:'Production → logistics → trade → market access'     },
+        { title:'China Base',            desc:'Agriculture, technology & industrial resources'        },
+        { title:'Malaysia Hub',          desc:'Kuantan halal parks (830 acres) · JAKIM certification' },
+        { title:'Indonesia Network',     desc:'Fengjie Logistics · 4 depots · 145M people reached'  },
+        { title:'Cross-Border Platform', desc:'Production → logistics → trade → market access'      },
       ].map(item => (
         <div class="hb-item">
           <div class="hb-dot"></div>
@@ -101,7 +98,7 @@
 
 /* ── Left copy ── */
 .hero-over {
-  font-family: var(--FL); font-size: 10px; letter-spacing: 7px;
+  font-family: var(--FL); font-size: 15px; letter-spacing: 5px;
   color: var(--gold); margin-bottom: 24px;
   display: flex; align-items: center; gap: 14px;
   opacity: 0; animation: slideRight .9s ease .15s forwards;
@@ -110,57 +107,94 @@
 
 .hero-h1 {
   margin-bottom: 24px;
+  font-weight: 400;
   opacity: 0; animation: slideRight .9s ease .3s forwards;
 }
-.hero-h1 em     { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
-.hero-h1 strong { font-weight:600; color:var(--text); }
+.hero-h1 em { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
 
 .hero-body {
-  font-size: 16px; line-height: 1.85;
+  font-family: var(--FB);
+  font-size: 16px; font-weight: 400; line-height: 1.85;
   color: var(--text-2); max-width: 520px; margin-bottom: 36px;
   opacity: 0; animation: slideRight .9s ease .45s forwards;
 }
-.hero-body strong { color: var(--text); font-weight: 600; }
 
 .hero-actions {
   display: flex; gap: 16px; flex-wrap: wrap;
   opacity: 0; animation: slideRight .9s ease .6s forwards;
 }
 
-/* ── Floating stat cards ── */
+/* ── Right: 6 business segment cards ── */
 .hero-right {
   display: flex; align-items: center; justify-content: center;
   opacity: 0; animation: fadeIn 1s ease .75s forwards;
 }
-.hero-cards { position: relative; width: 360px; height: 360px; }
 
-.hc {
-  position: absolute;
+.hero-segs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.hseg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px 16px;
   background: var(--bg);
   border: 1px solid var(--bg-4);
-  border-top: 3px solid var(--gold);
-  padding: 26px 30px;
-  min-width: 185px;
-  box-shadow: var(--shadow);
-  transition: box-shadow .3s, transform .3s;
+  border-left: 3px solid transparent;
+  text-decoration: none; color: inherit;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+  opacity: 0;
 }
-.hc:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+/* staggered fade-in for the 6 cards */
+.anim-d0 { animation: fadeIn .6s ease .85s forwards; }
+.anim-d1 { animation: fadeIn .6s ease .95s forwards; }
+.anim-d2 { animation: fadeIn .6s ease 1.05s forwards; }
+.anim-d3 { animation: fadeIn .6s ease 1.15s forwards; }
+.anim-d4 { animation: fadeIn .6s ease 1.25s forwards; }
+.anim-d5 { animation: fadeIn .6s ease 1.35s forwards; }
 
-.hc-num {
-  font-family: var(--FL); font-size: 44px; font-weight: 600;
-  color: var(--gold); line-height: 1; margin-bottom: 8px;
-  letter-spacing: -1px;
-}
-.hc-num sup { font-size: 20px; font-weight: 500; }
-.hc-lbl {
-  font-family: var(--FL); font-size: 9.5px; letter-spacing: 2.5px;
-  color: var(--text-3); font-weight: 400;
+.hseg:hover {
+  border-left-color: var(--gold);
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-2);
 }
 
-/* Card positions + animations */
-.hc-1 { top: 0;    left: 0;    animation: floatA 5s   ease-in-out infinite; }
-.hc-2 { top: 65px; right: 0;   animation: floatB 6s   ease-in-out infinite .8s; }
-.hc-3 { bottom: 0; left: 40px; animation: floatA 5.5s ease-in-out infinite 1.4s; }
+.hseg-num {
+  font-family: var(--FL);
+  font-size: 14px;
+  font-weight: 400;        /* not bold */
+  color: var(--gold);
+  flex-shrink: 0;
+  line-height: 1.4;
+  width: 20px;
+}
+
+.hseg-name {
+  font-family: var(--FB);
+  font-size: 13px;
+  font-weight: 400;        /* not bold */
+  color: var(--text-2);
+  line-height: 1.45;
+  flex: 1;
+  white-space: pre-line;   /* respect \n line breaks */
+}
+.hseg:hover .hseg-name { color: var(--text); }
+
+.hseg-arr {
+  font-size: 14px;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .2s, transform .2s;
+  flex-shrink: 0;
+  align-self: center;
+}
+.hseg:hover .hseg-arr { opacity: 1; transform: translateX(0); }
 
 /* ── Bottom bar ── */
 .hero-bar {
@@ -181,8 +215,11 @@
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--gold); flex-shrink: 0; margin-top: 5px;
 }
-.hb-title { font-family:var(--FL); font-size:9px; letter-spacing:2.5px; color:var(--gold-dk); margin-bottom:4px; font-weight:600; }
-.hb-desc  { font-size:12px; color:var(--text-3); line-height:1.5; }
+.hb-title {
+  font-family: var(--FL); font-size: 14px; font-weight: 500;
+  letter-spacing: 1px; color: var(--gold-dk); margin-bottom: 4px;
+}
+.hb-desc  { font-family: var(--FB); font-size: 13px; color: var(--text-3); line-height: 1.5; }
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {

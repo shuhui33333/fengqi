@@ -42,8 +42,8 @@
   --ph:   64px;   /* page horizontal padding  */
 
   /* Typography scale */
-  --t-xs:   11px;
-  --t-sm:   13px;
+  --t-xs:   16px;
+  --t-sm:   19px;
   --t-base: 16px;
   --t-lg:   18px;
   --t-xl:   21px;
@@ -73,10 +73,10 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--FL);
+  font-family: var(--FB);
   font-weight: 400;
   font-size: var(--t-base);
-  line-height: 1.7;
+  line-height: 1.75;
   overflow-x: hidden;
   cursor: none;
 }
@@ -168,7 +168,7 @@ h4, .h4 {
   display: flex;
   align-items: center;
   gap: 14px;
-  text-transform: uppercase;
+  text-transform: none;
 }
 .label::before { content: ''; width: 28px; height: 1.5px; background: var(--gold); flex-shrink: 0; }
 .label--c { justify-content: center; }
@@ -177,7 +177,7 @@ h4, .h4 {
 
 /* ── Body text (lead paragraphs) ── */
 .body-text {
-  font-family: var(--FL);
+  font-family: var(--FB);
   font-size: 17px;
   font-weight: 400;
   line-height: 1.9;
@@ -190,7 +190,7 @@ h4, .h4 {
 .body-text--light { color: rgba(255,255,255,.78); }
 
 /* ── Prose paragraphs ── */
-p { font-family: var(--FL); }
+p { font-family: var(--FB); }
 
 /* ── Gold divider ── */
 .gold-rule { width: 52px; height: 2px; background: var(--gold); margin-bottom: 40px; }

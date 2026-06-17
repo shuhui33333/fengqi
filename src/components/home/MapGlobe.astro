@@ -4,7 +4,7 @@
 <section class="section mc-sec" id="global-footprint">
   <div class="wrap">
     <div class="reveal">
-      <div class="label">GLOBAL FOOTPRINT</div>
+      <div class="label">Global Footprint</div>
       <h2>Three Strategic Regions.<br />One <em>Connected</em> Platform.</h2>
       <p class="body-text">
         Fengqi uses China as its industrial base, Malaysia as its Southeast Asian core hub, and is progressively expanding in Indonesia — building a cross-border network covering production, logistics, trade and industrial synergy.
@@ -13,15 +13,15 @@
 
     <div class="mc-grid">
       {[
-        { flag:'🇨🇳', region:'CHINA', role:'Industrial Base & Technology', hl:false,
+        { flag:'🇨🇳', region:'China', role:'Industrial Base & Technology', hl:false,
           items:['Agricultural ecological technology & digital systems','Zengcheng 530-acre eco-agriculture space','Broiler farming, functional food & health products','Supply chain integration & cross-border export'],
           stat:'Production & technology hub',
           img:'https://images.unsplash.com/photo-1508189860359-777d945909ef?w=800&q=80' },
-        { flag:'🇲🇾', region:'MALAYSIA', role:'ASEAN Hub & Halal Gateway', hl:true,
+        { flag:'🇲🇾', region:'Malaysia', role:'ASEAN Hub & Halal Gateway', hl:true,
           items:['Kuantan Digital Halal Park: 730 acres (Gebeng) + 100 acres (Gambang)','JAKIM certification — recognised in 80+ countries','Kuantan Port & East Coast Rail Link access','RCEP & Malaysia-EU FTA trade advantages'],
           stat:'Global halal gateway',
           img:'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80' },
-        { flag:'🇮🇩', region:'INDONESIA', role:'Regional Logistics Network', hl:false,
+        { flag:'🇮🇩', region:'Indonesia', role:'Regional Logistics Network', hl:false,
           items:['Fengjie Logistics: 4 depots across Java Island','Covers ~80% of Java logistics demand','Serves ~145M people in core economic areas','Cold chain, urban distribution & trunk transport'],
           stat:'145M people reached',
           img:'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&q=80' },
@@ -45,9 +45,9 @@
     <!-- Corridors -->
     <div class="mc-corridors reveal d2">
       {[
-        { lbl:'CORRIDOR I',   text:'China production → Malaysia JAKIM certification → ASEAN & Middle East markets' },
-        { lbl:'CORRIDOR II',  text:'China supply chain → Fengjie Logistics Indonesia → Java Island distribution'   },
-        { lbl:'CORRIDOR III', text:'Cross-border trade → Malaysia hub → Africa & global Muslim markets'            },
+        { lbl:'Corridor I',   text:'China production → Malaysia JAKIM certification → ASEAN & Middle East markets' },
+        { lbl:'Corridor II',  text:'China supply chain → Fengjie Logistics Indonesia → Java Island distribution'   },
+        { lbl:'Corridor III', text:'Cross-border trade → Malaysia hub → Africa & global Muslim markets'            },
       ].map(c => (
         <div class="mc-cor">
           <span class="mc-cor-lbl">{c.lbl}</span>
@@ -76,7 +76,7 @@
 .mc-img-badge {
   position:absolute; bottom:0; left:0; right:0; padding:10px 16px;
   background:linear-gradient(transparent,rgba(0,0,0,.55));
-  font-family:var(--FL); font-size:10px; letter-spacing:3px; color:#fff;
+  font-family:var(--FL); font-size:15px; letter-spacing:3px; color:#fff;
 }
 
 .mc-body { padding:24px 26px; }
@@ -90,7 +90,7 @@
 /* Corridors */
 .mc-corridors { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--bg-4); }
 .mc-cor { background:var(--bg); padding:22px 24px; }
-.mc-cor-lbl { font-family:var(--FL); font-size:9px; letter-spacing:3px; color:var(--gold-dk); display:block; margin-bottom:8px; }
+.mc-cor-lbl { font-family:var(--FL); font-size:14px; letter-spacing:3px; color:var(--gold-dk); display:block; margin-bottom:8px; }
 .mc-cor-txt { font-size:14px; color:var(--text-3); line-height:1.7; }
 
 @media (max-width:1100px) { .mc-grid,.mc-corridors { grid-template-columns:1fr; } }

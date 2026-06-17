@@ -14,7 +14,7 @@ import FormInput from '../components/ui/FormInput.astro'
       <div class="geo-bg ct-geo"></div>
       <div class="wrap">
         <div class="ct-hero-c">
-          <div class="label">联系我们 · CONTACT US</div>
+          <div class="label">联系我们 · Contact Us</div>
           <h1 class="heading">Let's <em>Start a Conversation</em>.</h1>
           <p class="body-text body-text--wide">Whether you're exploring partnership opportunities, seeking market entry support, or simply want to learn more about Fengqi — our team is ready to connect.</p>
         </div>
@@ -27,7 +27,7 @@ import FormInput from '../components/ui/FormInput.astro'
         <!-- Left: form -->
         <div>
           <div class="reveal">
-            <div class="label">SEND AN ENQUIRY</div>
+            <div class="label">Send an Enquiry</div>
             <h2 class="heading" style="font-size:clamp(24px,2.8vw,38px)">Contact Our Team.</h2>
           </div>
           <form id="contact-form-el" novalidate class="ct-form reveal d1">
@@ -63,7 +63,7 @@ import FormInput from '../components/ui/FormInput.astro'
         <!-- Right: offices -->
         <aside>
           <div class="reveal d2">
-            <div class="label">GLOBAL OFFICES</div>
+            <div class="label">Global Offices</div>
           </div>
           <div class="offices cgrid">
             {[
@@ -100,25 +100,51 @@ import FormInput from '../components/ui/FormInput.astro'
   <ClientEffects />
 
 <script>
-const form = document.getElementById('contact-form-el')
-const btn  = document.getElementById('ct-submit')
-const ok   = document.getElementById('ct-success')
-const err  = document.getElementById('ct-error')
-form?.addEventListener('submit', async e => {
-  e.preventDefault()
-  if (!form.checkValidity()) { form.reportValidity(); return }
-  btn.setAttribute('data-loading','1'); btn.disabled = true
-  try {
-    const res  = await fetch('/api/contact', { method:'POST', body:new FormData(form) })
-    const text = await res.text()
-    let json
-    try { json = JSON.parse(text) }
-    catch { json = { success:false, message: text.slice(0,300) || 'Unexpected server response' } }
-    if (json.success) { form.reset(); ok.hidden=false; err.hidden=true }
-    else { console.error('Form error:', json.message); err.hidden=false; ok.hidden=true }
-  } catch(netErr) { console.error('Network error:', netErr); err.hidden=false; ok.hidden=true }
-  finally  { btn.removeAttribute('data-loading'); btn.disabled=false }
-})
+(function () {
+  const form = document.getElementById('contact-form-el')
+  const btn  = document.getElementById('ct-submit')
+  const ok   = document.getElementById('ct-success')
+  const err  = document.getElementById('ct-error')
+  if (!form) return
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault()
+    if (!form.checkValidity()) { form.reportValidity(); return }
+    btn.setAttribute('data-loading','1'); btn.disabled = true
+    try {
+      const res  = await fetch('/api/contact', { method:'POST', body: new FormData(form) })
+      const text = await res.text()
+
+      // Always log for debugging
+      console.log('[ContactForm] HTTP status:', res.status)
+      console.log('[ContactForm] Response body:', text.slice(0, 500))
+
+      let data = {}
+      try { data = JSON.parse(text) } catch (_) {
+        data = { success: false, message: text || 'Unexpected server response' }
+      }
+
+      // Normalise success — handle true / 1 / "true"
+      const isOk = data.success === true || data.success === 1 || data.success === 'true'
+
+      if (isOk) {
+        form.reset()
+        ok.hidden = false
+        err.hidden = true
+      } else {
+        console.error('[ContactForm] Submission failed:', data.message)
+        err.hidden = false
+        ok.hidden  = true
+      }
+    } catch (netErr) {
+      console.error('[ContactForm] Network error:', netErr)
+      err.hidden = false
+      ok.hidden  = true
+    } finally {
+      btn.removeAttribute('data-loading'); btn.disabled = false
+    }
+  })
+})()
 </script>
 </BaseLayout>
 <style>
