@@ -1,19 +1,40 @@
 ---
 // src/components/Header.astro
-// White header on white pages — becomes solid white + shadow on scroll.
-interface Props { active?: string }
-const { active = '' } = Astro.props
-const NAV = [
+interface Props {
+  active?: string
+  lang?:   'en' | 'zh'   // current language, defaults to 'en'
+}
+const { active = '', lang = 'en' } = Astro.props
+
+const NAV_EN = [
   { label:'About',       href:'/about'       },
   { label:'Business',    href:'/business'    },
   { label:'Projects',    href:'/projects'    },
   { label:'Insights',    href:'/insights'    },
   { label:'Partnership', href:'/partnership' },
 ]
+const NAV_ZH = [
+  { label:'关于我们', href:'/zh/about'       },
+  { label:'业务板块', href:'/zh/business'    },
+  { label:'旗舰项目', href:'/zh/projects'    },
+  { label:'动态资讯', href:'/zh/insights'    },
+  { label:'合作伙伴', href:'/zh/partnership' },
+]
+
+const NAV       = lang === 'zh' ? NAV_ZH : NAV_EN
+const contactHref  = lang === 'zh' ? '/zh/contact'  : '/contact'
+const contactLabel = lang === 'zh' ? '联系我们'      : 'Contact'
+const logoHref     = lang === 'zh' ? '/zh'           : '/'
+
+// Language switch targets
+const altLang     = lang === 'zh' ? 'en'  : 'zh'
+const altHref     = lang === 'zh' ? '/'   : '/zh'
+const altLabel    = lang === 'zh' ? 'EN'  : '中文'
+const curLabel    = lang === 'zh' ? '中文' : 'EN'
 ---
 
 <header id="hdr">
-  <a href="/" class="logo" aria-label="Fengqi Group">
+  <a href={logoHref} class="logo" aria-label="Fengqi Group">
     <img src="/images/logo/logo-circle.png" alt="Fengqi" class="logo-img" />
     <div class="logo-text">
       <span class="logo-name">FENGQI</span>
@@ -23,28 +44,38 @@ const NAV = [
 
   <nav aria-label="Main navigation">
     <ul class="nav-list">
-      {NAV.map(({label,href}) => (
+      {NAV.map(({label, href}) => (
         <li>
           <a href={href} class={`nav-a${active===href?' is-on':''}`}>{label}</a>
         </li>
       ))}
       <li>
-        <a href="/contact" class="nav-a nav-cta">Contact</a>
+        <a href={contactHref} class="nav-a nav-cta">{contactLabel}</a>
+      </li>
+      <!-- Language switcher -->
+      <li class="lang-switch" aria-label="Language">
+        <span class="lang-cur">{curLabel}</span>
+        <span class="lang-sep">|</span>
+        <a href={altHref} class="lang-alt" hreflang={altLang}>{altLabel}</a>
       </li>
     </ul>
   </nav>
 
-  <button id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="hdr-right-mobile">
+    <!-- Mobile lang switch -->
+    <a href={altHref} class="lang-mobile" hreflang={altLang}>{altLabel}</a>
+    <button id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <div id="nav-drawer" aria-hidden="true">
   <ul>
-    {NAV.map(({label,href}) => (
+    {NAV.map(({label, href}) => (
       <li><a href={href}>{label}</a></li>
     ))}
-    <li><a href="/contact" class="drawer-cta">Contact Us</a></li>
+    <li><a href={contactHref} class="drawer-cta">{contactLabel}</a></li>
   </ul>
 </div>
 
@@ -68,52 +99,72 @@ const NAV = [
 
 /* ── Logo ── */
 .logo { display:flex; align-items:center; gap:16px; text-decoration:none; flex-shrink:0; }
-.logo-img {
-  width: 54px; height: 54px;
-  object-fit: contain;
-  transition: transform .3s;
-}
-.logo:hover .logo-img { transform: scale(1.05); }
+.logo-img { width:54px; height:54px; object-fit:contain; transition:transform .3s; }
+.logo:hover .logo-img { transform:scale(1.05); }
 .logo-text { display:flex; flex-direction:column; line-height:1; }
-.logo-name {
-  font-family: var(--FL); font-size: 16px; font-weight: 600;
-  color: var(--gold); letter-spacing: 4px;
-}
-.logo-sub {
-  font-family: var(--FL); font-size: 8.5px;
-  color: var(--gold-dk); letter-spacing: 3px; margin-top: 5px;
-}
+.logo-name { font-family:var(--FL); font-size:16px; font-weight:600; color:var(--gold); letter-spacing:4px; }
+.logo-sub  { font-family:var(--FL); font-size:8.5px; color:var(--gold-dk); letter-spacing:3px; margin-top:5px; }
 
 /* ── Nav links ── */
-.nav-list { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-list { display:flex; align-items:center; gap:32px; list-style:none; }
 .nav-a {
-  font-family: var(--FL); font-size: 11px; font-weight: 400;
-  color: var(--text-2); text-decoration: none; letter-spacing: 2.5px;
-  position: relative; transition: color .25s;
-  padding-bottom: 3px;
+  font-family:var(--FL); font-size:11px; font-weight:400;
+  color:var(--text-2); text-decoration:none; letter-spacing:2.5px;
+  position:relative; transition:color .25s; padding-bottom:3px;
 }
 .nav-a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 1.5px; background: var(--gold);
-  transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+  content:''; position:absolute; bottom:-2px; left:0; right:0;
+  height:1.5px; background:var(--gold);
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
 }
-.nav-a:hover, .nav-a.is-on { color: var(--gold); }
-.nav-a:hover::after, .nav-a.is-on::after { transform: scaleX(1); }
+.nav-a:hover, .nav-a.is-on { color:var(--gold); }
+.nav-a:hover::after, .nav-a.is-on::after { transform:scaleX(1); }
 
 /* Contact CTA */
 .nav-cta {
-  border: 1.5px solid var(--gold);
-  padding: 8px 20px;
-  color: var(--gold) !important;
-  transition: background .25s, color .25s !important;
-  border-radius: 1px;
+  border:1.5px solid var(--gold); padding:8px 20px;
+  color:var(--gold) !important; transition:background .25s, color .25s !important;
+  border-radius:1px;
 }
-.nav-cta:hover { background: var(--gold); color: #fff !important; }
-.nav-cta::after { display: none !important; }
+.nav-cta:hover { background:var(--gold); color:#fff !important; }
+.nav-cta::after { display:none !important; }
+
+/* ── Language switcher ── */
+.lang-switch {
+  display: flex; align-items: center; gap: 6px;
+  padding-left: 8px;
+  border-left: 1px solid var(--bg-4);
+}
+.lang-cur {
+  font-family: var(--FL); font-size: 11px; letter-spacing: 2px;
+  color: var(--gold); font-weight: 600;
+}
+.lang-sep {
+  font-size: 11px; color: var(--bg-4); user-select: none;
+}
+.lang-alt {
+  font-family: var(--FL); font-size: 11px; letter-spacing: 2px;
+  color: var(--text-3); text-decoration: none; font-weight: 400;
+  transition: color .25s; padding-bottom: 0;
+}
+.lang-alt:hover { color: var(--gold); }
+.lang-alt::after { display: none !important; }
+
+/* ── Mobile right cluster ── */
+.hdr-right-mobile {
+  display: none; align-items: center; gap: 16px;
+}
+.lang-mobile {
+  font-family: var(--FL); font-size: 12px; letter-spacing: 2px;
+  color: var(--gold-dk); text-decoration: none; font-weight: 500;
+  border: 1px solid var(--gold-border); padding: 5px 10px;
+  transition: color .25s, border-color .25s;
+}
+.lang-mobile:hover { color: var(--gold); border-color: var(--gold); }
 
 /* ── Hamburger ── */
 #nav-burger {
-  display: none; flex-direction: column; gap: 5px;
+  display: flex; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: pointer; padding: 8px;
 }
 #nav-burger span {
@@ -134,8 +185,7 @@ const NAV = [
 #nav-drawer a {
   font-family: var(--FL); font-size: 12px; letter-spacing: 3px;
   color: var(--text-2); text-decoration: none; padding: 12px 0;
-  display: block; border-bottom: 1px solid var(--bg-3);
-  transition: color .25s;
+  display: block; border-bottom: 1px solid var(--bg-3); transition: color .25s;
 }
 #nav-drawer a:hover { color: var(--gold); }
 .drawer-cta {
@@ -150,7 +200,7 @@ const NAV = [
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   nav { display: none; }
-  #nav-burger { display: flex; }
+  .hdr-right-mobile { display: flex; }
   #hdr { height: 68px; }
 }
 @media (max-width: 480px) {

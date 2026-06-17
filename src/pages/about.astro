@@ -20,7 +20,7 @@ const TEAM = [
 const MILESTONES = [
   {year:'2014', title:'Founded — Agriculture & Industry', desc:'Fengqi Group established. Ecological agriculture, breeding and industrial chain development. Standardised demonstration bases launched in core production areas.'},
   {year:'2018', title:'Southeast Asia Expansion', desc:'Expansion into Malaysian and Indonesian markets. Logistics, warehousing and regional supply chain construction commenced. Cross-border industrial synergy initiated.'},
-  {year:'2024', title:'International Resources & Hong Kong Base', desc:'Investment company established in Hong Kong. Kuantan Halal Park, Fengjie Logistics Indonesia and Zengcheng eco-agriculture projects advanced in coordination.'},
+  {year:'2024', title:'International Resources & Hong Kong Base', desc:'Investment company established in Hong Kong. Pahang Halal Park, Fengjie Logistics Indonesia and Zengcheng eco-agriculture projects advanced in coordination.'},
   {year:'Future', title:'Regional Industrial Ecosystem', desc:'Deepening agricultural technology, logistics supply chain and digital systems synergy. Replicating the industrial model across regions to build a cross-border industrial ecosystem.'},
 ]
 ---
@@ -47,7 +47,7 @@ const MILESTONES = [
             <div class="label">Group Overview</div>
             <h2 class="heading">A <em>Complete</em> Industrial Ecosystem.</h2>
             <p class="body-text">The Group establishes a complete industrial system from breeding, agricultural production and warehousing through to trade circulation and market connection. In agriculture, it promotes modern broiler farming, ecological circular agriculture and health foods. In logistics, Fengjie Logistics builds a regional network across Southeast Asian markets.</p>
-            <p class="body-text" style="margin-bottom:0">Fengqi drives the Kuantan Digital Halal Food Industrial Park in Malaysia — comprising a 730-acre zone in Gebeng and a 100-acre zone in Gambang — and the Zengcheng ecological space in Guangzhou, combining agriculture, wellness and educational experiences. Business currently spans China, Malaysia and Indonesia.</p>
+            <p class="body-text" style="margin-bottom:0">Fengqi drives the Pahang Digital Halal Food Industrial Park in Malaysia — comprising a 730-acre zone in Gebeng and a 100-acre zone in Gambang — and the Zengcheng ecological space in Guangzhou, combining agriculture, wellness and educational experiences. Business currently spans China, Malaysia and Indonesia.</p>
           </div>
           <div class="reveal d2">
             <div class="ab-stats cgrid">
@@ -119,7 +119,7 @@ const MILESTONES = [
         <div class="team-grid cgrid">
           {TEAM.map((m,i)=>(
             <div class={`tc ctop reveal d${(i%3)+1}`}>
-              <div class="tc-photo"><div class="tc-ph-inner"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,.2)" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div></div>
+              <div class="tc-photo"><img src={`/images/common/p${i+1}.jpg`} alt={m.name} class="tc-photo-img" /></div>
               <div class="tc-body">
                 <p class="tc-role">{m.role}</p>
                 <h3 class="tc-name">{m.name}</h3>
@@ -165,9 +165,8 @@ const MILESTONES = [
 .team-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);position:relative;overflow:hidden}
 .team-grid{grid-template-columns:repeat(3,1fr)}
 .tc{background:var(--bg-2);display:flex;flex-direction:column}
-.tc-photo{width:100%;aspect-ratio:4/3;background:var(--bg-3);overflow:hidden;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center}
-.tc-ph-inner{width:80px;height:80px;border-radius:50%;border:1px dashed rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center}
-.tc-ph-inner svg{width:40px;height:40px}
+.tc-photo{width:100%;aspect-ratio:4/3;overflow:hidden;border-bottom:1px solid var(--gold-border)}
+.tc-photo-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .tc-body{padding:26px 28px}
 .tc-role{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
 .tc-name{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}
