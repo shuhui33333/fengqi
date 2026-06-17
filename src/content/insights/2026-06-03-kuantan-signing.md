@@ -8,7 +8,7 @@ featured: true
 
 Fengqi Group has advanced key development milestones at the Pahang Digital Halal Food Industrial Park (HALAL Industria Hub), its flagship cross-border industrial platform in Malaysia's Pahang state.
 
-Fengqi Group's Pahang Digital Halal Food Industrial Park comprises two zones within Pahang's Pahang Digital Halal Food Industrial Hub: a 730-acre zone in Gebeng and a 100-acre zone in Gambang (830 acres in total). Adjacent to the Malaysia-China Kuantan Industrial Park (MCKIP) and approximately 10 kilometres from Kuantan Port, the park is designed to provide a comprehensive one-stop platform for businesses targeting the ASEAN, Middle East and global halal markets.
+Fengqi Group's Pahang Digital Halal Food Industrial Park comprises two zones within Pahang's Kuantan Digital Halal Food Industrial Hub: a 730-acre zone in Gebeng and a 100-acre zone in Gambang (830 acres in total). Adjacent to the Malaysia-China Kuantan Industrial Park (MCKIP) and approximately 10 kilometres from Kuantan Port, the park is designed to provide a comprehensive one-stop platform for businesses targeting the ASEAN, Middle East and global halal markets.
 
 The project leverages Malaysia's internationally recognised JAKIM halal certification system to help businesses access 80+ mutual recognition countries through a single certification framework — with Fengqi's established processes compressing standard timelines from 30+ days to approximately 10–12 days.
 
