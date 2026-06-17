@@ -1,7 +1,7 @@
 ---
 title: "Pahang Digital Halal Food Industrial Park"
 subtitle: "730-Acre (Gebeng) + 100-Acre (Gambang) Integrated Halal Platform in Pahang"
-location: "Pahang, Malaysia"
+location: "Kuantan, Pahang, Malaysia"
 category: "Industrial Park"
 status: "In Development"
 featured: true

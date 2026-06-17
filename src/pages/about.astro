@@ -119,7 +119,7 @@ const MILESTONES = [
         <div class="team-grid cgrid">
           {TEAM.map((m,i)=>(
             <div class={`tc ctop reveal d${(i%3)+1}`}>
-              <div class="tc-photo"><img src={`/images/common/p${i+1}.png`} alt={m.name} class="tc-photo-img" /></div>
+              <div class="tc-photo"><img src={`/images/common/profile/p${i+1}.png`} alt={m.name} class="tc-photo-img" /></div>
               <div class="tc-body">
                 <p class="tc-role">{m.role}</p>
                 <h3 class="tc-name">{m.name}</h3>
@@ -165,8 +165,8 @@ const MILESTONES = [
 .team-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);position:relative;overflow:hidden}
 .team-grid{grid-template-columns:repeat(3,1fr)}
 .tc{background:var(--bg-2);display:flex;flex-direction:column}
-.tc-photo{width:100%;aspect-ratio:3/4;overflow:hidden;border-bottom:1px solid var(--gold-border);background:var(--bg-3)}
-.tc-photo-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.tc-photo{width:100%;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--gold-border);background:var(--bg-3);display:flex;align-items:center;justify-content:center}
+.tc-photo-img{width:33.333%;height:100%;object-fit:contain;object-position:center;display:block;margin:0 auto}
 .tc-body{padding:26px 28px}
 .tc-role{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
 .tc-name{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}

@@ -45,6 +45,10 @@ export interface SBNode {
   marks?:   { type: string; attrs?: Record<string, unknown> }[]
 }
 
+// Aliases used by RichText.astro
+export type StoryblokNode = SBNode
+export type StoryblokRichText = SBRichText
+
 interface SBStory {
   slug:         string
   published_at: string | null

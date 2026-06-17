@@ -71,7 +71,7 @@ const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886
           {projects.map(p => (
             <ProjectCard title={p.data.title} subtitle={p.data.subtitle} location={p.data.location}
               status={p.data.status} highlights={p.data.highlights} category={p.data.category}
-              href={`/projects/${p.slug}`} />
+              href={`/projects/${p.slug}`} order={p.data.order} />
           ))}
         </div>
         <div class="reveal d2" style="margin-top:36px">

@@ -24,7 +24,7 @@ const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.da
       <div class="wrap">
         <div class="pj-grid cgrid">
           {projects.map(p=>(
-            <ProjectCard title={p.data.title} subtitle={p.data.subtitle} location={p.data.location} status={p.data.status} highlights={p.data.highlights} category={p.data.category} href={`/projects/${p.slug}`} />
+            <ProjectCard title={p.data.title} subtitle={p.data.subtitle} location={p.data.location} status={p.data.status} highlights={p.data.highlights} category={p.data.category} href={`/projects/${p.slug}`} order={p.data.order} />
           ))}
         </div>
       </div>
