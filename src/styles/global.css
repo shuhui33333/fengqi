@@ -44,7 +44,7 @@
   /* Typography scale */
   --t-xs:   16px;
   --t-sm:   19px;
-  --t-base: 16px;
+  --t-base: 24px;
   --t-lg:   18px;
   --t-xl:   21px;
   --t-2xl:  26px;
@@ -178,9 +178,9 @@ h4, .h4 {
 /* ── Body text (lead paragraphs) ── */
 .body-text {
   font-family: var(--FB);
-  font-size: 17px;
+  font-size: 26px;
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 1.85;
   color: var(--text-2);
   max-width: 600px;
   margin-bottom: 40px;

@@ -1,6 +1,6 @@
 ---
-title: "Kuantan Digital Halal Food Industrial Park"
-subtitle: "730-Acre (Gebeng) + 100-Acre (Gambang) Integrated Halal Platform in Pahang, Malaysia"
+title: "Pahang Digital Halal Food Industrial Park"
+subtitle: "730-Acre (Gebeng) + 100-Acre (Gambang) Integrated Halal Platform in Pahang"
 location: "Kuantan, Pahang, Malaysia"
 category: "Industrial Park"
 status: "In Development"
@@ -19,7 +19,7 @@ highlights:
 
 > **Land breakdown:** Kuantan-Gebeng zone — 730 acres · Kuantan-Gambang zone — 100 acres · Total: 830 acres
 
-With a global Muslim population exceeding 2 billion and halal market demand continuing to expand, the Kuantan Digital Halal Food Industrial Park (HALAL Industria Hub) is Fengqi's flagship platform in Malaysia — comprising a 730-acre zone in Gebeng and a 100-acre zone in Gambang (830 acres total), creating an integrated cross-border ecosystem integrating industrial park, logistics supply chain, international trade and digital platform into one.
+With a global Muslim population exceeding 2 billion and halal market demand continuing to expand, the Pahang Digital Halal Food Industrial Park (HALAL Industria Hub) is Fengqi's flagship platform in Malaysia — comprising a 730-acre zone in Gebeng and a 100-acre zone in Gambang (830 acres total), creating an integrated cross-border ecosystem integrating industrial park, logistics supply chain, international trade and digital platform into one.
 
 Located in Pahang, adjacent to the Malaysia-China Kuantan Industrial Park (MCKIP) and approximately 10 kilometres from Kuantan Port, the park benefits from direct access to the East Coast Rail Link (ECRL) and proximity to a planned new international airport — giving it a naturally superior multimodal transport position.
 

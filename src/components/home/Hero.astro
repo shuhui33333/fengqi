@@ -56,7 +56,7 @@
     <div class="wrap hero-bar-inner">
       {[
         { title:'China Base',            desc:'Agriculture, technology & industrial resources'        },
-        { title:'Malaysia Hub',          desc:'Kuantan halal parks (830 acres) · JAKIM certification' },
+        { title:'Malaysia Hub',          desc:'Pahang halal parks (830 acres) · JAKIM certification' },
         { title:'Indonesia Network',     desc:'Fengjie Logistics · 4 depots · 145M people reached'  },
         { title:'Cross-Border Platform', desc:'Production → logistics → trade → market access'      },
       ].map(item => (
@@ -98,7 +98,7 @@
 
 /* ── Left copy ── */
 .hero-over {
-  font-family: var(--FL); font-size: 15px; letter-spacing: 5px;
+  font-family: var(--FL); font-size: 22px; letter-spacing: 4px;
   color: var(--gold); margin-bottom: 24px;
   display: flex; align-items: center; gap: 14px;
   opacity: 0; animation: slideRight .9s ease .15s forwards;
@@ -114,8 +114,8 @@
 
 .hero-body {
   font-family: var(--FB);
-  font-size: 16px; font-weight: 400; line-height: 1.85;
-  color: var(--text-2); max-width: 520px; margin-bottom: 36px;
+  font-size: 24px; font-weight: 400; line-height: 1.85;
+  color: var(--text-2); max-width: 580px; margin-bottom: 36px;
   opacity: 0; animation: slideRight .9s ease .45s forwards;
 }
 
@@ -133,16 +133,16 @@
 .hero-segs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
-  max-width: 420px;
+  max-width: 630px;
 }
 
 .hseg {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 18px 16px;
+  gap: 15px;
+  padding: 27px 24px;
   background: var(--bg);
   border: 1px solid var(--bg-4);
   border-left: 3px solid transparent;
@@ -166,27 +166,27 @@
 
 .hseg-num {
   font-family: var(--FL);
-  font-size: 14px;
+  font-size: 21px;
   font-weight: 400;        /* not bold */
   color: var(--gold);
   flex-shrink: 0;
   line-height: 1.4;
-  width: 20px;
+  width: 30px;
 }
 
 .hseg-name {
-  font-family: var(--FB);
-  font-size: 13px;
+  font-family: var(--FL);
+  font-size: 20px;
   font-weight: 400;        /* not bold */
   color: var(--text-2);
-  line-height: 1.45;
+  line-height: 1.5;
   flex: 1;
   white-space: pre-line;   /* respect \n line breaks */
 }
 .hseg:hover .hseg-name { color: var(--text); }
 
 .hseg-arr {
-  font-size: 14px;
+  font-size: 21px;
   color: var(--gold);
   opacity: 0;
   transform: translateX(-4px);
@@ -216,7 +216,7 @@
   background: var(--gold); flex-shrink: 0; margin-top: 5px;
 }
 .hb-title {
-  font-family: var(--FL); font-size: 14px; font-weight: 500;
+  font-family: var(--FL); font-size: 21px; font-weight: 500;
   letter-spacing: 1px; color: var(--gold-dk); margin-bottom: 4px;
 }
 .hb-desc  { font-family: var(--FB); font-size: 13px; color: var(--text-3); line-height: 1.5; }
