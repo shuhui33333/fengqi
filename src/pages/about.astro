@@ -119,7 +119,7 @@ const MILESTONES = [
         <div class="team-grid cgrid">
           {TEAM.map((m,i)=>(
             <div class={`tc ctop reveal d${(i%3)+1}`}>
-              <div class="tc-photo"><div class="tc-ph-inner"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,.2)" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div></div>
+              <div class="tc-photo"><img src={`/images/common/p${i+1}.jpg`} alt={m.name} class="tc-photo-img" /></div>
               <div class="tc-body">
                 <p class="tc-role">{m.role}</p>
                 <h3 class="tc-name">{m.name}</h3>
@@ -145,33 +145,32 @@ const MILESTONES = [
 .ab-stat{background:var(--bg-2);padding:28px 24px;transition:background .3s}
 .ab-stat:hover{background:var(--bg-3)}
 .ab-stat-num{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:6px}
-.ab-stat-lbl{font-family:var(--FL);font-size:26px;letter-spacing:2.5px;color:var(--text-3)}
+.ab-stat-lbl{font-family:var(--FL);font-size:17px;letter-spacing:2.5px;color:var(--text-3)}
 .ab-vision{background:var(--bg-3);border:1px solid var(--bg-4);padding:32px;position:relative}
-.ab-vis-lbl{font-family:var(--FL);font-size:26px;letter-spacing:4px;color:var(--gold);margin-bottom:14px}
-.ab-vis-txt{font-size:27px;color:var(--text-3);line-height:1.9;font-style:italic}
+.ab-vis-lbl{font-family:var(--FL);font-size:17px;letter-spacing:4px;color:var(--gold);margin-bottom:14px}
+.ab-vis-txt{font-size:18px;color:var(--text-3);line-height:1.9;font-style:italic}
 .comp-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
 .comp-grid{grid-template-columns:repeat(4,1fr)}
 .cc{background:var(--bg-2);padding:44px 32px}
 .cc:hover{background:var(--bg-3)}
-.cc-t{font-family:var(--FD);font-size:30px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
-.cc-b{font-size:26px;line-height:2;color:var(--text-3)}
+.cc-t{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
+.cc-b{font-size:17px;line-height:2;color:var(--text-3)}
 .path-grid{grid-template-columns:repeat(4,1fr)}
 .pm{background:var(--bg-2);padding:48px 32px;position:relative}
 .pm::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
 .pm:hover::before{transform:scaleX(1)}
 .pm-year{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:14px}
-.pm-title{font-family:var(--FD);font-size:27px;font-weight:400;color:var(--text);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);line-height:1.3}
-.pm-desc{font-size:26px;line-height:2;color:var(--text-3)}
+.pm-title{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--text);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);line-height:1.3}
+.pm-desc{font-size:17px;line-height:2;color:var(--text-3)}
 .team-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);position:relative;overflow:hidden}
 .team-grid{grid-template-columns:repeat(3,1fr)}
 .tc{background:var(--bg-2);display:flex;flex-direction:column}
-.tc-photo{width:100%;aspect-ratio:4/3;background:var(--bg-3);overflow:hidden;border-bottom:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center}
-.tc-ph-inner{width:80px;height:80px;border-radius:50%;border:1px dashed rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center}
-.tc-ph-inner svg{width:40px;height:40px}
+.tc-photo{width:100%;aspect-ratio:4/3;overflow:hidden;border-bottom:1px solid var(--gold-border)}
+.tc-photo-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .tc-body{padding:26px 28px}
-.tc-role{font-family:var(--FL);font-size:27px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
-.tc-name{font-family:var(--FD);font-size:30px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}
-.tc-bio{font-size:27px;color:var(--text-3);line-height:1.8}
+.tc-role{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
+.tc-name{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}
+.tc-bio{font-size:18px;color:var(--text-3);line-height:1.8}
 @media(max-width:1100px){.ab-layout{grid-template-columns:1fr;gap:40px}.comp-grid,.path-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.comp-grid,.path-grid,.team-grid{grid-template-columns:1fr}}
 

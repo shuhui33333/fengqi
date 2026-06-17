@@ -11,14 +11,14 @@ interface Props {
 }
 const { num, en, name, body, href, tags, image = null } = Astro.props
 
-// Default placeholder images per segment type (Unsplash free-to-use)
+// Local business card images — C1.jpg to C6.jpg in public/images/common/
 const DEFAULTS: Record<string, string> = {
-  '01': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',  // industrial / aerial
-  '02': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80',  // logistics / warehouse
-  '03': 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80',      // healthcare / wellness
-  '04': 'https://images.unsplash.com/photo-1543332164-6e82f355badc?w=800&q=80',      // trade / supply chain
-  '05': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80',   // agriculture / fields
-  '06': 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80',  // digital / tech
+  '01': '/images/common/C1.jpg',   // Industrial Parks
+  '02': '/images/common/C2.jpg',   // Logistics & Supply Chain
+  '03': '/images/common/C3.jpg',   // Healthcare & Wellness
+  '04': '/images/common/C4.jpg',   // Trade & Distribution
+  '05': '/images/common/C5.jpg',   // Agriculture & Eco-Tech
+  '06': '/images/common/C6.jpg',   // Digital Systems
 }
 const imgSrc = image ?? DEFAULTS[num] ?? DEFAULTS['01']
 ---
