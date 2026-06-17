@@ -132,9 +132,8 @@
 .hero-segs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
-  /* 1.5× the previous 420px max-width */
   max-width: 630px;
 }
 
@@ -142,7 +141,6 @@
   display: flex;
   align-items: flex-start;
   gap: 13px;
-  /* 1.5× the previous 18px 16px padding */
   padding: 27px 24px;
   background: var(--bg);
   border: 1px solid var(--bg-4);
@@ -181,13 +179,13 @@
 /* ── Card name — title font (Cinzel), not bold ── */
 .hseg-name {
   font-family: var(--FL);
-  /* 1.5× previous 13px */
-  font-size: 19px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-2);
-  line-height: 1.4;
+  line-height: 1.5;
   flex: 1;
   white-space: pre-line;
+  letter-spacing: 0.2px;
 }
 .hseg:hover .hseg-name { color: var(--text); }
 
@@ -227,9 +225,9 @@
 
 /* ── Responsive ── */
 @media (max-width: 1280px) {
-  .hero-segs { max-width: 420px; }
-  .hseg-name { font-size: 13px; }
-  .hseg { padding: 20px 16px; }
+  .hero-segs { max-width: 100%; }
+  .hseg-name { font-size: 14px; }
+  .hseg { padding: 22px 18px; }
 }
 @media (max-width: 1100px) {
   .hero-content { grid-template-columns: 1fr; padding-bottom: 72px; }
