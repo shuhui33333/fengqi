@@ -1,12 +1,17 @@
 ---
-// src/pages/insights/index.astro  →  /insights  (Storyblok)
+// src/pages/insights/index.astro  →  /insights  (page 1 of paginated list)
 import BaseLayout    from '../../layouts/BaseLayout.astro'
 import Header        from '../../components/Header.astro'
 import Footer        from '../../components/Footer.astro'
 import ClientEffects from '../../components/ClientEffects.astro'
+import Pagination    from '../../components/ui/Pagination.astro'
 import { getAllInsights } from '../../lib/storyblok'
 
-const posts = await getAllInsights()
+const PER_PAGE = 9
+const all   = await getAllInsights()
+const posts = all.slice(0, PER_PAGE)
+const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
+
 const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
 ---
 <BaseLayout title="Insights | Fengqi Group" description="Latest news, project updates and industry perspectives from Fengqi Group.">
@@ -32,29 +37,33 @@ const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5
         {posts.length === 0 ? (
           <p class="ins-empty">No articles published yet — check back soon.</p>
         ) : (
-          <div class="ins-grid">
-            {posts.map((a, i) => {
-              const imgSrc = a.image ?? DEFAULT_IMG
-              return (
-                <a href={`/insights/${a.slug}`} class={`ins-card reveal d${(i % 3) + 1}`}>
-                  <div class="ins-card-img">
-                    <img src={imgSrc} alt={a.title} loading="lazy" />
-                  </div>
-                  <div class="ins-card-body">
-                    <p class="ins-card-date">
-                      {a.date.toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' })}
-                    </p>
-                    <h3 class="ins-card-title">{a.title}</h3>
-                    <p class="ins-card-sum">{a.summary}</p>
-                    <span class="ins-card-arr">
-                      Read more
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </span>
-                  </div>
-                </a>
-              )
-            })}
-          </div>
+          <>
+            <div class="ins-grid">
+              {posts.map((a, i) => {
+                const imgSrc = a.image ?? DEFAULT_IMG
+                return (
+                  <a href={`/insights/${a.slug}`} class={`ins-card reveal d${(i % 3) + 1}`}>
+                    <div class="ins-card-img">
+                      <img src={imgSrc} alt={a.title} loading="lazy" />
+                    </div>
+                    <div class="ins-card-body">
+                      <p class="ins-card-date">
+                        {a.date.toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' })}
+                      </p>
+                      <h3 class="ins-card-title">{a.title}</h3>
+                      <p class="ins-card-sum">{a.summary}</p>
+                      <span class="ins-card-arr">
+                        Read more
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+
+            <Pagination currentPage={1} totalPages={totalPages} basePath="/insights" />
+          </>
         )}
       </div>
     </section>

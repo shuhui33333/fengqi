@@ -58,30 +58,49 @@ interface SBStory {
 
 // ── Fetch API ───────────────────────────────────────────────────────────────
 
-/** All stories in insights/, newest-first. Returns [] on any error. */
+/** All stories in insights/, newest-first. Paginates through every Storyblok
+ *  page so there is no 100-article cap. Returns [] on any error. */
 export async function getAllInsights(): Promise<InsightEntry[]> {
   if (!TOKEN) {
     console.warn('[storyblok] Secret "storyblock" is missing — returning empty array')
     return []
   }
-  const url = [
-    `${BASE}/stories`,
-    `?token=${TOKEN}`,
-    `&starts_with=insights/`,
-    `&version=${VERSION}`,
-    `&sort_by=content.date:desc`,
-    `&per_page=100`,
-    `&cv=${CV}`,
-  ].join('')
+
+  const PER_PAGE = 100
+  const all: SBStory[] = []
 
   try {
-    const res  = await fetch(url)
-    if (!res.ok) {
-      console.error(`[storyblok] getAllInsights → ${res.status} ${res.statusText}`)
-      return []
+    let page = 1
+    // Safety cap of 50 pages (5,000 articles) to avoid runaway loops
+    while (page <= 50) {
+      const url = [
+        `${BASE}/stories`,
+        `?token=${TOKEN}`,
+        `&starts_with=insights/`,
+        `&version=${VERSION}`,
+        `&sort_by=content.date:desc`,
+        `&per_page=${PER_PAGE}`,
+        `&page=${page}`,
+        `&cv=${CV}`,
+      ].join('')
+
+      const res = await fetch(url)
+      if (!res.ok) {
+        console.error(`[storyblok] getAllInsights page ${page} → ${res.status} ${res.statusText}`)
+        break
+      }
+
+      const data = await res.json() as { stories?: SBStory[] }
+      const batch = data.stories ?? []
+      all.push(...batch)
+
+      // Storyblok exposes the grand total via the "total" response header.
+      const total = Number(res.headers.get('total') ?? '0')
+      if (batch.length < PER_PAGE || (total > 0 && all.length >= total)) break
+      page++
     }
-    const data = await res.json() as { stories?: SBStory[] }
-    return (data.stories ?? []).map(mapStory)
+
+    return all.map(mapStory)
   } catch (err) {
     console.error('[storyblok] getAllInsights fetch failed:', err)
     return []

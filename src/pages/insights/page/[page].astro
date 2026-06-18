@@ -1,0 +1,124 @@
+---
+// src/pages/insights/page/[page].astro  →  /insights/page/2, /insights/page/3 …
+// Page 1 lives at /insights (index.astro); this route covers pages 2+.
+import BaseLayout    from '../../../layouts/BaseLayout.astro'
+import Header        from '../../../components/Header.astro'
+import Footer        from '../../../components/Footer.astro'
+import ClientEffects from '../../../components/ClientEffects.astro'
+import Pagination    from '../../../components/ui/Pagination.astro'
+import { getAllInsights } from '../../../lib/storyblok'
+
+export async function getStaticPaths() {
+  const PER_PAGE = 9
+  const all = await getAllInsights()
+  const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
+
+  // Generate routes for pages 2 … N (page 1 is /insights)
+  const paths = []
+  for (let p = 2; p <= totalPages; p++) {
+    paths.push({
+      params: { page: String(p) },
+      props:  {
+        pagePosts: all.slice((p - 1) * PER_PAGE, p * PER_PAGE),
+        currentPage: p,
+        totalPages,
+      },
+    })
+  }
+  return paths
+}
+
+const { pagePosts, currentPage, totalPages } = Astro.props
+const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+---
+<BaseLayout title={`Insights — Page ${currentPage} | Fengqi Group`} description="Latest news, project updates and industry perspectives from Fengqi Group.">
+  <Header active="/insights" />
+  <main>
+
+    <section class="section ins-hero page-hero">
+      <div class="wrap">
+        <div class="ins-hero-content">
+          <div class="label">Insights</div>
+          <h1>News &amp; <em>Updates</em>.</h1>
+          <p class="body-text body-text--wide">
+            Latest developments, project milestones and industry perspectives from Fengqi Group.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-light" id="all-insights">
+      <div class="wrap">
+        <div class="ins-grid">
+          {pagePosts.map((a, i) => {
+            const imgSrc = a.image ?? DEFAULT_IMG
+            return (
+              <a href={`/insights/${a.slug}`} class={`ins-card reveal d${(i % 3) + 1}`}>
+                <div class="ins-card-img">
+                  <img src={imgSrc} alt={a.title} loading="lazy" />
+                </div>
+                <div class="ins-card-body">
+                  <p class="ins-card-date">
+                    {a.date.toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' })}
+                  </p>
+                  <h3 class="ins-card-title">{a.title}</h3>
+                  <p class="ins-card-sum">{a.summary}</p>
+                  <span class="ins-card-arr">
+                    Read more
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+
+        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/insights" />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.ins-hero { }
+.ins-hero-content { max-width: 760px; }
+.ins-hero h1   { color: var(--text); }
+.ins-hero h1 em { color: var(--gold); }
+.ins-hero .label { color: var(--gold); }
+.ins-hero .body-text { color: var(--text-2); }
+
+.ins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+.ins-card {
+  background: var(--bg); border: 1px solid var(--bg-4);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; overflow: hidden;
+  transition: box-shadow .28s, border-color .28s, transform .28s;
+}
+.ins-card:hover { box-shadow: var(--shadow); border-color: var(--gold-border); transform: translateY(-3px); }
+
+.ins-card-img { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--bg-3); flex-shrink: 0; }
+.ins-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.ins-card:hover .ins-card-img img { transform: scale(1.05); }
+
+.ins-card-body { padding: 24px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+.ins-card-date { font-family: var(--FL); font-size: 9px; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 10px; }
+.ins-card-title { font-family: var(--FL); font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.4; }
+.ins-card:hover .ins-card-title { color: var(--gold); }
+.ins-card-sum {
+  font-size: 14px; color: var(--text-3); line-height: 1.75; flex: 1; margin-bottom: 16px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ins-card-arr {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--FL); font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-top: auto;
+  opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s;
+}
+.ins-card:hover .ins-card-arr { opacity: 1; transform: translateX(0); }
+
+@media (max-width: 1100px) { .ins-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px)  { .ins-grid { grid-template-columns: 1fr; gap: 20px; } }
+</style>

@@ -1,0 +1,107 @@
+---
+// src/components/ui/Pagination.astro
+// Numbered pagination nav. Page 1 lives at basePath (/insights),
+// pages 2+ at basePath/page/N (/insights/page/2).
+interface Props {
+  currentPage: number
+  totalPages:  number
+  basePath:    string   // e.g. "/insights"
+}
+const { currentPage, totalPages, basePath } = Astro.props
+
+const href = (p: number) => (p <= 1 ? basePath : `${basePath}/page/${p}`)
+
+// Build a compact page list with ellipses: 1 … (c-1) c (c+1) … last
+function pageList(current: number, total: number): (number | '…')[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+  const pages: (number | '…')[] = [1]
+  const start = Math.max(2, current - 1)
+  const end   = Math.min(total - 1, current + 1)
+  if (start > 2) pages.push('…')
+  for (let p = start; p <= end; p++) pages.push(p)
+  if (end < total - 1) pages.push('…')
+  pages.push(total)
+  return pages
+}
+const pages = pageList(currentPage, totalPages)
+---
+{totalPages > 1 && (
+  <nav class="pg" aria-label="Pagination">
+    <a
+      class={`pg-edge${currentPage === 1 ? ' is-disabled' : ''}`}
+      href={currentPage === 1 ? undefined : href(currentPage - 1)}
+      aria-disabled={currentPage === 1 ? 'true' : 'false'}
+      rel="prev"
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 4 6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Prev</span>
+    </a>
+
+    <div class="pg-nums">
+      {pages.map(p => (
+        p === '…'
+          ? <span class="pg-gap">…</span>
+          : <a
+              class={`pg-num${p === currentPage ? ' is-active' : ''}`}
+              href={href(p)}
+              aria-current={p === currentPage ? 'page' : undefined}
+            >{p}</a>
+      ))}
+    </div>
+
+    <a
+      class={`pg-edge${currentPage === totalPages ? ' is-disabled' : ''}`}
+      href={currentPage === totalPages ? undefined : href(currentPage + 1)}
+      aria-disabled={currentPage === totalPages ? 'true' : 'false'}
+      rel="next"
+    >
+      <span>Next</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </nav>
+)}
+
+<style>
+.pg {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-top: 56px; flex-wrap: wrap;
+}
+.pg-nums { display: flex; align-items: center; gap: 6px; }
+
+.pg-num {
+  min-width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--FL); font-size: 14px; color: var(--text-2);
+  border: 1px solid var(--bg-4); background: var(--bg);
+  text-decoration: none; padding: 0 6px;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.pg-num:hover { border-color: var(--gold-border); color: var(--gold); }
+.pg-num.is-active {
+  background: var(--gold); border-color: var(--gold); color: #fff;
+  pointer-events: none;
+}
+
+.pg-gap {
+  min-width: 24px; text-align: center;
+  font-family: var(--FL); font-size: 14px; color: var(--text-muted);
+}
+
+.pg-edge {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 40px; padding: 0 16px;
+  font-family: var(--FL); font-size: 12px; letter-spacing: 1px;
+  color: var(--text-2); border: 1px solid var(--bg-4); background: var(--bg);
+  text-decoration: none;
+  transition: border-color .2s, color .2s;
+}
+.pg-edge:hover { border-color: var(--gold-border); color: var(--gold); }
+.pg-edge.is-disabled {
+  opacity: .4; pointer-events: none; cursor: default;
+}
+
+@media (max-width: 560px) {
+  .pg-edge span { display: none; }
+  .pg-edge { padding: 0 12px; }
+}
+</style>
