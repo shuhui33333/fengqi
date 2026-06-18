@@ -54,7 +54,7 @@ import FormInput from '../components/ui/FormInput.astro'
             <span class="ct-btn-text">Send Message →</span>
             <span class="ct-btn-loading" aria-hidden="true">Sending…</span>
           </button>
-          <div id="ct-success" class="ct-success" aria-live="polite" hidden>✓ Message received — we'll be in touch within two business days.</div>
+          <div id="ct-success" class="ct-success" aria-live="polite" hidden>✓ Message sent successfully. We will contact you shortly.</div>
           <div id="ct-error"   class="ct-err"     aria-live="polite" hidden>Something went wrong. Email us at <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a></div>
         </div>
           </form>
@@ -115,24 +115,20 @@ import FormInput from '../components/ui/FormInput.astro'
       const res  = await fetch('/api/contact', { method:'POST', body: new FormData(form) })
       const text = await res.text()
 
+      let result = {}
+      try { result = JSON.parse(text) } catch (_) { result = { raw: text } }
+
       // Always log for debugging
-      console.log('[ContactForm] HTTP status:', res.status)
-      console.log('[ContactForm] Response body:', text.slice(0, 500))
+      console.log('[ContactForm] response status:', res.status)
+      console.log('[ContactForm] result:', result)
 
-      let data = {}
-      try { data = JSON.parse(text) } catch (_) {
-        data = { success: false, message: text || 'Unexpected server response' }
-      }
-
-      // Normalise success — handle true / 1 / "true"
-      const isOk = data.success === true || data.success === 1 || data.success === 'true'
-
-      if (isOk) {
+      // Primary signal is response.ok — do not depend on result.success alone
+      if (res.ok) {
         form.reset()
-        ok.hidden = false
+        ok.hidden  = false
         err.hidden = true
       } else {
-        console.error('[ContactForm] Submission failed:', data.message)
+        console.error('[ContactForm] Submission failed:', res.status, result)
         err.hidden = false
         ok.hidden  = true
       }

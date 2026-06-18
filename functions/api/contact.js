@@ -54,10 +54,12 @@ export async function onRequest({ request, env }) {
       data = { success: false, message: rawText.slice(0, 200) || 'Unknown error from Web3Forms' }
     }
 
-    // Normalise success — Web3Forms may return true (bool) or 1 (int) or "true" (string)
-    const isSuccess = data.success === true || data.success === 1 || data.success === 'true'
+    // Determine success: Web3Forms HTTP ok OR explicit success flag (true / 1 / "true")
+    const flagged   = data.success === true || data.success === 1 || data.success === 'true'
+    const isSuccess = w3Res.ok || flagged
     const normalised = { ...data, success: isSuccess }
 
+    // Pass through the real outcome via status so frontend response.ok is reliable
     return json(normalised, isSuccess ? 200 : 422)
 
   } catch (err) {
