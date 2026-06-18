@@ -76,6 +76,9 @@ const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rg
 .prose > h2:first-of-type{margin-top:0;border-top:none;padding-top:0}
 .prose h3{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 12px}
 .prose p{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:28px}
+/* Extra blank line between body text and the heading below it */
+.prose p + h2, .prose ul + h2, .prose ol + h2, .prose table + h2, .prose blockquote + h2 { margin-top: 88px; }
+.prose p + h3, .prose ul + h3, .prose ol + h3, .prose table + h3, .prose blockquote + h3 { margin-top: 56px; }
 .prose ul,.prose ol{padding-left:20px;margin-bottom:20px}
 .prose li{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:6px}
 .prose strong{color:var(--text);font-weight:500}

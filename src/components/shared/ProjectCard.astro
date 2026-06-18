@@ -28,7 +28,13 @@ const DEFAULT_IMGS: Record<string,string> = {
   'Healthcare':      'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80',
   'Media':           'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
 }
-const localImg = order >= 1 && order <= 5 ? `/images/common/projects/c${order}.png` : null
+// Project images by order (c4 uses the updated -new.png file)
+const PROJECT_IMG_OVERRIDES: Record<number, string> = {
+  4: '/images/common/projects/c4-new.png',
+}
+const localImg = order >= 1 && order <= 5
+  ? (PROJECT_IMG_OVERRIDES[order] ?? `/images/common/projects/c${order}.png`)
+  : null
 const imgSrc = image ?? localImg ?? DEFAULT_IMGS[category] ?? DEFAULT_IMGS['Industrial Park']
 ---
 
