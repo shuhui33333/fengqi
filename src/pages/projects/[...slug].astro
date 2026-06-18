@@ -38,7 +38,7 @@ const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rg
     </section>
     <section class="section pd-body">
       <div class="wrap pd-layout">
-        <div class="pd-prose prose reveal"><Content /></div>
+        <div class="pd-prose reveal"><Content /></div>
         <aside class="pd-aside reveal d2">
           <div class="pd-hl">
             <p class="pd-hl-t">Key Highlights</p>
@@ -70,24 +70,29 @@ const sc:Record<string,string>={Active:'rgba(201,168,76,1)','In Development':'rg
 .pd-status{background:var(--bg-3);border:1px solid var(--bg-4);padding:24px 28px;white-space:nowrap;text-align:right}
 .pd-st-lbl{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
 .pd-st-val{font-family:var(--FD);font-size:18px}
-.pd-body{background:var(--black)}
+.pd-body{background:var(--bg)}
 .pd-layout{display:grid;grid-template-columns:1fr 320px;gap:60px;align-items:start}
-.prose h2{font-family:var(--FL);font-size:clamp(22px,2.5vw,32px);font-weight:500;color:var(--text);margin:96px 0 24px;line-height:1.2;padding-top:0;border-top:none}
-.prose > h2:first-of-type{margin-top:0;border-top:none;padding-top:0}
-.prose h3{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 12px}
-.prose p{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:28px}
-/* Generous section spacing between body content and the next heading
-   (premium corporate style — Temasek / BlackRock / McKinsey) */
-.prose p + h2, .prose ul + h2, .prose ol + h2, .prose table + h2,
-.prose blockquote + h2, .prose pre + h2, .prose figure + h2 { margin-top: 4rem; }
-.prose p + h3, .prose ul + h3, .prose ol + h3, .prose table + h3,
-.prose blockquote + h3, .prose pre + h3, .prose figure + h3 { margin-top: 3rem; }
-.prose ul,.prose ol{padding-left:20px;margin-bottom:20px}
-.prose li{font-size:18px;line-height:2;color:var(--text-3);margin-bottom:6px}
-.prose strong{color:var(--text);font-weight:500}
-.prose table{width:100%;border-collapse:collapse;margin:24px 0}
-.prose th{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold);border-bottom:1px solid var(--gold-border);padding:10px 14px;text-align:left}
-.prose td{font-size:17px;color:var(--text-3);border-bottom:1px solid rgba(201,168,76,.08);padding:10px 14px}
+/* Content rendered by <Content /> has NO astro scope attribute, so these
+   selectors must be :global. Scoped to .pd-prose to stay isolated from the
+   insights page's own global .prose styles. */
+:global(.pd-prose h2){font-family:var(--FL);font-size:clamp(22px,2.5vw,32px);font-weight:500;color:var(--text);margin:96px 0 24px;line-height:1.2;padding-top:0;border-top:none}
+:global(.pd-prose > h2:first-of-type){margin-top:0;border-top:none;padding-top:0}
+:global(.pd-prose h3){font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 12px}
+:global(.pd-prose p){font-size:18px;line-height:2;color:var(--text-3);margin-bottom:28px}
+/* Generous section spacing before each new heading (Temasek / BlackRock style).
+   Adjacent value >= base h2 margin so the gap never shrinks. */
+:global(.pd-prose p + h2), :global(.pd-prose ul + h2), :global(.pd-prose ol + h2),
+:global(.pd-prose table + h2), :global(.pd-prose blockquote + h2),
+:global(.pd-prose pre + h2), :global(.pd-prose figure + h2){margin-top:6rem}
+:global(.pd-prose p + h3), :global(.pd-prose ul + h3), :global(.pd-prose ol + h3),
+:global(.pd-prose table + h3), :global(.pd-prose blockquote + h3),
+:global(.pd-prose pre + h3), :global(.pd-prose figure + h3){margin-top:3.5rem}
+:global(.pd-prose ul), :global(.pd-prose ol){padding-left:20px;margin-bottom:20px}
+:global(.pd-prose li){font-size:18px;line-height:2;color:var(--text-3);margin-bottom:6px}
+:global(.pd-prose strong){color:var(--text);font-weight:500}
+:global(.pd-prose table){width:100%;border-collapse:collapse;margin:24px 0}
+:global(.pd-prose th){font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold);border-bottom:1px solid var(--gold-border);padding:10px 14px;text-align:left}
+:global(.pd-prose td){font-size:17px;color:var(--text-3);border-bottom:1px solid rgba(201,168,76,.08);padding:10px 14px}
 .pd-hl{background:var(--bg-2);border:1px solid var(--bg-4);padding:28px;margin-bottom:20px;position:relative}
 .pd-hl::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),transparent)}
 .pd-hl-t{font-family:var(--FL);font-size:17px;letter-spacing:4px;color:var(--gold);margin-bottom:16px}

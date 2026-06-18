@@ -107,22 +107,26 @@ import FormInput from '../ui/FormInput.astro'
       let result = {}
       try { result = JSON.parse(text) } catch (_) { result = { raw: text } }
 
-      // Always log for debugging
+      // Debug — inspect these in the Network tab / console
       console.log('[PartnerForm] response status:', res.status)
+      console.log('[PartnerForm] response ok:', res.ok)
       console.log('[PartnerForm] result:', result)
 
-      // Primary signal is response.ok — do not depend on result.success alone
-      if (res.ok) {
+      // Success is judged by the real HTTP status (200–299).
+      // result.success is only a secondary fallback for non-standard responses.
+      const succeeded = res.ok || result.success === true || result.success === 1 || result.success === 'true'
+
+      if (succeeded) {
         form.reset()
         ok.hidden  = false
         err.hidden = true
       } else {
-        console.error('[PartnerForm] Submission failed:', res.status, result)
+        console.error('[PartnerForm] Submission failed — status:', res.status, 'result:', result)
         err.hidden = false
         ok.hidden  = true
       }
     } catch (netErr) {
-      console.error('[PartnerForm] Network error:', netErr)
+      console.error('[PartnerForm] Network/fetch error:', netErr)
       err.hidden = false
       ok.hidden  = true
     } finally {
