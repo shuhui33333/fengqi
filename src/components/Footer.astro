@@ -37,10 +37,16 @@ const T = {
   cmpPartnership: zh ? '合作伙伴' : 'Partnership',
   cmpContact:     zh ? '联系我们' : 'Contact',
   // Offices
-  offHK:  zh ? '香港 · 集团总部' : 'Hong Kong · Group HQ',
-  offMY:  zh ? '马来西亚 · 彭亨' : 'Malaysia · Pahang',
-  offID:  zh ? '印度尼西亚 · 雅加达' : 'Indonesia · Jakarta',
-  offCN:  zh ? '中国 · 广州' : 'China · Guangzhou',
+  // Offices — grouped by country
+  offChinaLabel: zh ? '中国办事处' : 'China Offices',
+  offChinaCities: zh
+    ? '广州｜深圳｜北京｜保定｜成都｜厦门｜抚州'
+    : 'Guangzhou | Shenzhen | Beijing | Baoding | Chengdu | Xiamen | Fuzhou',
+  offMyLabel: zh ? '马来西亚' : 'Malaysia',
+  offMyCities: zh ? '吉隆坡｜关丹' : 'Kuala Lumpur | Kuantan',
+  // Related platform display names
+  relAsean:      zh ? '东盟 ASEAN 平台'      : 'ASEAN Platform',
+  relAseanChina: zh ? '东盟 ASEAN-中国区平台' : 'ASEAN-China Platform',
   copy:   zh ? '© 2025 丰麒集团有限公司' : '© 2025 Fengqi Group Limited',
 }
 ---
@@ -97,12 +103,14 @@ const T = {
       <!-- Offices -->
       <div>
         <p class="ft-col-title">{T.offices}</p>
-        <nav class="ft-links">
-          <a href={P('/contact')}>{T.offHK}</a>
-          <a href={P('/contact')}>{T.offMY}</a>
-          <a href={P('/contact')}>{T.offID}</a>
-          <a href={P('/contact')}>{T.offCN}</a>
-        </nav>
+        <div class="ft-office-group">
+          <p class="ft-office-country">{T.offChinaLabel}</p>
+          <p class="ft-office-cities">{T.offChinaCities}</p>
+        </div>
+        <div class="ft-office-group">
+          <p class="ft-office-country">{T.offMyLabel}</p>
+          <p class="ft-office-cities">{T.offMyCities}</p>
+        </div>
         <div class="ft-contact">
           <p class="ft-col-title" style="margin-top:28px">{T.contact}</p>
           <a href="mailto:info@fengqi-global.com" class="ft-email">info@fengqi-global.com</a>
@@ -110,8 +118,8 @@ const T = {
         <div class="ft-related">
           <p class="ft-col-title" style="margin-top:28px">{T.related}</p>
           <nav class="ft-links">
-            <a href="https://www.arff.my" target="_blank" rel="noopener noreferrer">ASEAN Platform</a>
-            <a href="https://zy30719374-2.jzfkw.net/" target="_blank" rel="noopener noreferrer">ASEAN-China Platform</a>
+            <a href="https://www.arff.my" target="_blank" rel="noopener noreferrer">{T.relAsean}</a>
+            <a href="https://zy30719374-2.jzfkw.net/" target="_blank" rel="noopener noreferrer">{T.relAseanChina}</a>
           </nav>
         </div>
       </div>
@@ -172,6 +180,17 @@ const T = {
   border-bottom:1px solid rgba(184,145,42,.12);
 }
 .ft-links a:hover { color:var(--ft-gold); }
+
+/* Office groups — country + city list */
+.ft-office-group { margin-bottom:16px; }
+.ft-office-country {
+  font-family:var(--FB); font-size:15px; font-weight:600;
+  color:var(--ft-text); margin-bottom:4px; line-height:1.4;
+}
+.ft-office-cities {
+  font-family:var(--FB); font-size:14px; color:var(--ft-text-2);
+  line-height:1.7;
+}
 
 /* Contact email */
 .ft-email {

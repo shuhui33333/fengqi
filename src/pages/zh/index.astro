@@ -268,41 +268,6 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
       </div>
     </section>
 
-    <!-- ══ 280 英亩农业用地 ══ -->
-    <section class="section sec-tint ag-sec" id="agricultural-land">
-      <div class="wrap">
-        <div class="ag-layout">
-          <div class="ag-img reveal">
-            <img src="/images/common/projects/c4-new.png" alt="280英亩农业用地" loading="lazy" />
-          </div>
-          <div class="ag-text reveal d2">
-            <div class="label">农业用地 · 马来西亚</div>
-            <h2><em>280 英亩</em>农业用地</h2>
-            <p class="body-text">
-              项目总占地约 280 英亩，其中 56 英亩为商业用途。其中 40 英亩已规划建设四栋现代化肉鸡鸡舍及一栋母代鸡舍，预计年出栏量可达 182.4 万羽。
-            </p>
-            <p class="body-text" style="margin-bottom:0">
-              建立从种鸡、孵化、养殖到食品加工与冷链配送的一体化体系，并结合现代化密闭式养殖与智能管理系统，实现更稳定、高效率及规模化生产。
-            </p>
-            <div class="ag-stats">
-              {[
-                { n:'280',   l:'总英亩数'   },
-                { n:'56',    l:'商业用途'   },
-                { n:'40',    l:'肉鸡养殖'   },
-                { n:'182.4万', l:'年出栏量（羽）' },
-              ].map(s => (
-                <div class="ag-stat">
-                  <div class="ag-stat-n">{s.n}</div>
-                  <div class="ag-stat-l">{s.l}</div>
-                </div>
-              ))}
-            </div>
-            <a href="/zh/projects/broiler-chicken-malaysia" class="btn btn--ghost" style="margin-top:8px">查看项目详情 →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ══ 全球布局 ══ -->
     <section class="section mc-sec" id="global-footprint">
       <div class="wrap">
@@ -465,11 +430,11 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
 .bc-img { width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--bg-3); }
 .bc-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
 .bc:hover .bc-img img { transform:scale(1.05); }
-.bc-body { padding:28px 24px; display:flex; flex-direction:column; flex:1; }
-.bc-en { font-family:var(--FL); font-size:14px; letter-spacing:1px; color:var(--gold-dk); margin-bottom:6px; }
-.bc-name { font-family:var(--FL); font-size:20px; font-weight:500; color:var(--text); margin-bottom:10px; line-height:1.25; }
+.bc-body { padding:32px 28px; display:flex; flex-direction:column; flex:1; }
+.bc-en { font-family:var(--FL); font-size:9px; letter-spacing:3px; color:var(--gold-dk); margin-bottom:6px; }
+.bc-name { font-family:var(--FD); font-size:24px; font-weight:400; color:var(--text); margin-bottom:12px; line-height:1.25; }
 .bc:hover .bc-name { color:var(--gold); }
-.bc-text { font-family:var(--FB); font-size:22px; line-height:1.8; color:var(--text-3); flex:1; margin-bottom:16px; }
+.bc-text { font-family:var(--FB); font-size:15px; line-height:1.8; color:var(--text-3); flex:1; margin-bottom:16px; }
 .bc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
 .bc-tags span { font-family:var(--FL); font-size:13px; letter-spacing:1px; border:1px solid var(--gold-border); color:var(--gold-dk); padding:3px 10px; background:var(--gold-faint); }
 .bc-arr { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-8px); transition:opacity .3s,transform .3s; }
@@ -496,16 +461,6 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
 .pc-hl li::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:5px; height:1.5px; background:var(--gold); }
 .pc-arr    { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-8px); transition:opacity .3s,transform .3s; }
 .pc:hover .pc-arr { opacity:1; transform:translateX(0); }
-
-/* ══ 280英亩 ══ */
-.ag-sec { }
-.ag-layout { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
-.ag-img { border-radius:2px; overflow:hidden; box-shadow:var(--shadow-lg); aspect-ratio:4/3; }
-.ag-img img { width:100%; height:100%; object-fit:cover; }
-.ag-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--bg-4); margin:28px 0 22px; }
-.ag-stat { background:var(--bg); padding:18px 12px; text-align:center; }
-.ag-stat-n { font-family:var(--FD); font-size:28px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:5px; }
-.ag-stat-l { font-family:var(--FL); font-size:12px; letter-spacing:1px; color:var(--text-3); }
 
 /* ══ 全球布局 ══ */
 .mc-sec { background:var(--bg-2); border-top:1px solid var(--bg-4); border-bottom:1px solid var(--bg-4); }
@@ -582,7 +537,6 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
   .hb-item:nth-child(n+3) { border-top:1px solid var(--bg-4); }
   .biz-grid,.ins-grid,.mc-grid { grid-template-columns:1fr 1fr; }
   .proj-grid { grid-template-columns:1fr; }
-  .ag-layout { grid-template-columns:1fr; gap:40px; }
   .mc-corridors { grid-template-columns:1fr; }
   .ft-top-inner { grid-template-columns:1fr 1fr; gap:36px; }
   .met-inner { grid-template-columns:repeat(3,1fr); }
@@ -594,7 +548,6 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
   .hb-item { border-right:none !important; border-bottom:1px solid var(--bg-4); }
   .biz-grid,.ins-grid,.mc-grid { grid-template-columns:1fr; }
   .cta-acts { flex-direction:column; }
-  .ag-stats { grid-template-columns:repeat(2,1fr); }
   .ft-top-inner { grid-template-columns:1fr; }
   .met-inner { grid-template-columns:repeat(2,1fr); }
 }
