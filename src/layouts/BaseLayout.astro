@@ -4,15 +4,18 @@ interface Props {
   title?:       string;
   description?: string;
   ogImage?:     string;
+  lang?:        'en' | 'zh';
 }
 const {
   title       = 'Fengqi Group | Cross-Border Industrial Platform',
   description = "Fengqi Group connects China and Southeast Asia through agriculture, logistics, industrial parks, trade and digital systems.",
   ogImage,
+  lang        = 'en',
 } = Astro.props;
+const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

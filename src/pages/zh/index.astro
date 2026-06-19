@@ -1,0 +1,601 @@
+---
+// src/pages/zh/index.astro  →  /zh/
+// 中文首页 — 结构与英文首页一致，内容为中文
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import { getCollection } from 'astro:content'
+import { getAllInsights } from '../../lib/storyblok'
+
+const projects = (await getCollection('projects'))
+  .filter(p => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+
+const ctfInsights = await getAllInsights().catch(() => [])
+const latest = ctfInsights.slice(0, 3)
+
+const DEFAULT_NEWS_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+
+// Chinese project metadata
+const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights: string[] }> = {
+  'kuantan-halal-park': {
+    title:    '关丹数字清真食品产业园',
+    subtitle: '马来西亚清真市场的核心战略平台',
+    highlights: [
+      '格宾 730 英亩 + 甘孟 100 英亩，合计 830 英亩',
+      '毗邻马中关丹产业园，距关丹港约 10 公里',
+      'JAKIM 清真认证：30+ 天 → 10–12 天',
+      '通关时间：约 72 小时 → 约 48 小时',
+      '0–5% 关税优惠（RCEP 及马来西亚-欧盟自贸协定）',
+      '聚焦：清真食品、保健品、化妆品、药品',
+    ],
+  },
+  'indonesia-fengjie-logistics': {
+    title:    '丰捷物流印度尼西亚',
+    subtitle: '覆盖爪哇岛的区域仓储与配送网络',
+    highlights: [
+      '自营 4 个仓储配送中心，遍布爪哇岛',
+      '覆盖约 80% 爪哇物流需求',
+      '触达约 1.45 亿人口',
+      '冷链损耗率 <8%（行业均值 15%）',
+      '库存周转效率提升 35%',
+      '配送成本降低约 20%',
+    ],
+  },
+}
+---
+
+<BaseLayout
+  title="丰麒集团 | 跨境产业平台"
+  description="丰麒集团专注农业、物流、清真产业园、贸易与数字系统，连接中国与东南亚市场。"
+  lang="zh"
+>
+  <Header active="/zh" lang="zh" />
+  <main>
+
+    <!-- ══ 首页 Hero ══ -->
+    <section class="hero" id="top">
+      <div class="hero-bg"></div>
+
+      <div class="wrap hero-content">
+        <!-- 左：文案 -->
+        <div class="hero-left">
+          <p class="hero-over">跨境产业集团</p>
+
+          <h1 class="hero-h1">
+            连接中国<br />
+            与<em>东南亚</em><br />
+            共筑产业未来。
+          </h1>
+
+          <p class="hero-body">
+            丰麒集团专注农业、物流、医疗与康养、贸易及数字系统——以生态农业、肉鸡养殖、仓储物流、清真产业园及供应链协同为核心，构建连接中国与东南亚的跨境产业平台。
+          </p>
+
+          <div class="hero-actions">
+            <a href="/zh/business"    class="btn btn--gold">探索我们的业务</a>
+            <a href="/zh/partnership" class="btn btn--ghost">与我们合作</a>
+          </div>
+        </div>
+
+        <!-- 右：6 个业务板块卡片 -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="hero-segs">
+            {[
+              { num:'01', name:'产业园\n跨境平台',   href:'/zh/business#parks'       },
+              { num:'02', name:'物流\n供应链',       href:'/zh/business#logistics'   },
+              { num:'03', name:'医疗\n与康养',       href:'/zh/business#healthcare'  },
+              { num:'04', name:'贸易\n与分销',       href:'/zh/business#trade'       },
+              { num:'05', name:'农业\n生态科技',     href:'/zh/business#agriculture' },
+              { num:'06', name:'数字\n系统',         href:'/zh/business#digital'     },
+            ].map((s, i) => (
+              <a href={s.href} class={`hseg anim-d${i}`}>
+                <span class="hseg-num">{s.num}</span>
+                <span class="hseg-name">{s.name}</span>
+                <span class="hseg-arr">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部亮点栏 -->
+      <div class="hero-bar">
+        <div class="wrap hero-bar-inner">
+          {[
+            { title:'中国基地',    desc:'农业科技、工业资源与供应链出口'              },
+            { title:'马来西亚枢纽', desc:'830 英亩清真产业园 · JAKIM 认证通道'        },
+            { title:'印度尼西亚网络', desc:'丰捷物流 · 4 个仓储中心 · 触达 1.45 亿人' },
+            { title:'跨境产业平台', desc:'生产 → 物流 → 贸易 → 市场'                 },
+          ].map(item => (
+            <div class="hb-item">
+              <div class="hb-dot"></div>
+              <div>
+                <p class="hb-title">{item.title}</p>
+                <p class="hb-desc">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 数据指标条 ══ -->
+    <div class="met-bar">
+      <div class="wrap met-inner">
+        {[
+          { num:'2014',  lbl:'成立年份'     },
+          { num:'3',     lbl:'业务国家'     },
+          { num:'6',     lbl:'业务板块'     },
+          { num:'830ac', lbl:'关丹清真产业园' },
+          { num:'145M',  lbl:'爪哇物流覆盖'  },
+          { num:'80+',   lbl:'清真认证国家'  },
+        ].map((m, i) => (
+          <div class={`met reveal d${i}`}>
+            <div class="met-num">{m.num}</div>
+            <div class="met-lbl">{m.lbl}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ══ 六大核心业务板块 ══ -->
+    <section class="section biz-sec" id="business">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">核心业务板块</div>
+          <h2>六大<em>产业</em>协同支柱</h2>
+          <p class="body-text">从生产与物流，到认证、贸易与数字化管理——丰麒六大板块共同构成连接中国与东南亚市场的完整产业体系。</p>
+        </div>
+        <div class="biz-grid">
+
+          <div class="bc cbar" onclick="location.href='/zh/business#parks'">
+            <div class="bc-img"><img src="/images/common/business/b1-new.png" alt="产业园" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">01</div>
+              <p class="bc-en">产业园与跨境平台</p>
+              <h3 class="bc-name">产业园与跨境平台</h3>
+              <p class="bc-text">关丹数字清真食品产业园：格宾 730 英亩 + 甘孟 100 英亩，合计 830 英亩。一站式平台：注册入驻、JAKIM 清真认证、物流配套与市场渠道。</p>
+              <div class="bc-tags"><span>清真产业园</span><span>JAKIM 认证</span><span>跨境平台</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+          <div class="bc cbar" onclick="location.href='/zh/business#logistics'">
+            <div class="bc-img"><img src="/images/common/business/b2.png" alt="物流" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">02</div>
+              <p class="bc-en">物流与供应链</p>
+              <h3 class="bc-name">物流与供应链</h3>
+              <p class="bc-text">丰捷物流深耕印度尼西亚与马来西亚——整合仓储、运输、冷链及跨境供应链，助力企业快速进入东南亚市场。</p>
+              <div class="bc-tags"><span>冷链物流</span><span>仓储配送</span><span>东南亚</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+          <div class="bc cbar" onclick="location.href='/zh/business#healthcare'">
+            <div class="bc-img"><img src="/images/common/business/b3-new.png" alt="医疗康养" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">03</div>
+              <p class="bc-en">医疗与康养</p>
+              <h3 class="bc-name">医疗与康养</h3>
+              <p class="bc-text">功能性农业、保健食品、康养体验及马来西亚血液透析中心——将农业延伸至健康生活管理领域。</p>
+              <div class="bc-tags"><span>功能食品</span><span>血透中心</span><span>康养</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+          <div class="bc cbar" onclick="location.href='/zh/business#trade'">
+            <div class="bc-img"><img src="/images/common/business/b4-new.png" alt="贸易" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">04</div>
+              <p class="bc-en">贸易与分销</p>
+              <h3 class="bc-name">贸易与分销</h3>
+              <p class="bc-text">全球采购、跨境流通与区域分销——高效开拓东盟及国际市场，助力农产品与食品走向世界。</p>
+              <div class="bc-tags"><span>清真进出口</span><span>分销渠道</span><span>全球采购</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+          <div class="bc cbar" onclick="location.href='/zh/business#agriculture'">
+            <div class="bc-img"><img src="/images/common/business/b5.png" alt="农业" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">05</div>
+              <p class="bc-en">农业与生态科技</p>
+              <h3 class="bc-name">农业与生态科技</h3>
+              <p class="bc-text">现代肉鸡养殖、生态循环农业与 EnzyLoop 酶联生态系统——构建更健康、更安全、更可持续的农业基础。</p>
+              <div class="bc-tags"><span>肉鸡养殖</span><span>EnzyLoop</span><span>可持续农业</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+          <div class="bc cbar" onclick="location.href='/zh/business#digital'">
+            <div class="bc-img"><img src="/images/common/business/b6-new.png" alt="数字系统" loading="lazy" /></div>
+            <div class="bc-body">
+              <div class="cidx">06</div>
+              <p class="bc-en">数字系统</p>
+              <h3 class="bc-name">数字系统</h3>
+              <p class="bc-text">人工智能、物联网、区块链及农业、物流、供应链全链路数字平台——提升运营效率与各环节协同能力。</p>
+              <div class="bc-tags"><span>人工智能</span><span>物联网</span><span>区块链</span></div>
+              <span class="bc-arr">了解更多 →</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="reveal d2" style="margin-top:36px">
+          <a href="/zh/business" class="btn btn--ghost">探索全部业务板块 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 旗舰项目 ══ -->
+    <section class="section proj-sec" id="projects">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">旗舰项目</div>
+          <h2>战略落地，<em>务实推进</em>。</h2>
+          <p class="body-text">丰麒集团在中国、马来西亚和印度尼西亚推进的核心项目——助力企业落地注册、认证通关、物流配送与市场拓展。</p>
+        </div>
+        <div class="proj-grid">
+          {projects.map(p => {
+            const zh = ZH_PROJECTS[p.slug]
+            return (
+              <a href={`/zh/projects/${p.slug}`} class="pc">
+                <div class="pc-img">
+                  <img src={p.data.order === 4 ? "/images/common/projects/c4-new.png" : `/images/common/projects/c${p.data.order}.png`} alt={zh?.title ?? p.data.title} loading="lazy" />
+                  <div class="pc-overlay">
+                    <span class="pc-cat">{p.data.category}</span>
+                    <span class="pc-status">{p.data.status === 'Active' ? '✓ 运营中' : p.data.status === 'In Development' ? '⬤ 开发中' : '◯ 规划中'}</span>
+                  </div>
+                </div>
+                <div class="pc-body">
+                  <h3 class="pc-title">{zh?.title ?? p.data.title}</h3>
+                  <p class="pc-sub">{zh?.subtitle ?? p.data.subtitle}</p>
+                  <p class="pc-loc">📍 {p.data.location}</p>
+                  <ul class="pc-hl">
+                    {(zh?.highlights ?? p.data.highlights).slice(0,3).map(h => <li>{h}</li>)}
+                  </ul>
+                  <span class="pc-arr">查看项目详情 →</span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+        <div class="reveal d2" style="margin-top:36px">
+          <a href="/zh/projects" class="btn btn--ghost">全部项目 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 280 英亩农业用地 ══ -->
+    <section class="section sec-tint ag-sec" id="agricultural-land">
+      <div class="wrap">
+        <div class="ag-layout">
+          <div class="ag-img reveal">
+            <img src="/images/common/projects/c4-new.png" alt="280英亩农业用地" loading="lazy" />
+          </div>
+          <div class="ag-text reveal d2">
+            <div class="label">农业用地 · 马来西亚</div>
+            <h2><em>280 英亩</em>农业用地</h2>
+            <p class="body-text">
+              项目总占地约 280 英亩，其中 56 英亩为商业用途。其中 40 英亩已规划建设四栋现代化肉鸡鸡舍及一栋母代鸡舍，预计年出栏量可达 182.4 万羽。
+            </p>
+            <p class="body-text" style="margin-bottom:0">
+              建立从种鸡、孵化、养殖到食品加工与冷链配送的一体化体系，并结合现代化密闭式养殖与智能管理系统，实现更稳定、高效率及规模化生产。
+            </p>
+            <div class="ag-stats">
+              {[
+                { n:'280',   l:'总英亩数'   },
+                { n:'56',    l:'商业用途'   },
+                { n:'40',    l:'肉鸡养殖'   },
+                { n:'182.4万', l:'年出栏量（羽）' },
+              ].map(s => (
+                <div class="ag-stat">
+                  <div class="ag-stat-n">{s.n}</div>
+                  <div class="ag-stat-l">{s.l}</div>
+                </div>
+              ))}
+            </div>
+            <a href="/zh/projects/broiler-chicken-malaysia" class="btn btn--ghost" style="margin-top:8px">查看项目详情 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 全球布局 ══ -->
+    <section class="section mc-sec" id="global-footprint">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">全球布局</div>
+          <h2>三大战略区域，<em>一个</em>互联平台。</h2>
+          <p class="body-text">
+            丰麒以中国为产业基地，以马来西亚为东南亚核心枢纽，并持续拓展印度尼西亚市场——构建覆盖生产、物流、贸易与产业协同的跨境网络。
+          </p>
+        </div>
+        <div class="mc-grid">
+          {[
+            { flag:'🇨🇳', region:'中国', role:'产业基地与科技创新', hl:false,
+              items:['农业生态科技与数字系统','增城 530 英亩生态农业示范基地','肉鸡养殖、功能性食品与保健产品','供应链整合与跨境出口'],
+              stat:'生产与科技核心',
+              img:'/images/common/a1-new.png' },
+            { flag:'🇲🇾', region:'马来西亚', role:'东盟枢纽与清真通道', hl:true,
+              items:['关丹数字清真产业园：格宾 730 + 甘孟 100 英亩','JAKIM 清真认证，覆盖 80+ 国家','关丹港 + 东海岸铁路（ECRL）接入','RCEP 及马来西亚-欧盟自贸协定关税优势'],
+              stat:'全球清真市场通道',
+              img:'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80' },
+            { flag:'🇮🇩', region:'印度尼西亚', role:'区域物流网络', hl:false,
+              items:['丰捷物流：4 个仓储配送中心遍布爪哇','覆盖约 80% 爪哇物流需求','触达约 1.45 亿核心经济区人口','冷链、城市配送与干线运输'],
+              stat:'触达 1.45 亿人口',
+              img:'/images/common/a3-new.png' },
+          ].map((n, i) => (
+            <div class={`mc-card reveal d${i+1}${n.hl?' mc-card--hl':''}`}>
+              <div class="mc-img">
+                <img src={n.img} alt={n.region} loading="lazy" />
+                <div class="mc-img-badge">{n.flag} {n.region}</div>
+              </div>
+              <div class="mc-body">
+                <h3 class="mc-role">{n.role}</h3>
+                <ul class="mc-items">
+                  {n.items.map(item => <li>{item}</li>)}
+                </ul>
+                <p class="mc-stat">{n.stat}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="mc-corridors reveal d2">
+          {[
+            { lbl:'通道一', text:'中国产品 → 马来西亚 JAKIM 清真认证 → 东盟及中东市场' },
+            { lbl:'通道二', text:'中国供应链 → 丰捷物流印度尼西亚 → 爪哇岛配送'        },
+            { lbl:'通道三', text:'跨境贸易 → 马来西亚枢纽 → 非洲及全球穆斯林市场'       },
+          ].map(c => (
+            <div class="mc-cor">
+              <span class="mc-cor-lbl">{c.lbl}</span>
+              <p class="mc-cor-txt">{c.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 最新动态 ══ -->
+    {latest.length > 0 && (
+      <section class="section ins-sec" id="insights">
+        <div class="wrap">
+          <div class="reveal">
+            <div class="label">最新动态</div>
+            <h2>新闻与<em>资讯</em>。</h2>
+          </div>
+          <div class="ins-grid">
+            {latest.map((a, i) => {
+              const imgSrc = a.image ?? DEFAULT_NEWS_IMG
+              return (
+                <a href={`/zh/insights/${a.slug}`} class={`ins-card reveal d${i+1}`}>
+                  <div class="ins-card-img">
+                    <img src={imgSrc} alt={a.title} loading="lazy" />
+                    <span class="ins-card-cat">{a.category}</span>
+                  </div>
+                  <div class="ins-card-body">
+                    <p class="ins-card-date">{a.date.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})}</p>
+                    <h3 class="ins-card-title">{a.title}</h3>
+                    <p class="ins-card-sum">{a.summary}</p>
+                    <span class="ins-card-arr">阅读全文 →</span>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+          <div class="reveal d2" style="margin-top:36px">
+            <a href="/zh/insights" class="btn btn--ghost">全部动态 →</a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ══ CTA ══ -->
+    <section class="section cta-sec" id="cta">
+      <div class="geo-bg geo-bg--fade" style="opacity:.3"></div>
+      <div class="wrap cta-wrap">
+        <div class="label reveal">开放合作</div>
+        <h2 class="reveal d1">携手共建<em>中国与东南亚</em>产业未来。</h2>
+        <p class="body-text reveal d2">丰麒诚邀政府机构、企业伙伴、投资方及渠道合作商，共同推进区域产业发展、供应链建设与市场开拓。</p>
+        <div class="cta-acts reveal d3">
+          <a href="/zh/partnership" class="btn btn--gold">探索合作机会</a>
+          <a href="/zh/contact"     class="btn btn--ghost">联系我们</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer lang="zh" />
+
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+/* ══ Hero ══ */
+.hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; background:var(--bg); padding-top:80px; }
+.hero-bg { position:absolute; inset:0; pointer-events:none; background:linear-gradient(135deg,rgba(184,145,42,.05) 0%,transparent 55%),linear-gradient(225deg,rgba(184,145,42,.03) 0%,transparent 45%); }
+.hero-content { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px; padding-top:60px; padding-bottom:120px; position:relative; z-index:2; }
+.hero-over { font-family:var(--FL); font-size:22px; letter-spacing:5px; color:var(--gold); margin-bottom:24px; display:flex; align-items:center; gap:14px; opacity:0; animation:slideRight .9s ease .15s forwards; }
+.hero-over::before { content:''; width:28px; height:1.5px; background:var(--gold); flex-shrink:0; }
+.hero-h1 { margin-bottom:24px; font-weight:400; opacity:0; animation:slideRight .9s ease .3s forwards; }
+.hero-h1 em { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
+.hero-body { font-family:var(--FB); font-size:16px; font-weight:400; line-height:1.85; color:var(--text-2); max-width:520px; margin-bottom:36px; opacity:0; animation:slideRight .9s ease .45s forwards; }
+.hero-actions { display:flex; gap:16px; flex-wrap:wrap; opacity:0; animation:slideRight .9s ease .6s forwards; }
+
+/* 右侧业务卡 */
+.hero-right { display:flex; align-items:center; justify-content:center; opacity:0; animation:fadeIn 1s ease .75s forwards; }
+.hero-segs { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:420px; }
+.hseg { display:flex; align-items:flex-start; gap:10px; padding:18px 16px; background:var(--bg); border:1px solid var(--bg-4); border-left:3px solid transparent; text-decoration:none; color:inherit; transition:border-color .25s,box-shadow .25s,background .25s; opacity:0; }
+.anim-d0{animation:fadeIn .6s ease .85s forwards}.anim-d1{animation:fadeIn .6s ease .95s forwards}
+.anim-d2{animation:fadeIn .6s ease 1.05s forwards}.anim-d3{animation:fadeIn .6s ease 1.15s forwards}
+.anim-d4{animation:fadeIn .6s ease 1.25s forwards}.anim-d5{animation:fadeIn .6s ease 1.35s forwards}
+.hseg:hover { border-left-color:var(--gold); box-shadow:var(--shadow-sm); background:var(--bg-2); }
+.hseg-num  { font-family:var(--FL); font-size:14px; font-weight:400; color:var(--gold); flex-shrink:0; line-height:1.4; width:20px; }
+.hseg-name { font-family:var(--FB); font-size:13px; font-weight:400; color:var(--text-2); line-height:1.45; flex:1; white-space:pre-line; }
+.hseg:hover .hseg-name { color:var(--text); }
+.hseg-arr  { font-size:14px; color:var(--gold); opacity:0; transform:translateX(-4px); transition:opacity .2s,transform .2s; flex-shrink:0; align-self:center; }
+.hseg:hover .hseg-arr { opacity:1; transform:translateX(0); }
+
+/* 底部栏 */
+.hero-bar { border-top:1px solid var(--bg-4); background:var(--bg-2); position:relative; z-index:2; }
+.hero-bar-inner { display:grid; grid-template-columns:repeat(4,1fr); }
+.hb-item { display:flex; align-items:flex-start; gap:12px; padding:20px 28px; border-right:1px solid var(--bg-4); }
+.hb-item:last-child { border-right:none; }
+.hb-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; margin-top:5px; }
+.hb-title { font-family:var(--FL); font-size:14px; font-weight:500; letter-spacing:1px; color:var(--gold-dk); margin-bottom:4px; }
+.hb-desc  { font-family:var(--FB); font-size:13px; color:var(--text-3); line-height:1.5; }
+
+/* ══ 指标条 ══ */
+.met-bar { background:var(--bg-3); border-top:1px solid var(--bg-4); border-bottom:1px solid var(--bg-4); }
+.met-inner { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--bg-4); }
+.met { background:var(--bg-3); padding:34px 18px; text-align:center; transition:background .25s; }
+.met:hover { background:var(--bg-2); }
+.met-num { font-family:var(--FL); font-size:36px; font-weight:600; color:var(--gold); line-height:1; margin-bottom:8px; }
+.met-lbl { font-family:var(--FL); font-size:14px; letter-spacing:1px; color:var(--text-3); font-weight:400; }
+
+/* ══ 业务卡 ══ */
+.biz-sec { background:var(--bg); border-top:1px solid var(--bg-4); }
+.biz-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.bc { background:var(--bg); text-decoration:none; color:inherit; display:flex; flex-direction:column; border:1px solid var(--bg-4); overflow:hidden; transition:box-shadow .28s,border-color .28s,transform .28s; cursor:pointer; }
+.bc:hover { box-shadow:var(--shadow); border-color:var(--gold-border); transform:translateY(-3px); }
+.bc::before { border-radius:0; }
+.bc-img { width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--bg-3); }
+.bc-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.bc:hover .bc-img img { transform:scale(1.05); }
+.bc-body { padding:28px 24px; display:flex; flex-direction:column; flex:1; }
+.bc-en { font-family:var(--FL); font-size:14px; letter-spacing:1px; color:var(--gold-dk); margin-bottom:6px; }
+.bc-name { font-family:var(--FL); font-size:20px; font-weight:500; color:var(--text); margin-bottom:10px; line-height:1.25; }
+.bc:hover .bc-name { color:var(--gold); }
+.bc-text { font-family:var(--FB); font-size:22px; line-height:1.8; color:var(--text-3); flex:1; margin-bottom:16px; }
+.bc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+.bc-tags span { font-family:var(--FL); font-size:13px; letter-spacing:1px; border:1px solid var(--gold-border); color:var(--gold-dk); padding:3px 10px; background:var(--gold-faint); }
+.bc-arr { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-8px); transition:opacity .3s,transform .3s; }
+.bc:hover .bc-arr { opacity:1; transform:translateX(0); }
+
+/* ══ 项目卡 ══ */
+.proj-sec { background:var(--bg-2); border-top:1px solid var(--bg-4); }
+.proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+.pc { background:var(--bg); text-decoration:none; color:inherit; display:flex; flex-direction:column; border:1px solid var(--bg-4); overflow:hidden; transition:box-shadow .28s,border-color .28s,transform .28s; }
+.pc:hover { box-shadow:var(--shadow); border-color:var(--gold-border); transform:translateY(-3px); }
+.pc-img { width:100%; aspect-ratio:16/9; overflow:hidden; position:relative; background:var(--bg-3); }
+.pc-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.pc:hover .pc-img img { transform:scale(1.05); }
+.pc-overlay { position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-start; padding:14px 16px; background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 100%); }
+.pc-cat    { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:#fff; background:rgba(0,0,0,.4); padding:4px 10px; backdrop-filter:blur(4px); }
+.pc-status { font-family:var(--FL); font-size:14px; letter-spacing:1.5px; color:#fff; background:rgba(184,145,42,.7); padding:4px 10px; }
+.pc-body   { padding:24px; display:flex; flex-direction:column; flex:1; }
+.pc-title  { font-family:var(--FL); font-size:20px; font-weight:500; color:var(--text); margin-bottom:6px; line-height:1.25; }
+.pc:hover .pc-title { color:var(--gold); }
+.pc-sub    { font-family:var(--FB); font-size:14px; color:var(--text-3); margin-bottom:10px; line-height:1.6; flex:1; }
+.pc-loc    { font-family:var(--FB); font-size:13px; color:var(--gold-dk); margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--bg-4); }
+.pc-hl     { list-style:none; margin-bottom:16px; }
+.pc-hl li  { font-family:var(--FB); font-size:13px; color:var(--text-3); padding:5px 0 5px 14px; position:relative; border-bottom:1px solid var(--bg-3); line-height:1.5; }
+.pc-hl li::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:5px; height:1.5px; background:var(--gold); }
+.pc-arr    { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-8px); transition:opacity .3s,transform .3s; }
+.pc:hover .pc-arr { opacity:1; transform:translateX(0); }
+
+/* ══ 280英亩 ══ */
+.ag-sec { }
+.ag-layout { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+.ag-img { border-radius:2px; overflow:hidden; box-shadow:var(--shadow-lg); aspect-ratio:4/3; }
+.ag-img img { width:100%; height:100%; object-fit:cover; }
+.ag-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--bg-4); margin:28px 0 22px; }
+.ag-stat { background:var(--bg); padding:18px 12px; text-align:center; }
+.ag-stat-n { font-family:var(--FD); font-size:28px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:5px; }
+.ag-stat-l { font-family:var(--FL); font-size:12px; letter-spacing:1px; color:var(--text-3); }
+
+/* ══ 全球布局 ══ */
+.mc-sec { background:var(--bg-2); border-top:1px solid var(--bg-4); border-bottom:1px solid var(--bg-4); }
+.mc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:24px; }
+.mc-card { background:var(--bg); border:1px solid var(--bg-4); overflow:hidden; transition:box-shadow .28s,border-color .28s,transform .28s; }
+.mc-card:hover { box-shadow:var(--shadow); border-color:var(--gold-border); transform:translateY(-3px); }
+.mc-card--hl { border-top:3px solid var(--gold); }
+.mc-img { width:100%; aspect-ratio:16/9; overflow:hidden; position:relative; background:var(--bg-3); }
+.mc-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+.mc-card:hover .mc-img img { transform:scale(1.05); }
+.mc-img-badge { position:absolute; bottom:0; left:0; right:0; padding:10px 16px; background:linear-gradient(transparent,rgba(0,0,0,.55)); font-family:var(--FL); font-size:22px; letter-spacing:2px; color:#fff; }
+.mc-body  { padding:22px 24px; }
+.mc-role  { font-family:var(--FL); font-size:17px; font-weight:500; color:var(--text); margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--bg-4); line-height:1.3; }
+.mc-card:hover .mc-role { color:var(--gold); }
+.mc-items { list-style:none; margin-bottom:14px; }
+.mc-items li { font-family:var(--FB); font-size:14px; color:var(--text-3); padding:6px 0 6px 14px; position:relative; border-bottom:1px solid var(--bg-3); line-height:1.5; }
+.mc-items li::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:5px; height:1.5px; background:var(--gold); }
+.mc-stat  { font-family:var(--FD); font-size:14px; font-style:italic; color:var(--gold-dk); }
+.mc-corridors { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--bg-4); }
+.mc-cor     { background:var(--bg); padding:22px 24px; }
+.mc-cor-lbl { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold-dk); display:block; margin-bottom:8px; font-weight:500; }
+.mc-cor-txt { font-family:var(--FB); font-size:14px; color:var(--text-3); line-height:1.7; }
+
+/* ══ 动态资讯 ══ */
+.ins-sec { background:var(--bg); border-top:1px solid var(--bg-4); }
+.ins-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.ins-card { background:var(--bg); border:1px solid var(--bg-4); text-decoration:none; color:inherit; display:flex; flex-direction:column; overflow:hidden; transition:box-shadow .28s,border-color .28s,transform .28s; }
+.ins-card:hover { box-shadow:var(--shadow); border-color:var(--gold-border); transform:translateY(-3px); }
+.ins-card-img { width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--bg-3); position:relative; flex-shrink:0; }
+.ins-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.ins-card:hover .ins-card-img img { transform:scale(1.05); }
+.ins-card-cat { position:absolute; top:12px; left:12px; font-family:var(--FL); font-size:13px; letter-spacing:2px; background:rgba(0,0,0,.55); color:#fff; padding:4px 10px; backdrop-filter:blur(4px); }
+.ins-card-body { padding:20px; display:flex; flex-direction:column; flex:1; }
+.ins-card-date { font-family:var(--FL); font-size:13px; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:8px; }
+.ins-card-title { font-family:var(--FL); font-size:17px; font-weight:500; color:var(--text); margin-bottom:8px; line-height:1.4; }
+.ins-card:hover .ins-card-title { color:var(--gold); }
+.ins-card-sum { font-family:var(--FB); font-size:14px; color:var(--text-3); line-height:1.75; flex:1; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.ins-card-arr { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:var(--gold); opacity:0; transform:translateX(-6px); transition:opacity .3s,transform .3s; }
+.ins-card:hover .ins-card-arr { opacity:1; transform:translateX(0); }
+
+/* ══ CTA ══ */
+.cta-sec { background:var(--bg-3); border-top:1px solid var(--bg-4); position:relative; overflow:hidden; text-align:center; }
+.cta-wrap { position:relative; z-index:2; }
+.cta-sec h2 { color:var(--text); margin-bottom:20px; }
+.cta-sec h2 em { color:var(--gold); }
+.cta-acts { display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+
+/* ══ 页脚（复用英文页脚样式变量） ══ */
+#site-footer { background:var(--ft-bg,#FAF5E8); border-top:2px solid rgba(184,145,42,.2); }
+.ft-top  { padding:64px 0 52px; }
+.ft-top-inner  { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:52px; }
+.ft-logo       { display:flex; align-items:center; gap:16px; text-decoration:none; margin-bottom:20px; }
+.ft-logo-img   { width:52px; height:52px; object-fit:contain; }
+.ft-logo-name  { font-family:var(--FL); font-size:17px; color:#1A1814; letter-spacing:3px; font-weight:600; }
+.ft-logo-cn    { font-family:var(--FD); font-size:12px; color:#8A5F10; letter-spacing:2px; display:block; margin-top:4px; font-style:italic; }
+.ft-desc       { font-family:var(--FB); font-size:16px; color:#3D3020; line-height:1.85; margin-bottom:16px; }
+.ft-motto      { font-family:var(--FD); font-size:22px; font-style:italic; color:#8A5F10; letter-spacing:2px; margin-bottom:18px; }
+.ft-col-title  { font-family:var(--FL); font-size:14px; letter-spacing:2px; color:#1A1814; margin-bottom:14px; padding-bottom:10px; border-bottom:1.5px solid rgba(184,145,42,.25); font-weight:600; }
+.ft-links      { display:flex; flex-direction:column; }
+.ft-links a    { font-family:var(--FB); font-size:22px; color:#3D3020; padding:6px 0; transition:color .25s; line-height:1.5; border-bottom:1px solid rgba(184,145,42,.1); }
+.ft-links a:hover { color:#8A5F10; }
+.ft-email      { display:block; font-family:var(--FB); font-size:22px; color:#8A5F10; text-decoration:none; transition:color .25s; margin-top:6px; }
+.ft-email:hover { color:#1A1814; }
+.ft-bottom     { background:#F2E9CF; border-top:1px solid rgba(184,145,42,.2); padding:20px 0; }
+.ft-bottom-inner { display:flex; justify-content:center; }
+.ft-copy       { font-family:var(--FB); font-size:22px; letter-spacing:0.3px; color:#6B5832; }
+
+/* ══ 响应式 ══ */
+@media (max-width:1100px) {
+  .hero-content { grid-template-columns:1fr; padding-bottom:72px; }
+  .hero-right   { display:none; }
+  .hero-bar-inner { grid-template-columns:1fr 1fr; }
+  .hb-item:nth-child(2) { border-right:none; }
+  .hb-item:nth-child(n+3) { border-top:1px solid var(--bg-4); }
+  .biz-grid,.ins-grid,.mc-grid { grid-template-columns:1fr 1fr; }
+  .proj-grid { grid-template-columns:1fr; }
+  .ag-layout { grid-template-columns:1fr; gap:40px; }
+  .mc-corridors { grid-template-columns:1fr; }
+  .ft-top-inner { grid-template-columns:1fr 1fr; gap:36px; }
+  .met-inner { grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:700px) {
+  .hero-h1 { font-size:36px; }
+  .hero-actions { flex-direction:column; }
+  .hero-bar-inner { grid-template-columns:1fr; }
+  .hb-item { border-right:none !important; border-bottom:1px solid var(--bg-4); }
+  .biz-grid,.ins-grid,.mc-grid { grid-template-columns:1fr; }
+  .cta-acts { flex-direction:column; }
+  .ag-stats { grid-template-columns:repeat(2,1fr); }
+  .ft-top-inner { grid-template-columns:1fr; }
+  .met-inner { grid-template-columns:repeat(2,1fr); }
+}
+</style>

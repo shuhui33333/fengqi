@@ -344,8 +344,21 @@ p { font-family: var(--FB); }
 /* ── Scroll Reveal ─────────────────────────────────────────────── */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity:1; transform:none; }
+
+/* Safety fallback: if JavaScript never runs (or the IntersectionObserver
+   fails to fire — e.g. for elements taller than the mobile viewport),
+   force every .reveal visible after a short delay so content is never lost. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1 !important; transform:none !important; transition:none; }
+}
 .d1{transition-delay:.08s} .d2{transition-delay:.16s}
 .d3{transition-delay:.24s} .d4{transition-delay:.32s}
+
+/* Last-resort fallback: 3s after first paint, any .reveal still not revealed
+   by JS animates to fully visible. Guarantees article bodies never stay hidden
+   on mobile even if the IntersectionObserver fails entirely. */
+@keyframes reveal-failsafe { to { opacity:1; transform:none; } }
+.reveal:not(.in) { animation: reveal-failsafe .6s ease 3s forwards; }
 .d5{transition-delay:.40s}
 
 /* ── Keyframes ─────────────────────────────────────────────────── */

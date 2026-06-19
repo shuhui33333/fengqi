@@ -1,6 +1,48 @@
 ---
 // src/components/Footer.astro
 // Light gold background · black / deep brown / gold text
+// Lang-aware: pass lang="zh" for the Chinese site.
+interface Props { lang?: 'en' | 'zh' }
+const { lang = 'en' } = Astro.props
+const zh = lang === 'zh'
+const P = (en: string) => (zh ? '/zh' + en : en)   // path prefixer
+
+const T = {
+  desc: zh
+    ? '丰麒集团是一家连接中国与东南亚的跨境产业集团，业务涵盖农业、物流、产业园区、贸易与数字系统。'
+    : 'A cross-border industrial group connecting China and Southeast Asia through agriculture, logistics, industrial parks, trade and digital systems.',
+  business:   zh ? '业务板块' : 'Business',
+  projects:   zh ? '旗舰项目' : 'Projects',
+  company:    zh ? '集团信息' : 'Company',
+  offices:    zh ? '全球办事处' : 'Global Offices',
+  contact:    zh ? '联系我们' : 'Contact',
+  related:    zh ? '关联平台' : 'Related',
+  // Business segment labels
+  bizParks:      zh ? '产业园区' : 'Industrial Parks',
+  bizLogistics:  zh ? '物流与供应链' : 'Logistics & Supply Chain',
+  bizHealth:     zh ? '医疗与康养' : 'Healthcare & Wellness',
+  bizTrade:      zh ? '贸易与分销' : 'Trade & Distribution',
+  bizAgri:       zh ? '农业与生态科技' : 'Agriculture & Eco-Tech',
+  bizDigital:    zh ? '数字系统' : 'Digital Systems',
+  // Project labels
+  prjKuantan:  zh ? '关丹清真产业园' : 'Kuantan Halal Park',
+  prjFengjie:  zh ? '丰捷物流' : 'Fengjie Logistics',
+  prjZeng:     zh ? '增城生态空间' : 'Zengcheng Eco Space',
+  prjBroiler:  zh ? '农业用地 — 马来西亚' : 'Agricultural Land — Malaysia',
+  prjAchiev:   zh ? '天下人物' : 'Achievers World',
+  // Company labels
+  cmpAbout:       zh ? '关于丰麒' : 'About Fengqi',
+  cmpLeadership:  zh ? '领导团队' : 'Leadership',
+  cmpInsights:    zh ? '动态资讯' : 'Insights',
+  cmpPartnership: zh ? '合作伙伴' : 'Partnership',
+  cmpContact:     zh ? '联系我们' : 'Contact',
+  // Offices
+  offHK:  zh ? '香港 · 集团总部' : 'Hong Kong · Group HQ',
+  offMY:  zh ? '马来西亚 · 彭亨' : 'Malaysia · Pahang',
+  offID:  zh ? '印度尼西亚 · 雅加达' : 'Indonesia · Jakarta',
+  offCN:  zh ? '中国 · 广州' : 'China · Guangzhou',
+  copy:   zh ? '© 2025 丰麒集团有限公司' : '© 2025 Fengqi Group Limited',
+}
 ---
 <footer id="site-footer">
   <div class="ft-top">
@@ -8,65 +50,65 @@
 
       <!-- Brand -->
       <div class="ft-brand">
-        <a href="/" class="ft-logo" aria-label="Fengqi Group">
+        <a href={P('/')} class="ft-logo" aria-label="Fengqi Group">
           <img src="/images/logo/logo-circle.png" alt="Fengqi" class="ft-logo-img" />
           <div>
             <div class="ft-logo-name">FENGQI GROUP</div>
             <span class="ft-logo-cn">丰麒集团有限公司</span>
           </div>
         </a>
-        <p class="ft-desc">A cross-border industrial group connecting China and Southeast Asia through agriculture, logistics, industrial parks, trade and digital systems.</p>
+        <p class="ft-desc">{T.desc}</p>
         <p class="ft-motto">丰行天下 · 麒通四海</p>
       </div>
 
       <!-- Business -->
       <div>
-        <p class="ft-col-title">Business</p>
+        <p class="ft-col-title">{T.business}</p>
         <nav class="ft-links">
-          <a href="/business#parks">Industrial Parks</a>
-          <a href="/business#logistics">Logistics & Supply Chain</a>
-          <a href="/business#healthcare">Healthcare & Wellness</a>
-          <a href="/business#trade">Trade & Distribution</a>
-          <a href="/business#agriculture">Agriculture & Eco-Tech</a>
-          <a href="/business#digital">Digital Systems</a>
+          <a href={P('/business') + '#parks'}>{T.bizParks}</a>
+          <a href={P('/business') + '#logistics'}>{T.bizLogistics}</a>
+          <a href={P('/business') + '#healthcare'}>{T.bizHealth}</a>
+          <a href={P('/business') + '#trade'}>{T.bizTrade}</a>
+          <a href={P('/business') + '#agriculture'}>{T.bizAgri}</a>
+          <a href={P('/business') + '#digital'}>{T.bizDigital}</a>
         </nav>
       </div>
 
       <!-- Projects + Company -->
       <div>
-        <p class="ft-col-title">Projects</p>
+        <p class="ft-col-title">{T.projects}</p>
         <nav class="ft-links">
-          <a href="/projects/kuantan-halal-park">Kuantan Halal Park</a>
-          <a href="/projects/indonesia-fengjie-logistics">Fengjie Logistics</a>
-          <a href="/projects/zengcheng-ecological-space">Zengcheng Eco Space</a>
-          <a href="/projects/broiler-chicken-malaysia">Agricultural Land — Malaysia</a>
-          <a href="/projects/achievers-world">Achievers World</a>
+          <a href={P('/projects/kuantan-halal-park')}>{T.prjKuantan}</a>
+          <a href={P('/projects/indonesia-fengjie-logistics')}>{T.prjFengjie}</a>
+          <a href={P('/projects/zengcheng-ecological-space')}>{T.prjZeng}</a>
+          <a href={P('/projects/broiler-chicken-malaysia')}>{T.prjBroiler}</a>
+          <a href={P('/projects/achievers-world')}>{T.prjAchiev}</a>
         </nav>
-        <p class="ft-col-title" style="margin-top:28px">Company</p>
+        <p class="ft-col-title" style="margin-top:28px">{T.company}</p>
         <nav class="ft-links">
-          <a href="/about">About Fengqi</a>
-          <a href="/about#team">Leadership</a>
-          <a href="/insights">Insights</a>
-          <a href="/partnership">Partnership</a>
-          <a href="/contact">Contact</a>
+          <a href={P('/about')}>{T.cmpAbout}</a>
+          <a href={P('/about') + '#team'}>{T.cmpLeadership}</a>
+          <a href={P('/insights')}>{T.cmpInsights}</a>
+          <a href={P('/partnership')}>{T.cmpPartnership}</a>
+          <a href={P('/contact')}>{T.cmpContact}</a>
         </nav>
       </div>
 
       <!-- Offices -->
       <div>
-        <p class="ft-col-title">Global Offices</p>
+        <p class="ft-col-title">{T.offices}</p>
         <nav class="ft-links">
-          <a href="/contact">Hong Kong · Group HQ</a>
-          <a href="/contact">Malaysia · Pahang</a>
-          <a href="/contact">Indonesia · Jakarta</a>
-          <a href="/contact">China · Guangzhou</a>
+          <a href={P('/contact')}>{T.offHK}</a>
+          <a href={P('/contact')}>{T.offMY}</a>
+          <a href={P('/contact')}>{T.offID}</a>
+          <a href={P('/contact')}>{T.offCN}</a>
         </nav>
         <div class="ft-contact">
-          <p class="ft-col-title" style="margin-top:28px">Contact</p>
+          <p class="ft-col-title" style="margin-top:28px">{T.contact}</p>
           <a href="mailto:info@fengqi-global.com" class="ft-email">info@fengqi-global.com</a>
         </div>
         <div class="ft-related">
-          <p class="ft-col-title" style="margin-top:28px">Related</p>
+          <p class="ft-col-title" style="margin-top:28px">{T.related}</p>
           <nav class="ft-links">
             <a href="https://www.arff.my" target="_blank" rel="noopener noreferrer">ASEAN Platform</a>
             <a href="https://zy30719374-2.jzfkw.net/" target="_blank" rel="noopener noreferrer">ASEAN-China Platform</a>
@@ -79,10 +121,11 @@
 
   <div class="ft-bottom">
     <div class="wrap ft-bottom-inner">
-      <span class="ft-copy">© 2025 Fengqi Group Limited</span>
+      <span class="ft-copy">{T.copy}</span>
     </div>
   </div>
 </footer>
+
 
 <style>
 /* ── Light gold palette for footer ── */

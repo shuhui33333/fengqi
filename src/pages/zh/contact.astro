@@ -1,0 +1,180 @@
+---
+// src/pages/zh/contact.astro  →  /zh/contact
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import FormInput from '../../components/ui/FormInput.astro'
+---
+<BaseLayout lang="zh" title="联系我们 | 丰麒集团" description="联系丰麒集团——在香港、马来西亚、印度尼西亚和中国设有办事处，全业务板块欢迎合作洽询。">
+  <Header active="/zh/contact" lang="zh" />
+  <main>
+
+    <section class="section ct-hero page-hero">
+      <div class="geo-bg ct-geo"></div>
+      <div class="wrap">
+        <div class="ct-hero-c">
+          <div class="label">联系我们</div>
+          <h1 class="heading">开启<em>合作对话</em>。</h1>
+          <p class="body-text body-text--wide">无论您是在探索合作机会、寻求市场进入支持，还是希望进一步了解丰麒——我们的团队随时为您对接。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section ct-body">
+      <div class="wrap ct-layout">
+
+        <!-- Left: form -->
+        <div>
+          <div class="reveal">
+            <div class="label">发送咨询</div>
+            <h2 class="heading" style="font-size:clamp(24px,2.8vw,38px)">联系我们的团队。</h2>
+          </div>
+          <form id="contact-form-el" novalidate class="ct-form reveal d1">
+            <div class="ct-row">
+              <FormInput name="name"    label="姓名"    placeholder="您的姓名"       required />
+              <FormInput name="company" label="公司"      placeholder="您的公司"         />
+            </div>
+            <div class="ct-row">
+              <FormInput type="email" name="email" label="电子邮箱" placeholder="your@email.com" required />
+              <FormInput type="tel"   name="phone" label="电话 / WhatsApp" placeholder="+60 / +86 …"       />
+            </div>
+            <FormInput type="select" name="enquiry_type" label="咨询类型" required options={[
+              '合作 — 政府机构',
+              '合作 — 企业 / 产业',
+              '合作 — 投资',
+              '合作 — 渠道 / 分销',
+              '一般咨询',
+              '媒体与采访',
+            ]} />
+            <FormInput type="textarea" name="message" label="留言" placeholder="请告诉我们如何为您提供帮助…" required />
+
+            <div class="ct-submit-row">
+          <button type="submit" id="ct-submit" class="btn btn--gold ct-btn">
+            <span class="ct-btn-text">发送信息 →</span>
+            <span class="ct-btn-loading" aria-hidden="true">发送中…</span>
+          </button>
+          <div id="ct-success" class="ct-success" aria-live="polite" hidden>✓ 信息已成功发送，我们将尽快与您联系。</div>
+          <div id="ct-error"   class="ct-err"     aria-live="polite" hidden>出现错误。请发送邮件至 <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a></div>
+        </div>
+          </form>
+        </div>
+
+        <!-- Right: offices -->
+        <aside>
+          <div class="reveal d2">
+            <div class="label">全球办事处</div>
+          </div>
+          <div class="offices cgrid">
+            {[
+              {flag:'🇭🇰', city:'香港', role:'集团总部', detail:'丰麒集团有限公司\n集团战略、投资与国际协调'},
+              {flag:'🇲🇾', city:'马来西亚', role:'彭亨（格宾 & 甘孟）', detail:'彭亨数字清真食品产业园\n清真认证、产业园及东盟枢纽运营'},
+              {flag:'🇲🇾', city:'马来西亚', role:'吉隆坡', detail:'马来西亚业务拓展\n政府关系与区域合作'},
+              {flag:'🇮🇩', city:'印度尼西亚', role:'雅加达 · 爪哇', detail:'丰捷物流印度尼西亚\n区域物流、仓储与配送'},
+              {flag:'🇨🇳', city:'中国', role:'广州 · 增城', detail:'生态农业基地\n农业科技、功能食品与康养运营'},
+            ].map((o,i)=>(
+              <div class={`office reveal d${i+1}`}>
+                <div class="off-flag">{o.flag}</div>
+                <h3 class="off-city">{o.city}</h3>
+                <p class="off-role">{o.role}</p>
+                <p class="off-det">{o.detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="ct-email reveal d3">
+            <p class="ct-email-lbl">一般咨询</p>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
+          </div>
+          <div class="ct-email reveal d3">
+            <p class="ct-email-lbl">合作洽询</p>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer lang="zh" />
+  <ClientEffects />
+
+<script>
+(function () {
+  const form = document.getElementById('contact-form-el')
+  const btn  = document.getElementById('ct-submit')
+  const ok   = document.getElementById('ct-success')
+  const err  = document.getElementById('ct-error')
+  if (!form) return
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault()
+    if (!form.checkValidity()) { form.reportValidity(); return }
+    btn.setAttribute('data-loading','1'); btn.disabled = true
+    try {
+      const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) })
+      const text = await res.text()
+
+      let result = {}
+      try { result = JSON.parse(text) } catch (_) { result = { raw: text } }
+
+      // Debug — inspect these in the Network tab / console
+      console.log('[ContactForm] response status:', res.status)
+      console.log('[ContactForm] response ok:', res.ok)
+      console.log('[ContactForm] result:', result)
+
+      // Success is judged by the real HTTP status (200–299).
+      // result.success is only a secondary fallback for non-standard responses.
+      const succeeded = res.ok || result.success === true || result.success === 1 || result.success === 'true'
+
+      if (succeeded) {
+        form.reset()
+        ok.hidden  = false
+        err.hidden = true
+      } else {
+        console.error('[ContactForm] Submission failed — status:', res.status, 'result:', result)
+        err.hidden = false
+        ok.hidden  = true
+      }
+    } catch (netErr) {
+      console.error('[ContactForm] Network/fetch error:', netErr)
+      err.hidden = false
+      ok.hidden  = true
+    } finally {
+      btn.removeAttribute('data-loading'); btn.disabled = false
+    }
+  })
+})()
+</script>
+</BaseLayout>
+<style>
+.ct-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.ct-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.ct-hero-c{max-width:760px}
+.ct-body{background:var(--bg)}
+.ct-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start}
+.ct-form{display:flex;flex-direction:column;gap:20px}
+.ct-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ct-btn{width:100%;text-align:center;margin-top:8px}
+.offices{grid-template-columns:1fr;gap:1px}
+.office{background:var(--bg-2);padding:24px 24px;transition:background .3s}
+.office:hover{background:var(--bg-3)}
+.off-flag{font-size:20px;margin-bottom:8px}
+.off-city{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--gold);margin-bottom:4px}
+.off-role{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--gold-border)}
+.off-det{font-size:18px;color:var(--text-3);line-height:1.7;white-space:pre-line}
+.ct-email{background:var(--bg-3);border:1px solid var(--bg-4);padding:20px 24px;margin-top:12px}
+.ct-email-lbl{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:6px}
+.ct-email-val{font-family:var(--FD);font-size:18px;color:var(--gold);text-decoration:none;transition:color .3s}
+.ct-email-val:hover{color:var(--gold-lt)}
+@media(max-width:1100px){.ct-layout{grid-template-columns:1fr;gap:52px}}
+@media(max-width:700px){.ct-row{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.ct-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.ct-hero h1 { color:var(--text); }
+.ct-hero h1 em { color:var(--gold); }
+.ct-hero .label { color:var(--gold); }
+.ct-hero .body-text { color:var(--text-2); }
+.ct-hero-wrap { position:relative; z-index:2; max-width:900px; }
+</style>

@@ -1,19 +1,84 @@
 ---
 // src/components/partnership/PartnerForm.astro
 // Submits to /api/contact (Cloudflare Pages Function).
-// No access_key in the browser.
+// No access_key in the browser. Lang-aware: pass lang="zh" for Chinese.
 import FormInput from '../ui/FormInput.astro'
+interface Props { lang?: 'en' | 'zh' }
+const { lang = 'en' } = Astro.props
+const zh = lang === 'zh'
+
+const T = {
+  label:    zh ? '开启合作' : 'Initiate Collaboration',
+  heading:  zh ? '<em>携手合作</em>，即刻启程。' : 'Ready to <em>Work Together</em>?',
+  intro:    zh
+    ? '无论您是政府机构、企业伙伴、投资方还是渠道合作商——请告诉我们您的合作意向，我们的团队将在两个工作日内回复。'
+    : "Whether you're a government agency, enterprise partner, investor or channel partner — tell us about your interest and our team will respond within two business days.",
+  types: zh ? [
+    { t:'政府机构',  d:'区域产业合作、产业园区开发、物流基础设施及中国—东南亚资源对接。' },
+    { t:'企业伙伴',  d:'市场进入支持、供应链协同、清真认证、仓储配送、联合市场开拓。' },
+    { t:'投资方',    d:'产业园区项目、农业食品开发、物流网络、医疗康养。优先长期合作。' },
+    { t:'渠道伙伴',  d:'稳定产品供应、冷链物流、清真市场对接、区域分销与销售渠道连接。' },
+  ] : [
+    { t:'Government Agencies',  d:'Regional industry cooperation, industrial park development, logistics infrastructure and China–SE Asia resource connections.' },
+    { t:'Industry Partners',    d:'Market entry support, supply chain collaboration, halal certification, warehousing and distribution, joint market development.' },
+    { t:'Investors',            d:'Industrial park projects, agri-food development, logistics networks, healthcare. Long-term partnerships preferred.' },
+    { t:'Channel Partners',     d:'Stable product supply, cold chain logistics, halal market access, regional distribution and sales channel connections.' },
+  ],
+  name:      zh ? '姓名' : 'Full Name',
+  namePh:    zh ? '您的姓名' : 'Your name',
+  company:   zh ? '公司 / 机构' : 'Company / Organisation',
+  companyPh: zh ? '您的公司' : 'Your company',
+  email:     zh ? '电子邮箱' : 'Email Address',
+  phone:     zh ? '电话 / WhatsApp' : 'Phone / WhatsApp',
+  partnerType: zh ? '合作意向' : 'Partnership Interest',
+  partnerOpts: zh ? [
+    '政府机构 — 区域产业合作',
+    '企业伙伴 — 市场进入与供应链',
+    '投资方 — 产业园 / 农业食品 / 物流',
+    '渠道伙伴 — 产品供应与分销',
+    '媒体及其他咨询',
+  ] : [
+    'Government Agency — Regional Industry Cooperation',
+    'Enterprise Partner — Market Entry & Supply Chain',
+    'Investor — Industrial Park / Agri-Food / Logistics',
+    'Channel Partner — Product Supply & Distribution',
+    'Media & Other Enquiry',
+  ],
+  focusArea: zh ? '关注领域' : 'Focus Area',
+  focusOpts: zh ? [
+    '产业园区与跨境平台',
+    '物流与供应链',
+    '农业与生态科技',
+    '医疗与康养',
+    '数字系统',
+    '贸易与分销',
+    '一般咨询',
+  ] : [
+    'Industrial Parks & Cross-Border Platform',
+    'Logistics & Supply Chain',
+    'Agriculture & Ecological Technology',
+    'Healthcare & Wellness',
+    'Digital Systems',
+    'Trade & Distribution',
+    'General Enquiry',
+  ],
+  message:   zh ? '留言' : 'Your Message',
+  messagePh: zh ? '请告诉我们您的项目、需求或问题…' : 'Tell us about your project, needs or questions…',
+  btnText:   zh ? '发送咨询 →' : 'Send Enquiry →',
+  btnLoading:zh ? '发送中…' : 'Sending…',
+  success:   zh ? '✓ 信息已成功发送，我们将尽快与您联系。' : '✓ Message sent successfully. We will contact you shortly.',
+  errPre:    zh ? '出现错误。请直接发送邮件至' : 'Something went wrong. Please email us directly at',
+}
 ---
 
 <section class="section pf-sec" id="partner-form">
   <div class="wrap">
 
     <div class="pf-header reveal">
-      <div class="label">Initiate Collaboration</div>
-      <h2>Ready to <em>Work Together</em>?</h2>
+      <div class="label">{T.label}</div>
+      <h2 set:html={T.heading}></h2>
       <p class="body-text body-text--wide">
-        Whether you're a government agency, enterprise partner, investor or channel partner —
-        tell us about your interest and our team will respond within two business days.
+        {T.intro}
       </p>
     </div>
 
@@ -21,12 +86,7 @@ import FormInput from '../ui/FormInput.astro'
 
       <!-- Partner type guide -->
       <div class="pf-types reveal d1">
-        {[
-          { t:'Government Agencies',  d:'Regional industry cooperation, industrial park development, logistics infrastructure and China–SE Asia resource connections.' },
-          { t:'Industry Partners',    d:'Market entry support, supply chain collaboration, halal certification, warehousing and distribution, joint market development.' },
-          { t:'Investors',            d:'Industrial park projects, agri-food development, logistics networks, healthcare. Long-term partnerships preferred.' },
-          { t:'Channel Partners',     d:'Stable product supply, cold chain logistics, halal market access, regional distribution and sales channel connections.' },
-        ].map(p => (
+        {T.types.map(p => (
           <div class="pf-type">
             <h4>{p.t}</h4>
             <p>{p.d}</p>
@@ -40,42 +100,28 @@ import FormInput from '../ui/FormInput.astro'
         <input type="checkbox" name="botcheck" class="pf-bot" tabindex="-1" aria-hidden="true" />
 
         <div class="pf-row">
-          <FormInput name="name"    label="Full Name"              placeholder="Your name"       required />
-          <FormInput name="company" label="Company / Organisation" placeholder="Your company"         />
+          <FormInput name="name"    label={T.name}    placeholder={T.namePh}    required />
+          <FormInput name="company" label={T.company} placeholder={T.companyPh}         />
         </div>
         <div class="pf-row">
-          <FormInput type="email" name="email" label="Email Address"    placeholder="your@email.com" required />
-          <FormInput type="tel"   name="phone" label="Phone / WhatsApp" placeholder="+60 / +86 …"         />
+          <FormInput type="email" name="email" label={T.email} placeholder="your@email.com" required />
+          <FormInput type="tel"   name="phone" label={T.phone} placeholder="+60 / +86 …"         />
         </div>
-        <FormInput type="select" name="partner_type" label="Partnership Interest" required options={[
-          'Government Agency — Regional Industry Cooperation',
-          'Enterprise Partner — Market Entry & Supply Chain',
-          'Investor — Industrial Park / Agri-Food / Logistics',
-          'Channel Partner — Product Supply & Distribution',
-          'Media & Other Enquiry',
-        ]} />
-        <FormInput type="select" name="focus_area" label="Focus Area" options={[
-          'Industrial Parks & Cross-Border Platform',
-          'Logistics & Supply Chain',
-          'Agriculture & Ecological Technology',
-          'Healthcare & Wellness',
-          'Digital Systems',
-          'Trade & Distribution',
-          'General Enquiry',
-        ]} />
-        <FormInput type="textarea" name="message" label="Your Message"
-          placeholder="Tell us about your project, needs or questions…" required />
+        <FormInput type="select" name="partner_type" label={T.partnerType} required options={T.partnerOpts} />
+        <FormInput type="select" name="focus_area" label={T.focusArea} options={T.focusOpts} />
+        <FormInput type="textarea" name="message" label={T.message}
+          placeholder={T.messagePh} required />
 
         <div class="pf-submit-row">
           <button type="submit" id="pf-submit" class="btn btn--gold pf-btn">
-            <span class="pf-btn-text">Send Enquiry →</span>
-            <span class="pf-btn-loading" aria-hidden="true">Sending…</span>
+            <span class="pf-btn-text">{T.btnText}</span>
+            <span class="pf-btn-loading" aria-hidden="true">{T.btnLoading}</span>
           </button>
           <div id="pf-success" class="pf-success" aria-live="polite" hidden>
-            ✓ Message sent successfully. We will contact you shortly.
+            {T.success}
           </div>
           <div id="pf-error" class="pf-error" aria-live="polite" hidden>
-            Something went wrong. Please email us directly at
+            {T.errPre}
             <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a>
           </div>
         </div>

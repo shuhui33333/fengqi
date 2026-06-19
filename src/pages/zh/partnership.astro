@@ -1,0 +1,388 @@
+---
+// src/pages/zh/partnership.astro  →  /zh/partnership
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import PartnerForm   from '../../components/partnership/PartnerForm.astro'
+---
+<BaseLayout lang="zh" title="合作伙伴 | 丰麒集团" description="与丰麒携手，连接东南亚市场、清真认证通道、物流网络与产业园区资源。">
+  <Header active="/zh/partnership" lang="zh" />
+  <main>
+
+    <section class="section pn-hero page-hero">
+      <div class="geo-bg pn-geo"></div>
+      <div class="wrap">
+        <div class="pn-hero-c">
+          <div class="label">合作伙伴</div>
+          <h1 class="heading">携手共建<em>中国与东南亚</em>。</h1>
+          <p class="body-text body-text--wide">丰麒致力于成为连接中国与东南亚市场的长期合作平台，助力合作伙伴更顺利地进入区域市场，建立更稳定的产业与供应链体系。对我们而言，合作不只是商业往来——而是真正帮助伙伴解决市场进入、供应链管理、物流、区域资源对接与长期运营的挑战。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four partner types -->
+    <section class="section pn-types-sec" id="partner-types">
+      <div class="geo-bg" style="opacity:.3"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">合作对象</div>
+          <h2 class="heading">四种<em>合作</em>模式。</h2>
+          <p class="body-text">无论您是政府机构、企业、投资方还是渠道合作商——丰麒都致力于建立长期、稳定、务实有效的合作。</p>
+        </div>
+        <div class="pn-grid cgrid">
+          {[
+            {idx:'01',t:'政府机构',    sub:'区域产业与项目合作',
+             b:'随着越来越多企业进入东南亚市场，地方政府不仅关注招商引资，更注重项目的长期可行性、就业创造及完整的产业与供应链基础。丰麒与政府机构、地方发展组织及产业园区合作，共同推动区域产业发展，重点关注长期运营、市场连接与物流支持。',
+             li:['产业园区开发与规划','农业及食品产业项目','物流、仓储与基础设施','中国—东南亚资源与市场对接']},
+            {idx:'02',t:'企业伙伴',       sub:'商业与产业协作',
+             b:'企业进入东南亚后发现，真正的挑战在于仓储、运输、供应链、本地合作与市场运营——而非销售本身。丰麒依托覆盖中国、马来西亚和印度尼西亚的网络，助力企业顺利进入区域市场。',
+             li:['园区入驻与落地支持','供应链搭建与管理','清真认证与合规协助','联合市场开拓与分销渠道']},
+            {idx:'03',t:'投资方',              sub:'长期产业合作',
+             b:'丰麒专注于可长期可持续运营、供应链稳定、具备真正产业开发能力的项目。集团优先考虑长期运营与持续增长，而非短期交易。',
+             li:['产业园区项目（彭亨及未来）','农业及食品产业开发','物流与仓储网络','医疗与康养领域']},
+            {idx:'04',t:'渠道伙伴',       sub:'市场与渠道合作',
+             b:'随着东南亚市场增长，对稳定供应、物流效率与本地市场合作的需求不断提升。丰麒助力渠道伙伴建立稳定的产品供应，减轻物流、库存与分销压力。',
+             li:['产品供应与库存管理','区域冷链与配送支持','清真市场资源对接','本地市场渠道与销售网络']},
+          ].map((p,i)=>(
+            <div class={`pn-card ctop cbar reveal d${i+1}`}>
+              <div class="cidx">{p.idx}</div>
+              <h3 class="pn-card-t">{p.t}</h3>
+              <p class="pn-card-sub">{p.sub}</p>
+              <p class="pn-card-b">{p.b}</p>
+              <ul class="pn-card-li">{p.li.map(l=><li>{l}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Fengqi -->
+    <section class="section pn-why" id="why-fengqi">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">为何选择丰麒</div>
+          <h2 class="heading">不止是服务商——<br />更是<em>长期</em>平台伙伴。</h2>
+        </div>
+        <div class="pn-why-grid cgrid">
+          {[
+            {t:'区域布局与本地洞察', b:'长期深耕马来西亚与印度尼西亚，丰麒深谙本地营商环境、政府政策、监管框架与市场动态——降低您的进入风险与时间成本。'},
+            {t:'跨产业一体化体系',     b:'从产业园区、认证到物流、供应链与数字化管理——是互联的系统而非孤立的服务，减少跨境运营的碎片化。'},
+            {t:'清真市场连接',            b:'丰麒与马来西亚 JAKIM 认证体系及区域清真网络的成熟关系，为合作伙伴提供直达全球增长最快消费群体之一的通道。'},
+            {t:'长期运营承诺',     b:'丰麒重视稳定、透明与长期合作——专注于持续的市场存在与运营成功，而非仅仅完成项目。'},
+          ].map((w,i)=>(
+            <div class={`pn-w ctop cbar reveal d${i+1}`}><h3 class="pn-w-t">{w.t}</h3><p class="pn-w-b">{w.b}</p></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── Download Centre ── -->
+    <section class="section dl-sec" id="download-centre">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">资料下载中心</div>
+          <h2>集团<em>资料</em>下载。</h2>
+          <p class="body-text body-text--wide">
+            下载丰麒集团官方资料——集团介绍、招商资料、产品资料及技术方案。所有文件均可免费下载。
+          </p>
+        </div>
+
+        <div class="dl-grid">
+
+          <!-- 01 Corporate Profile 集团介绍 -->
+          <div class="dl-card reveal d1">
+            <div class="dl-card-head">
+              <div class="dl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div>
+                <p class="dl-card-num">01</p>
+                <h3 class="dl-card-title">集团介绍</h3>
+                <p class="dl-card-cn">集团介绍下载</p>
+              </div>
+            </div>
+            <ul class="dl-files">
+              <li>
+                <a href="/documents/fengqi-corporate-profile-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>公司介绍（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/fengqi-corporate-profile-en.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Corporate Profile (English)</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/gambang-halal-park-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Gambang Halal Park 项目介绍（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/gambang-halal-park-en.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Gambang Halal Park Introduction (English)</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/fengqi-agritech-profile-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>农业科技有限公司企业介绍（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 02 Investment Brochure 招商资料 -->
+          <div class="dl-card reveal d2">
+            <div class="dl-card-head">
+              <div class="dl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <path d="M3 9h18M9 21V9"/>
+                </svg>
+              </div>
+              <div>
+                <p class="dl-card-num">02</p>
+                <h3 class="dl-card-title">招商资料</h3>
+                <p class="dl-card-cn">招商资料下载</p>
+              </div>
+            </div>
+            <ul class="dl-files">
+              <li>
+                <a href="/documents/investment-brochure-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>招商资料（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/investment-brochure-en.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Investment Brochure (English)</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 03 Product Catalogue 产品资料 -->
+          <div class="dl-card reveal d3">
+            <div class="dl-card-head">
+              <div class="dl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <div>
+                <p class="dl-card-num">03</p>
+                <h3 class="dl-card-title">产品资料</h3>
+                <p class="dl-card-cn">产品资料下载</p>
+              </div>
+            </div>
+            <ul class="dl-files">
+              <li>
+                <a href="/documents/product-catalogue-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>产品资料（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/product-catalogue-en.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Product Catalogue (English)</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 04 Technical Solutions 技术方案 -->
+          <div class="dl-card reveal d4">
+            <div class="dl-card-head">
+              <div class="dl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <p class="dl-card-num">04</p>
+                <h3 class="dl-card-title">技术方案</h3>
+                <p class="dl-card-cn">技术方案下载</p>
+              </div>
+            </div>
+            <ul class="dl-files">
+              <li>
+                <a href="/documents/technical-solutions-cn.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>技术方案（中文版）</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+              <li>
+                <a href="/documents/technical-solutions-en.pdf" class="dl-link" download>
+                  <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                  <span>Technical Solutions (English)</span>
+                  <span class="dl-tag">PDF</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <p class="dl-note reveal d3">
+          如需获取上述未列出的特定资料，请联系
+          <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a>
+        </p>
+      </div>
+    </section>
+
+    <PartnerForm lang="zh" />
+
+  </main>
+  <Footer lang="zh" />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pn-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.pn-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.pn-hero-c{max-width:760px}
+.pn-types-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.pn-grid{grid-template-columns:repeat(4,1fr)}
+.pn-card{background:var(--bg-2);padding:44px 28px}
+.pn-card:hover{background:var(--bg-3)}
+.pn-card-t{font-family:var(--FD);font-size:22px;font-weight:400;color:var(--gold);margin-bottom:6px;line-height:1.2}
+.pn-card-sub{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--gold-border)}
+.pn-card-b{font-size:17px;line-height:2;color:var(--text-3);margin-bottom:20px}
+.pn-card-li{list-style:none}
+.pn-card-li li{font-size:18px;color:var(--text-3);padding-left:12px;position:relative;margin-bottom:8px;line-height:1.7}
+.pn-card-li li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:1px;background:var(--gold-dk)}
+.pn-why{background:var(--bg)}
+.pn-why-grid{grid-template-columns:repeat(4,1fr)}
+.pn-w{background:var(--bg-2);padding:40px 28px}
+.pn-w:hover{background:var(--bg-3)}
+.pn-w-t{font-family:var(--FD);font-size:28px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
+.pn-w-b{font-size:17px;line-height:2;color:var(--text-3)}
+@media(max-width:1100px){.pn-grid,.pn-why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.pn-grid,.pn-why-grid{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.pn-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.pn-hero h1 { color:var(--text); }
+.pn-hero h1 em { color:var(--gold); }
+.pn-hero .label { color:var(--gold); }
+.pn-hero .body-text { color:var(--text-2); }
+.pn-hero-wrap { position:relative; z-index:2; max-width:900px; }
+
+/* ── Download Centre ── */
+.dl-sec { background: var(--bg-2); border-top: 1px solid var(--bg-4); }
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.dl-card {
+  background: var(--bg);
+  border: 1px solid var(--bg-4);
+  border-top: 3px solid var(--gold);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: box-shadow .25s, border-color .25s;
+}
+.dl-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--gold-border);
+}
+
+.dl-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.dl-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: var(--gold-faint); border: 1px solid var(--gold-border);
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+}
+.dl-icon svg { width: 20px; height: 20px; }
+
+.dl-card-num {
+  font-family: var(--FL); font-size: 18px; color: var(--gold);
+  font-weight: 600; letter-spacing: 1px; line-height: 1; margin-bottom: 4px;
+}
+.dl-card-title {
+  font-family: var(--FL); font-size: 16px; font-weight: 600;
+  color: var(--text); line-height: 1.3; margin-bottom: 4px;
+}
+.dl-card-cn {
+  font-family: var(--FB); font-size: 13px; color: var(--text-muted);
+}
+
+.dl-files {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.dl-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-2); border: 1px solid transparent;
+  text-decoration: none; color: var(--text-2);
+  font-family: var(--FB); font-size: 14px;
+  transition: background .2s, border-color .2s, color .2s;
+  border-radius: 1px;
+}
+.dl-link:hover {
+  background: var(--gold-faint);
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+.dl-pdf {
+  width: 16px; height: 16px; flex-shrink: 0; color: var(--gold); opacity: .8;
+}
+.dl-link span:nth-child(2) { flex: 1; }
+.dl-tag {
+  font-family: var(--FL); font-size: 10px; letter-spacing: 1px;
+  color: var(--gold-dk); background: rgba(184,145,42,.1);
+  padding: 2px 7px; border-radius: 2px; flex-shrink: 0;
+}
+
+.dl-note {
+  font-family: var(--FB); font-size: 15px; color: var(--text-3);
+  text-align: center; padding-top: 8px;
+}
+.dl-note a {
+  color: var(--gold); text-decoration: underline; text-underline-offset: 3px;
+}
+
+@media (max-width: 1100px) { .dl-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px)  { .dl-grid { grid-template-columns: 1fr; } }
+
+</style>

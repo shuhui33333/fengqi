@@ -26,4 +26,18 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { insights, projects };
+// Chinese project bodies — same slugs as `projects`, Chinese content.
+const projectsZh = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title:      z.string(),
+    subtitle:   z.string(),
+    location:   z.string(),
+    category:   z.string(),
+    status:     z.string(),
+    highlights: z.array(z.string()),
+    order:      z.number().default(99),
+  }),
+});
+
+export const collections = { insights, projects, projectsZh };
