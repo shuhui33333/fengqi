@@ -50,7 +50,7 @@ function normalizeCategory(raw: unknown): InsightCategory | null {
 // ── Public types ────────────────────────────────────────────────────────────
 
 export interface InsightEntry {
-  slug:     string
+  slug:     string   // full path after "insights/" — may contain "/" if the story lives in a subfolder
   title:    string
   date:     Date
   summary:  string
@@ -77,6 +77,7 @@ export type StoryblokRichText = SBRichText
 
 interface SBStory {
   slug:         string
+  full_slug:    string   // e.g. "insights/media-coverage/20260124" — includes any nested folder
   published_at: string | null
   first_published_at: string | null
   content:      Record<string, unknown>
@@ -135,7 +136,8 @@ export async function getAllInsights(category?: InsightCategory): Promise<Insigh
   }
 }
 
-/** Single story by slug (the part after insights/). Returns null if not found. */
+/** Single story by slug (the full path after insights/, "/" and all —
+ *  matches InsightEntry.slug). Returns null if not found. */
 export async function getInsightBySlug(slug: string): Promise<InsightEntry | null> {
   if (!TOKEN) return null
   const url = `${BASE}/stories/insights/${slug}?token=${TOKEN}&version=${VERSION}&cv=${CV}`
@@ -189,7 +191,15 @@ function mapStory(story: SBStory): InsightEntry {
   // Category — single-option field; see header comment for valid values
   const category = normalizeCategory(c.category ?? c.Category)
 
-  return { slug: story.slug, title, date, summary, image, body, category }
+  // Slug — use the FULL path after "insights/", not just the last segment.
+  // If an editor organizes articles into Storyblok subfolders
+  // (e.g. insights/media-coverage/20260124), story.slug would only be
+  // "20260124", which breaks routing and the Storyblok lookup below once an
+  // article isn't at the top level. full_slug always carries the complete
+  // path, so this works whether content is flat or nested.
+  const slug = story.full_slug.replace(/^insights\//, '')
+
+  return { slug, title, date, summary, image, body, category }
 }
 
 function extractImageUrl(img: unknown): string | null {
