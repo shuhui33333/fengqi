@@ -6,11 +6,24 @@
  * Content path      : insights/*
  *
  * Content type fields (exact Storyblok names → API lowercase keys):
- *   Title       Text        → c.title
- *   Date        Date/Time   → c.date
- *   Summary     Textarea    → c.summary
- *   CoverImage  Asset       → c.coverimage  (Storyblok lowercases field names)
- *   Richtext    Richtext    → c.richtext
+ *   Title       Text          → c.title
+ *   Date        Date/Time     → c.date
+ *   Summary     Textarea      → c.summary
+ *   CoverImage  Asset         → c.coverimage  (Storyblok lowercases field names)
+ *   Richtext    Richtext      → c.richtext
+ *   Category    Single-Option → c.category
+ *
+ * "Category" field setup (added manually in the Storyblok backend):
+ *   Field name : Category
+ *   Field type : Single-Option (or Text) — the exact stored VALUE must be
+ *                one of the slugs below (lowercase, hyphenated). The display
+ *                label shown to editors in Storyblok can be anything
+ *                ("Official News" etc.) — only the option VALUE matters here.
+ *     official     → Official News   / 官方新闻
+ *     media        → Media Coverage  / 媒体报道
+ *     arff-china   → ARFF China      / ARFF中国区
+ *   Entries with a missing/unrecognized Category still show up under "All"
+ *   but are excluded from every category-specific listing.
  *
  * Environments:
  *   Production deploy  → version=published
@@ -22,6 +35,18 @@ const BASE    = 'https://api.storyblok.com/v2/cdn'
 const VERSION = (import.meta.env.MODE === 'production' ? 'published' : 'draft') as 'published' | 'draft'
 const CV      = Date.now()
 
+// ── Categories ──────────────────────────────────────────────────────────────
+
+/** Stored Storyblok option values — must match the "Category" field exactly. */
+export type InsightCategory = 'official' | 'media' | 'arff-china'
+
+const VALID_CATEGORIES: readonly InsightCategory[] = ['official', 'media', 'arff-china']
+
+function normalizeCategory(raw: unknown): InsightCategory | null {
+  const v = String(raw ?? '').trim().toLowerCase()
+  return (VALID_CATEGORIES as readonly string[]).includes(v) ? (v as InsightCategory) : null
+}
+
 // ── Public types ────────────────────────────────────────────────────────────
 
 export interface InsightEntry {
@@ -31,6 +56,7 @@ export interface InsightEntry {
   summary:  string
   image:    string | null    // CoverImage URL or null → caller supplies default
   body:     SBRichText
+  category: InsightCategory | null
 }
 
 export interface SBRichText {
@@ -59,8 +85,9 @@ interface SBStory {
 // ── Fetch API ───────────────────────────────────────────────────────────────
 
 /** All stories in insights/, newest-first. Paginates through every Storyblok
- *  page so there is no 100-article cap. Returns [] on any error. */
-export async function getAllInsights(): Promise<InsightEntry[]> {
+ *  page so there is no 100-article cap. Pass a `category` to filter server-side
+ *  (Official News / Media Coverage / ARFF China). Returns [] on any error. */
+export async function getAllInsights(category?: InsightCategory): Promise<InsightEntry[]> {
   if (!TOKEN) {
     console.warn('[storyblok] Secret "storyblock" is missing — returning empty array')
     return []
@@ -79,6 +106,7 @@ export async function getAllInsights(): Promise<InsightEntry[]> {
         `&starts_with=insights/`,
         `&version=${VERSION}`,
         `&sort_by=content.date:desc`,
+        category ? `&filter_query[category][in]=${encodeURIComponent(category)}` : '',
         `&per_page=${PER_PAGE}`,
         `&page=${page}`,
         `&cv=${CV}`,
@@ -158,7 +186,10 @@ function mapStory(story: SBStory): InsightEntry {
   const body: SBRichText = (c.richtext ?? c.Richtext ?? c.body ?? c.Body) as SBRichText
     ?? { type: 'doc', content: [] }
 
-  return { slug: story.slug, title, date, summary, image, body }
+  // Category — single-option field; see header comment for valid values
+  const category = normalizeCategory(c.category ?? c.Category)
+
+  return { slug: story.slug, title, date, summary, image, body, category }
 }
 
 function extractImageUrl(img: unknown): string | null {

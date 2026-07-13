@@ -1,6 +1,5 @@
 ---
-// src/pages/zh/insights/index.astro  →  /zh/insights  (全部, page 1)
-// Same Storyblok data source as the English site.
+// src/pages/insights/arff-china/index.astro  →  /insights/arff-china  (page 1)
 import BaseLayout    from '../../../layouts/BaseLayout.astro'
 import Header        from '../../../components/Header.astro'
 import Footer        from '../../../components/Footer.astro'
@@ -11,21 +10,21 @@ import InsightsGrid  from '../../../components/insights/InsightsGrid.astro'
 import { getAllInsights } from '../../../lib/storyblok'
 
 const PER_PAGE = 9
-const all   = await getAllInsights()
+const all   = await getAllInsights('arff-china')
 const posts = all.slice(0, PER_PAGE)
 const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
 ---
-<BaseLayout lang="zh" title="动态资讯 | 丰麒集团" description="丰麒集团的最新动态、项目进展与行业洞察。">
-  <Header active="/zh/insights" lang="zh" />
+<BaseLayout title="ARFF China | Fengqi Group" description="Updates from ARFF's operations and partnerships in China.">
+  <Header active="/insights" />
   <main>
 
     <section class="section ins-hero page-hero">
       <div class="wrap">
         <div class="ins-hero-content">
-          <div class="label">动态资讯</div>
-          <h1>新闻与<em>资讯</em>。</h1>
+          <div class="label">Insights</div>
+          <h1>ARFF <em>China</em>.</h1>
           <p class="body-text body-text--wide">
-            丰麒集团的最新动态、项目里程碑与行业洞察。
+            Updates from ARFF's operations and partnerships in China.
           </p>
         </div>
       </div>
@@ -33,19 +32,19 @@ const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
 
     <section class="section sec-light" id="all-insights">
       <div class="wrap">
-        <CategoryTabs lang="zh" active="all" />
+        <CategoryTabs lang="en" active="arff-china" />
         <InsightsGrid
           posts={posts}
-          lang="zh"
-          basePath="/zh/insights"
-          emptyText="暂无已发布的文章，敬请期待。"
+          lang="en"
+          basePath="/insights"
+          emptyText="No ARFF China updates published yet — check back soon."
         />
-        <Pagination currentPage={1} totalPages={totalPages} basePath="/zh/insights" />
+        <Pagination currentPage={1} totalPages={totalPages} basePath="/insights/arff-china" />
       </div>
     </section>
 
   </main>
-  <Footer lang="zh" />
+  <Footer />
   <ClientEffects />
 </BaseLayout>
 

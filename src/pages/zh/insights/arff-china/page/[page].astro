@@ -1,0 +1,70 @@
+---
+// src/pages/zh/insights/arff-china/page/[page].astro  →  /zh/insights/arff-china/page/2 …
+import BaseLayout    from '../../../../../layouts/BaseLayout.astro'
+import Header        from '../../../../../components/Header.astro'
+import Footer        from '../../../../../components/Footer.astro'
+import ClientEffects from '../../../../../components/ClientEffects.astro'
+import Pagination    from '../../../../../components/ui/Pagination.astro'
+import CategoryTabs  from '../../../../../components/insights/CategoryTabs.astro'
+import InsightsGrid  from '../../../../../components/insights/InsightsGrid.astro'
+import { getAllInsights } from '../../../../../lib/storyblok'
+
+export async function getStaticPaths() {
+  const PER_PAGE = 9
+  const all = await getAllInsights('arff-china')
+  const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
+  const paths = []
+  for (let p = 2; p <= totalPages; p++) {
+    paths.push({
+      params: { page: String(p) },
+      props:  {
+        pagePosts: all.slice((p - 1) * PER_PAGE, p * PER_PAGE),
+        currentPage: p,
+        totalPages,
+      },
+    })
+  }
+  return paths
+}
+
+const { pagePosts, currentPage, totalPages } = Astro.props
+---
+<BaseLayout lang="zh" title={`ARFF中国区 — 第 ${currentPage} 页 | 丰麒集团`} description="ARFF在中国区业务与合作的最新动态。">
+  <Header active="/zh/insights" lang="zh" />
+  <main>
+
+    <section class="section ins-hero page-hero">
+      <div class="wrap">
+        <div class="ins-hero-content">
+          <div class="label">动态资讯</div>
+          <h1>ARFF<em>中国区</em>。</h1>
+          <p class="body-text body-text--wide">ARFF在中国区业务与合作的最新动态。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-light" id="all-insights">
+      <div class="wrap">
+        <CategoryTabs lang="zh" active="arff-china" />
+        <InsightsGrid
+          posts={pagePosts}
+          lang="zh"
+          basePath="/zh/insights"
+          emptyText="暂无已发布的ARFF中国区动态，敬请期待。"
+        />
+        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/zh/insights/arff-china" />
+      </div>
+    </section>
+
+  </main>
+  <Footer lang="zh" />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.ins-hero-content { max-width: 760px; }
+.ins-hero h1   { color: var(--text); }
+.ins-hero h1 em { color: var(--gold); }
+.ins-hero .label { color: var(--gold); }
+.ins-hero .body-text { color: var(--text-2); }
+</style>

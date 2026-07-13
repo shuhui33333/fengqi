@@ -1,0 +1,30 @@
+---
+// src/components/insights/InsightsGrid.astro
+// Grid wrapper + empty-state for the Insights/News listing pages.
+import InsightCard from './InsightCard.astro'
+import type { InsightEntry } from '../../lib/storyblok'
+
+interface Props {
+  posts:     InsightEntry[]
+  lang:      'en' | 'zh'
+  basePath:  string   // detail-page base, e.g. "/insights" or "/zh/insights"
+  emptyText: string
+}
+const { posts, lang, basePath, emptyText } = Astro.props
+---
+{posts.length === 0 ? (
+  <p class="ins-empty">{emptyText}</p>
+) : (
+  <div class="ins-grid">
+    {posts.map((post, i) => (
+      <InsightCard post={post} index={i} lang={lang} basePath={basePath} />
+    ))}
+  </div>
+)}
+
+<style>
+.ins-empty { font-size: 17px; color: var(--text-3); padding: 80px 0; text-align: center; }
+.ins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+@media (max-width: 1100px) { .ins-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px)  { .ins-grid { grid-template-columns: 1fr; gap: 20px; } }
+</style>

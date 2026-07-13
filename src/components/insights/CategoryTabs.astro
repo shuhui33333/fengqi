@@ -1,0 +1,35 @@
+---
+// src/components/insights/CategoryTabs.astro
+// Filter tabs for the Insights/News listing pages (All / Official News / Media Coverage / ARFF China).
+import { INSIGHT_CATEGORY_TABS } from '../../lib/insightCategories'
+
+interface Props {
+  lang:   'en' | 'zh'
+  active: 'all' | 'official' | 'media' | 'arff-china'
+}
+const { lang, active } = Astro.props
+---
+<nav class="cat-tabs" aria-label={lang === 'zh' ? '资讯分类' : 'News categories'}>
+  {INSIGHT_CATEGORY_TABS.map(tab => {
+    const href  = lang === 'zh' ? tab.hrefZh : tab.hrefEn
+    const label = lang === 'zh' ? tab.labelZh : tab.labelEn
+    const isOn  = tab.slug === active
+    return (
+      <a href={href} class={`cat-tab${isOn ? ' is-on' : ''}`} aria-current={isOn ? 'page' : undefined}>
+        {label}
+      </a>
+    )
+  })}
+</nav>
+
+<style>
+.cat-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+.cat-tab {
+  font-family: var(--FL); font-size: 11px; letter-spacing: 2px;
+  color: var(--text-2); text-decoration: none;
+  padding: 10px 20px; border: 1px solid var(--bg-4); background: var(--bg);
+  transition: border-color .2s, color .2s, background .2s;
+}
+.cat-tab:hover { border-color: var(--gold-border); color: var(--gold); }
+.cat-tab.is-on { background: var(--gold); border-color: var(--gold); color: #fff; }
+</style>

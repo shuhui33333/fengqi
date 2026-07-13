@@ -1,5 +1,5 @@
 ---
-// src/pages/zh/insights/page/[page].astro  →  /zh/insights/page/N
+// src/pages/insights/official/page/[page].astro  →  /insights/official/page/2 …
 import BaseLayout    from '../../../../layouts/BaseLayout.astro'
 import Header        from '../../../../components/Header.astro'
 import Footer        from '../../../../components/Footer.astro'
@@ -11,7 +11,7 @@ import { getAllInsights } from '../../../../lib/storyblok'
 
 export async function getStaticPaths() {
   const PER_PAGE = 9
-  const all = await getAllInsights()
+  const all = await getAllInsights('official')
   const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
   const paths = []
   for (let p = 2; p <= totalPages; p++) {
@@ -29,35 +29,37 @@ export async function getStaticPaths() {
 
 const { pagePosts, currentPage, totalPages } = Astro.props
 ---
-<BaseLayout lang="zh" title={`动态资讯 — 第 ${currentPage} 页 | 丰麒集团`} description="丰麒集团的最新动态、项目进展与行业洞察。">
-  <Header active="/zh/insights" lang="zh" />
+<BaseLayout title={`Official News — Page ${currentPage} | Fengqi Group`} description="Official announcements and company updates from Fengqi Group.">
+  <Header active="/insights" />
   <main>
 
     <section class="section ins-hero page-hero">
       <div class="wrap">
         <div class="ins-hero-content">
-          <div class="label">动态资讯</div>
-          <h1>新闻与<em>资讯</em>。</h1>
-          <p class="body-text body-text--wide">丰麒集团的最新动态、项目里程碑与行业洞察。</p>
+          <div class="label">Insights</div>
+          <h1>Official <em>News</em>.</h1>
+          <p class="body-text body-text--wide">
+            Official announcements and company updates from Fengqi Group.
+          </p>
         </div>
       </div>
     </section>
 
     <section class="section sec-light" id="all-insights">
       <div class="wrap">
-        <CategoryTabs lang="zh" active="all" />
+        <CategoryTabs lang="en" active="official" />
         <InsightsGrid
           posts={pagePosts}
-          lang="zh"
-          basePath="/zh/insights"
-          emptyText="暂无已发布的文章，敬请期待。"
+          lang="en"
+          basePath="/insights"
+          emptyText="No official news published yet — check back soon."
         />
-        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/zh/insights" />
+        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/insights/official" />
       </div>
     </section>
 
   </main>
-  <Footer lang="zh" />
+  <Footer />
   <ClientEffects />
 </BaseLayout>
 

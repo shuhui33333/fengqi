@@ -1,0 +1,83 @@
+---
+// src/components/insights/InsightCard.astro
+// One article card in the Insights/News grid. Shared by every listing page
+// (All + each category, EN + ZH) so the markup/styling lives in one place.
+import type { InsightEntry } from '../../lib/storyblok'
+
+interface Props {
+  post:     InsightEntry
+  index:    number
+  lang:     'en' | 'zh'
+  basePath: string   // detail-page base, e.g. "/insights" or "/zh/insights"
+}
+const { post, index, lang, basePath } = Astro.props
+
+const DEFAULT_IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+const imgSrc  = post.image ?? DEFAULT_IMG
+const dateStr = post.date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+const readMore = lang === 'zh' ? '阅读全文' : 'Read more'
+---
+<a href={`${basePath}/${post.slug}`} class={`ins-card reveal d${(index % 3) + 1}`}>
+  <div class="ins-card-img">
+    <img src={imgSrc} alt={post.title} loading="lazy" />
+  </div>
+  <div class="ins-card-body">
+    <p class="ins-card-date">{dateStr}</p>
+    <h3 class="ins-card-title">{post.title}</h3>
+    <p class="ins-card-sum">{post.summary}</p>
+    <span class="ins-card-arr">
+      {readMore}
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </div>
+</a>
+
+<style>
+.ins-card {
+  background: var(--bg);
+  border: 1px solid var(--bg-4);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow .28s, border-color .28s, transform .28s;
+}
+.ins-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--gold-border);
+  transform: translateY(-3px);
+}
+
+.ins-card-img {
+  width: 100%; aspect-ratio: 16/9;
+  overflow: hidden; background: var(--bg-3); flex-shrink: 0;
+}
+.ins-card-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.ins-card:hover .ins-card-img img { transform: scale(1.05); }
+
+.ins-card-body { padding: 24px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+.ins-card-date {
+  font-family: var(--FL); font-size: 9px; letter-spacing: 2px;
+  color: var(--text-muted); margin-bottom: 10px;
+}
+.ins-card-title {
+  font-family: var(--FL); font-size: 16px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.4;
+}
+.ins-card:hover .ins-card-title { color: var(--gold); }
+.ins-card-sum {
+  font-size: 14px; color: var(--text-3); line-height: 1.75;
+  flex: 1; margin-bottom: 16px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ins-card-arr {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--FL); font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); margin-top: auto;
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity .3s, transform .3s;
+}
+.ins-card:hover .ins-card-arr { opacity: 1; transform: translateX(0); }
+</style>
