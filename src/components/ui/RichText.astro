@@ -3,7 +3,16 @@
 // Renders a Storyblok rich-text document as HTML.
 // - Supports: paragraph, heading, bold, italic, underline, strike, code, link,
 //   bullet_list, ordered_list, list_item, image, blockquote, hard_break,
-//   horizontal_rule, code_block, table (table_row / table_header / table_cell), emoji.
+//   horizontal_rule, code_block, table (table_row / table_header / table_cell), emoji,
+//   blok (nested Storyblok content-blocks embedded in Richtext — see renderBlok()).
+//
+// Nested blocks ("blok" nodes): Storyblok richtext can embed custom content
+// blocks (bloks) inline. Each is resolved by component name in renderBlok()
+// below. Currently supported:
+//   video — a nestable block with an Asset field (video file) + optional
+//           Text "caption". See renderVideoBlok() for the exact field-name
+//           fallbacks it checks; if your Storyblok field is named something
+//           else, add it to that ?? chain.
 // - Unknown nodes degrade safely (render inner content or skip) instead of failing.
 // - Logs unknown node types to console for debugging.
 import type { StoryblokNode, StoryblokRichText } from '../../lib/storyblok'
@@ -124,6 +133,12 @@ function renderNode(node: StoryblokNode): string {
         return text
       }
 
+      // ── Nested content-blocks (custom Storyblok components in Richtext) ──
+      case 'blok': {
+        const bloks = (node.attrs?.body ?? []) as Record<string, unknown>[]
+        return bloks.map(renderBlok).join('')
+      }
+
       default:
         // Unknown node — degrade safely: render inner content if any, else skip
         unknownTypes.add(`node:${node.type}`)
@@ -134,6 +149,46 @@ function renderNode(node: StoryblokNode): string {
     console.error(`[RichText] Failed to render node type "${node.type}":`, err)
     return inner()
   }
+}
+
+// ── Nested block (blok) resolver ────────────────────────────────────────
+// Storyblok richtext embeds custom content-blocks as `{ type: 'blok', attrs:
+// { body: [ {component, ...fields} ] } }`. Route each by `component` name.
+function renderBlok(blok: Record<string, unknown>): string {
+  const component = String(blok.component ?? '')
+  switch (component) {
+    case 'video':
+      return renderVideoBlok(blok)
+    default:
+      unknownTypes.add(`blok:${component || 'unknown'}`)
+      return ''
+  }
+}
+
+// Video content-block. Field-name fallbacks below cover the common ways an
+// editor might have named the Asset field in Storyblok — "video" is the
+// name assumed in the setup instructions. If your block uses a different
+// technical field name, add it to this ?? chain (or tell me the exact name
+// and I'll pin it down instead of guessing further).
+function renderVideoBlok(blok: Record<string, unknown>): string {
+  const videoField = (blok.video ?? blok.video_file ?? blok.file ?? blok.asset) as
+    | { filename?: string; alt?: string; title?: string }
+    | string
+    | undefined
+
+  const src = typeof videoField === 'string' ? videoField : videoField?.filename
+  if (!src) return ''
+
+  const alt = typeof videoField === 'object'
+    ? (videoField.alt || videoField.title || 'Article video')
+    : 'Article video'
+  const caption = String(blok.caption ?? '')
+
+  // News footage: click-to-play, no autoplay. Autoplay would require `muted`
+  // to satisfy browser policy anyway, which is poor UX for news video.
+  return `<figure class="prose-video"><video controls preload="metadata" playsinline src="${escAttr(src)}" aria-label="${escAttr(alt)}">Your browser does not support HTML5 video.</video>${
+    caption ? `<figcaption>${esc(caption)}</figcaption>` : ''
+  }</figure>`
 }
 
 function colspanRowspan(node: StoryblokNode): string {
