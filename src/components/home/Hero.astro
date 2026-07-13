@@ -1,0 +1,238 @@
+---
+// src/components/home/Hero.astro
+---
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+
+  <div class="wrap hero-content">
+
+    <!-- ── Left: copy ── -->
+    <div class="hero-left">
+      <p class="hero-over">Cross-Border Industrial Group</p>
+
+      <h1 class="hero-h1">
+        Connecting China<br />
+        &amp; <em>Southeast Asia</em><br />
+        Through Integrated Industry, Trade and Supply Chains.
+      </h1>
+
+      <p class="hero-body">
+        Fengqi Group integrates agriculture, logistics, industrial parks,
+        trade and digital systems — a complete cross-border platform from
+        production and supply chain to market access.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/business"    class="btn btn--gold">Explore Our Business</a>
+        <a href="/partnership" class="btn btn--ghost">Partner With Us</a>
+      </div>
+    </div>
+
+    <!-- ── Right: 6 business segment cards (2 col × 3 row) ── -->
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-segs">
+        {[
+          { num:'01', name:'Industrial Parks &\nCross-Border Platforms', href:'/business#parks'       },
+          { num:'02', name:'Logistics &\nSupply Chain',               href:'/business#logistics'    },
+          { num:'03', name:'Healthcare\n& Wellness',                  href:'/business#healthcare'   },
+          { num:'04', name:'Trade &\nDistribution',                   href:'/business#trade'        },
+          { num:'05', name:'Agriculture &\nEcological Technology',    href:'/business#agriculture'  },
+          { num:'06', name:'Digital\nSystems',                        href:'/business#digital'      },
+        ].map((s, i) => (
+          <a href={s.href} class={`hseg anim-d${i}`}>
+            <span class="hseg-num">{s.num}</span>
+            <span class="hseg-name">{s.name}</span>
+            <span class="hseg-arr">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Bottom highlights bar ── -->
+  <div class="hero-bar">
+    <div class="wrap hero-bar-inner">
+      {[
+        { title:'China Base',            desc:'Agriculture, technology & industrial resources'        },
+        { title:'Malaysia Hub',          desc:'Pahang halal parks (830 acres) · JAKIM certification' },
+        { title:'Indonesia Network',     desc:'Fengjie Logistics · 4 depots · 145M people reached'  },
+        { title:'Cross-Border Platform', desc:'Production → Supply Chain → Trade → Market Access'      },
+      ].map(item => (
+        <div class="hb-item">
+          <div class="hb-dot"></div>
+          <div>
+            <p class="hb-title">{item.title}</p>
+            <p class="hb-desc">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Shell ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-top: 80px;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(184,145,42,.05) 0%, transparent 55%),
+    linear-gradient(225deg, rgba(184,145,42,.03) 0%, transparent 45%);
+}
+
+/* ── Content grid ── */
+.hero-content {
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 60px;
+  padding-top: 60px; padding-bottom: 120px;
+  position: relative; z-index: 2;
+}
+
+/* ── Left copy ── */
+.hero-over {
+  font-family: var(--FL); font-size: 15px; letter-spacing: 5px;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0; animation: slideRight .9s ease .15s forwards;
+}
+.hero-over::before { content:''; width:28px; height:1.5px; background:var(--gold); flex-shrink:0; }
+
+.hero-h1 {
+  margin-bottom: 24px;
+  font-weight: 400;
+  opacity: 0; animation: slideRight .9s ease .3s forwards;
+}
+.hero-h1 em { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
+
+.hero-body {
+  font-family: var(--FB);
+  font-size: 16px; font-weight: 400; line-height: 1.85;
+  color: var(--text-2); max-width: 520px; margin-bottom: 36px;
+  opacity: 0; animation: slideRight .9s ease .45s forwards;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0; animation: slideRight .9s ease .6s forwards;
+}
+
+/* ── Right: 6 business segment cards ── */
+.hero-right {
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; animation: fadeIn 1s ease .75s forwards;
+}
+
+.hero-segs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.hseg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--bg);
+  border: 1px solid var(--bg-4);
+  border-left: 3px solid transparent;
+  text-decoration: none; color: inherit;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+  opacity: 0;
+}
+/* staggered fade-in for the 6 cards */
+.anim-d0 { animation: fadeIn .6s ease .85s forwards; }
+.anim-d1 { animation: fadeIn .6s ease .95s forwards; }
+.anim-d2 { animation: fadeIn .6s ease 1.05s forwards; }
+.anim-d3 { animation: fadeIn .6s ease 1.15s forwards; }
+.anim-d4 { animation: fadeIn .6s ease 1.25s forwards; }
+.anim-d5 { animation: fadeIn .6s ease 1.35s forwards; }
+
+.hseg:hover {
+  border-left-color: var(--gold);
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-2);
+}
+
+.hseg-num {
+  font-family: var(--FL);
+  font-size: 14px;
+  font-weight: 400;        /* not bold */
+  color: var(--gold);
+  flex-shrink: 0;
+  line-height: 1.4;
+  width: 20px;
+}
+
+.hseg-name {
+  font-family: var(--FL);
+  font-size: 13px;
+  font-weight: 400;        /* not bold */
+  color: var(--text-2);
+  line-height: 1.5;
+  flex: 1;
+  white-space: pre-line;   /* respect \n line breaks */
+}
+.hseg:hover .hseg-name { color: var(--text); }
+
+.hseg-arr {
+  font-size: 14px;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .2s, transform .2s;
+  flex-shrink: 0;
+  align-self: center;
+}
+.hseg:hover .hseg-arr { opacity: 1; transform: translateX(0); }
+
+/* ── Bottom bar ── */
+.hero-bar {
+  border-top: 1px solid var(--bg-4);
+  background: var(--bg-2);
+  position: relative; z-index: 2;
+}
+.hero-bar-inner {
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.hb-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 20px 28px;
+  border-right: 1px solid var(--bg-4);
+}
+.hb-item:last-child { border-right: none; }
+.hb-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 5px;
+}
+.hb-title {
+  font-family: var(--FL); font-size: 14px; font-weight: 500;
+  letter-spacing: 1px; color: var(--gold-dk); margin-bottom: 4px;
+}
+.hb-desc  { font-family: var(--FB); font-size: 13px; color: var(--text-3); line-height: 1.5; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .hero-content { grid-template-columns: 1fr; padding-bottom: 72px; }
+  .hero-right   { display: none; }
+  .hero-bar-inner { grid-template-columns: 1fr 1fr; }
+  .hb-item:nth-child(2) { border-right: none; }
+  .hb-item:nth-child(n+3) { border-top: 1px solid var(--bg-4); }
+}
+@media (max-width: 700px) {
+  .hero-h1 { font-size: 36px; }
+  .hero-actions { flex-direction: column; }
+  .hero-bar-inner { grid-template-columns: 1fr; }
+  .hb-item { border-right: none !important; border-bottom: 1px solid var(--bg-4); }
+}
+</style>

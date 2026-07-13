@@ -1,0 +1,184 @@
+---
+// src/pages/zh/about.astro  →  /zh/about
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+
+const TEAM = [
+  {role:'集团执行主席', name:'卢朋 博士', bio:'管理学博士，应用经济学博士后。国务院特殊津贴专家。东盟连锁企业与特许经营联合会（ARFF）副会长。粤港澳大湾区商会会长——首位担任该职务的中国企业家。2021–2022 冷链行业年度人物。荣获"改革开放四十年中国企业改革奖章"。'},
+  {role:'马来西亚区首席执行官', name:'拿督斯里 Dr. Mohamed Zabid', bio:'法国艾克斯-马赛大学博士。英国特许管理学会 CMgr CCMI（最高级别）。敦阿都拉萨教育基金会首席执行官。马来西亚一带一路协会副主席。跨国经济合作与文化交流专家。'},
+  {role:'首席科学家', name:'黄卫东 教授', bio:'中国农业大学教授、博士生导师。主持 20+ 项国家重点研发项目。入选"百千万人才工程"。国家及北京市科技进步奖获得者。多年入选"中国高被引学者"。'},
+  {role:'董事会副主席', name:'拿督斯里 Rosli Bin Isa', bio:'资深政府官员，哈佛商学院高级管理资历。30+ 年行政管理经验。曾任职马来西亚财政部、教育部、能源与自然资源部及多个州政府要职。现任沙巴州联邦秘书。'},
+  {role:'决策委员会主席', name:'拿督胡文元', bio:'工程建设与跨行业运营专家。在工程技术、企业管理、投资并购领域经验卓著。为重大战略决策与资源整合提供核心驱动力。'},
+  {role:'战略委员会主席', name:'揭耀全', bio:'22+ 年资本市场经验。美国南伊利诺伊大学卡本代尔分校（SIUC）金融学学士，马来西亚 MBA。曾任马来西亚顶尖金融机构高管。主导全球战略规划与资本部署。'},
+  {role:'风险管理委员会主席', name:'谢少平', bio:'30+ 年风险管理与审计经验，曾任职政法及国企纪检部门。严谨的工程思维与合规背景——为跨国运营构建稳健治理体系。'},
+  {role:'总裁兼首席投资官', name:'王泽', bio:'高级工程师。曾任商务部援外项目专家组组长。武汉市政协常委。曾任中国铁建高管。主导基础设施投资与重大项目实施。'},
+  {role:'中国区首席执行官', name:'卢若愚', bio:'卡内基梅隆大学（公共政策管理）及雪城大学（经济学）。擅长数据分析及国务院部委数据项目。推动丰麒智慧物流与跨境数字系统升级。'},
+]
+
+const MILESTONES = [
+  {year:'2014', title:'创立 — 农业与产业', desc:'丰麒集团成立。布局生态农业、养殖及产业链开发，在核心产区建立标准化示范基地。'},
+  {year:'2018', title:'拓展东南亚', desc:'拓展马来西亚与印度尼西亚市场。启动物流、仓储及区域供应链建设，开启跨境产业协同。'},
+  {year:'2024', title:'国际资源与香港基地', desc:'于香港设立投资公司。彭亨清真产业园、丰捷物流印度尼西亚及增城生态农业项目协同推进。'},
+  {year:'未来', title:'区域产业生态', desc:'深化农业科技、物流供应链与数字系统协同。在不同区域复制产业模式，构建跨境产业生态。'},
+]
+---
+<BaseLayout lang="zh" title="关于丰麒 | 丰麒集团" description="丰麒集团成立于 2014 年，专注农业、物流、产业园区、贸易与数字系统，连接中国与东南亚。">
+  <Header active="/zh/about" lang="zh" />
+  <main>
+
+    <section class="section ab-hero page-hero">
+      <div class="geo-bg ab-geo"></div>
+      <div class="wrap">
+        <div class="ab-hero-c">
+          <div class="label">关于丰麒</div>
+          <h1 class="heading">一家<em>一体化</em>的<br />跨境产业集团。</h1>
+          <p class="body-text body-text--wide">丰麒集团成立于 2014 年，专注农业、物流、贸易、产业园区与数字系统——通过农业科技、物流供应链与数字协同，促进中国与东南亚之间的产业合作与资源流动。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview + stats -->
+    <section class="section" id="overview">
+      <div class="wrap">
+        <div class="ab-layout">
+          <div class="reveal">
+            <div class="label">集团概览</div>
+            <h2 class="heading">一个<em>完整</em>的产业生态。</h2>
+            <p class="body-text">集团构建从养殖、农业生产、仓储到贸易流通与市场对接的完整产业体系。农业方面，推进现代肉鸡养殖、生态循环农业与健康食品；物流方面，丰捷物流在东南亚市场构建区域网络。</p>
+            <p class="body-text" style="margin-bottom:0">丰麒推进马来西亚彭亨数字清真食品产业园——由格宾 730 英亩园区与甘孟 100 英亩园区组成——以及广州增城生态空间，融合农业、康养与教育体验。业务目前覆盖中国、马来西亚和印度尼西亚。</p>
+          </div>
+          <div class="reveal d2">
+            <div class="ab-stats cgrid">
+              {[{num:'2014',lbl:'成立年份'},{num:'香港',lbl:'集团总部'},{num:'3',lbl:'业务国家'},{num:'6',lbl:'业务板块'}].map(s=>(
+                <div class="ab-stat"><div class="ab-stat-num">{s.num}</div><div class="ab-stat-lbl">{s.lbl}</div></div>
+              ))}
+            </div>
+            <div class="ab-vision ctop">
+              <p class="ab-vis-lbl">愿景与使命</p>
+              <p class="ab-vis-txt">成为连接农业与全球市场的产业平台——以科技重构供应链，消除流通壁垒，构建可持续、可扩展的全球产业网络。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Competencies -->
+    <section class="section comp-sec" id="competencies">
+      <div class="geo-bg" style="opacity:.3"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">核心竞争力</div>
+          <h2 class="heading">丰麒的<em>独特</em>之处。</h2>
+        </div>
+        <div class="comp-grid cgrid">
+          {[
+            {t:'跨区域产业整合', b:'推动中国与东南亚之间农业、物流、贸易及产业园区的协同发展。'},
+            {t:'物流与供应链运营',   b:'整合仓储、运输与配送——通过智能数字调度优化成本、提升效率。'},
+            {t:'数字协同能力',    b:'运用物联网与智能系统，以数据激活传统产业——从农场管理到港口物流与园区运营。'},
+            {t:'清真市场连接',             b:'对接东南亚清真产业，助力合作伙伴把握 RCEP 及清真经济增长带来的机遇。'},
+          ].map((c,i)=>(
+            <div class={`cc ctop cbar reveal d${i+1}`}>
+              <h3 class="cc-t">{c.t}</h3>
+              <p class="cc-b">{c.b}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Development Path -->
+    <section class="section" id="journey">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">发展历程</div>
+          <h2 class="heading">我们的<em>历程</em>。</h2>
+        </div>
+        <div class="path-grid cgrid">
+          {MILESTONES.map((m,i)=>(
+            <div class={`pm reveal d${i+1}`}>
+              <div class="pm-year">{m.year}</div>
+              <h3 class="pm-title">{m.title}</h3>
+              <p class="pm-desc">{m.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership Team -->
+    <section class="section team-sec" id="team">
+      <div class="geo-bg" style="opacity:.25"></div>
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">领导团队</div>
+          <h2 class="heading">专业且<em>国际化</em>的背景。</h2>
+          <p class="body-text body-text--wide">丰麒汇聚来自农业、物流、供应链、科技与投资领域的专业人才。核心成员拥有横跨公共政策、科研机构与国际市场的跨行业、跨区域经验。</p>
+        </div>
+        <div class="team-grid cgrid">
+          {TEAM.map((m,i)=>(
+            <div class={`tc ctop reveal d${(i%3)+1}`}>
+              <div class="tc-photo"><img src={`/images/common/profile/p${i+1}.png`} alt={m.name} class="tc-photo-img" /></div>
+              <div class="tc-body">
+                <p class="tc-role">{m.role}</p>
+                <h3 class="tc-name">{m.name}</h3>
+                <p class="tc-bio">{m.bio}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang="zh" />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.ab-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg);position:relative;overflow:hidden}
+.ab-geo{opacity:.5}
+.ab-hero-c{max-width:760px}
+.ab-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.ab-stats{grid-template-columns:1fr 1fr;margin-bottom:24px}
+.ab-stat{background:var(--bg-2);padding:28px 24px;transition:background .3s}
+.ab-stat:hover{background:var(--bg-3)}
+.ab-stat-num{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:6px}
+.ab-stat-lbl{font-family:var(--FL);font-size:17px;letter-spacing:2.5px;color:var(--text-3)}
+.ab-vision{background:var(--bg-3);border:1px solid var(--bg-4);padding:32px;position:relative}
+.ab-vis-lbl{font-family:var(--FL);font-size:17px;letter-spacing:4px;color:var(--gold);margin-bottom:14px}
+.ab-vis-txt{font-size:18px;color:var(--text-3);line-height:1.9;font-style:italic}
+.comp-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.comp-grid{grid-template-columns:repeat(4,1fr)}
+.cc{background:var(--bg-2);padding:44px 32px}
+.cc:hover{background:var(--bg-3)}
+.cc-t{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:14px;line-height:1.25}
+.cc-b{font-size:17px;line-height:2;color:var(--text-3)}
+.path-grid{grid-template-columns:repeat(4,1fr)}
+.pm{background:var(--bg-2);padding:48px 32px;position:relative}
+.pm::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.pm:hover::before{transform:scaleX(1)}
+.pm-year{font-family:var(--FD);font-size:38px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:14px}
+.pm-title{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--text);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--gold-border);line-height:1.3}
+.pm-desc{font-size:17px;line-height:2;color:var(--text-3)}
+.team-sec{background:var(--bg-2);border-top:1px solid var(--gold-border);position:relative;overflow:hidden}
+.team-grid{grid-template-columns:repeat(3,1fr)}
+.tc{background:var(--bg-2);display:flex;flex-direction:column}
+.tc-photo{width:100%;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid var(--gold-border);background:#ffffff;display:flex;align-items:center;justify-content:center}
+.tc-photo-img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+.tc-body{padding:26px 28px}
+.tc-role{font-family:var(--FL);font-size:18px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:8px}
+.tc-name{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gold-border);line-height:1.2}
+.tc-bio{font-size:18px;color:var(--text-3);line-height:1.8}
+@media(max-width:1100px){.ab-layout{grid-template-columns:1fr;gap:40px}.comp-grid,.path-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.comp-grid,.path-grid,.team-grid{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.ab-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.ab-hero h1 { color:var(--text); }
+.ab-hero h1 em { color:var(--gold); }
+.ab-hero .label { color:var(--gold); }
+.ab-hero .body-text { color:var(--text-2); }
+.ab-hero-wrap { position:relative; z-index:2; max-width:900px; }
+</style>

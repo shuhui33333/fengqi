@@ -1,0 +1,180 @@
+---
+// src/pages/contact.astro  →  /contact
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+import FormInput from '../components/ui/FormInput.astro'
+---
+<BaseLayout title="联系我们 / Contact | Fengqi Group" description="Contact Fengqi Group — offices in Hong Kong, Malaysia, Indonesia and China. Open for partnership enquiries across all business segments.">
+  <Header active="/contact" />
+  <main>
+
+    <section class="section ct-hero page-hero">
+      <div class="geo-bg ct-geo"></div>
+      <div class="wrap">
+        <div class="ct-hero-c">
+          <div class="label">联系我们 · Contact Us</div>
+          <h1 class="heading">Let's <em>Start a Conversation</em>.</h1>
+          <p class="body-text body-text--wide">Whether you're exploring partnership opportunities, seeking market entry support, or simply want to learn more about Fengqi — our team is ready to connect.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section ct-body">
+      <div class="wrap ct-layout">
+
+        <!-- Left: form -->
+        <div>
+          <div class="reveal">
+            <div class="label">Send an Enquiry</div>
+            <h2 class="heading" style="font-size:clamp(24px,2.8vw,38px)">Contact Our Team.</h2>
+          </div>
+          <form id="contact-form-el" novalidate class="ct-form reveal d1">
+            <div class="ct-row">
+              <FormInput name="name"    label="Full Name"    placeholder="Your name"       required />
+              <FormInput name="company" label="Company"      placeholder="Your company"         />
+            </div>
+            <div class="ct-row">
+              <FormInput type="email" name="email" label="Email Address" placeholder="your@email.com" required />
+              <FormInput type="tel"   name="phone" label="Phone / WhatsApp" placeholder="+60 / +86 …"       />
+            </div>
+            <FormInput type="select" name="enquiry_type" label="Enquiry Type" required options={[
+              'Partnership — Government Agency',
+              'Partnership — Enterprise / Industry',
+              'Partnership — Investment',
+              'Partnership — Channel / Distribution',
+              'General Enquiry',
+              'Media & Press',
+            ]} />
+            <FormInput type="textarea" name="message" label="Message" placeholder="Tell us how we can help…" required />
+
+            <div class="ct-submit-row">
+          <button type="submit" id="ct-submit" class="btn btn--gold ct-btn">
+            <span class="ct-btn-text">Send Message →</span>
+            <span class="ct-btn-loading" aria-hidden="true">Sending…</span>
+          </button>
+          <div id="ct-success" class="ct-success" aria-live="polite" hidden>✓ Message sent successfully. We will contact you shortly.</div>
+          <div id="ct-error"   class="ct-err"     aria-live="polite" hidden>Something went wrong. Email us at <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a></div>
+        </div>
+          </form>
+        </div>
+
+        <!-- Right: offices -->
+        <aside>
+          <div class="reveal d2">
+            <div class="label">Global Offices</div>
+          </div>
+          <div class="offices cgrid">
+            {[
+              {flag:'🇭🇰', city:'Hong Kong', role:'Group Headquarters', detail:'Fengqi Group Limited\nGroup strategy, investment and international coordination'},
+              {flag:'🇲🇾', city:'Malaysia', role:'Pahang', detail:'Pahang Digital Halal Food Industrial Park\nHalal certification, industrial park & ASEAN hub operations'},
+              {flag:'🇲🇾', city:'Malaysia', role:'Kuala Lumpur', detail:'Malaysia business development\nGovernment relations & regional partnerships'},
+              {flag:'🇮🇩', city:'Indonesia', role:'Jakarta · Java', detail:'Fengjie Logistics Indonesia\nRegional logistics, warehousing & distribution'},
+              {flag:'🇨🇳', city:'China', role:'Guangzhou · Zengcheng', detail:'Ecological agriculture base\nAgri-tech, functional food & wellness operations'},
+            ].map((o,i)=>(
+              <div class={`office reveal d${i+1}`}>
+                <div class="off-flag">{o.flag}</div>
+                <h3 class="off-city">{o.city}</h3>
+                <p class="off-role">{o.role}</p>
+                <p class="off-det">{o.detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="ct-email reveal d3">
+            <p class="ct-email-lbl">GENERAL ENQUIRIES</p>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
+          </div>
+          <div class="ct-email reveal d3">
+            <p class="ct-email-lbl">PARTNERSHIP</p>
+            <a href="mailto:info@fengqi-global.com" class="ct-email-val">info@fengqi-global.com</a>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <ClientEffects />
+
+<script>
+(function () {
+  const form = document.getElementById('contact-form-el')
+  const btn  = document.getElementById('ct-submit')
+  const ok   = document.getElementById('ct-success')
+  const err  = document.getElementById('ct-error')
+  if (!form) return
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault()
+    if (!form.checkValidity()) { form.reportValidity(); return }
+    btn.setAttribute('data-loading','1'); btn.disabled = true
+    try {
+      const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) })
+      const text = await res.text()
+
+      let result = {}
+      try { result = JSON.parse(text) } catch (_) { result = { raw: text } }
+
+      // Debug — inspect these in the Network tab / console
+      console.log('[ContactForm] response status:', res.status)
+      console.log('[ContactForm] response ok:', res.ok)
+      console.log('[ContactForm] result:', result)
+
+      // Success is judged by the real HTTP status (200–299).
+      // result.success is only a secondary fallback for non-standard responses.
+      const succeeded = res.ok || result.success === true || result.success === 1 || result.success === 'true'
+
+      if (succeeded) {
+        form.reset()
+        ok.hidden  = false
+        err.hidden = true
+      } else {
+        console.error('[ContactForm] Submission failed — status:', res.status, 'result:', result)
+        err.hidden = false
+        ok.hidden  = true
+      }
+    } catch (netErr) {
+      console.error('[ContactForm] Network/fetch error:', netErr)
+      err.hidden = false
+      ok.hidden  = true
+    } finally {
+      btn.removeAttribute('data-loading'); btn.disabled = false
+    }
+  })
+})()
+</script>
+</BaseLayout>
+<style>
+.ct-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.ct-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.ct-hero-c{max-width:760px}
+.ct-body{background:var(--bg)}
+.ct-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start}
+.ct-form{display:flex;flex-direction:column;gap:20px}
+.ct-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ct-btn{width:100%;text-align:center;margin-top:8px}
+.offices{grid-template-columns:1fr;gap:1px}
+.office{background:var(--bg-2);padding:24px 24px;transition:background .3s}
+.office:hover{background:var(--bg-3)}
+.off-flag{font-size:20px;margin-bottom:8px}
+.off-city{font-family:var(--FD);font-size:18px;font-weight:400;color:var(--gold);margin-bottom:4px}
+.off-role{font-family:var(--FL);font-size:18px;letter-spacing:2px;color:var(--gold-dk);margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--gold-border)}
+.off-det{font-size:18px;color:var(--text-3);line-height:1.7;white-space:pre-line}
+.ct-email{background:var(--bg-3);border:1px solid var(--bg-4);padding:20px 24px;margin-top:12px}
+.ct-email-lbl{font-family:var(--FL);font-size:17px;letter-spacing:3px;color:var(--gold-dk);margin-bottom:6px}
+.ct-email-val{font-family:var(--FD);font-size:18px;color:var(--gold);text-decoration:none;transition:color .3s}
+.ct-email-val:hover{color:var(--gold-lt)}
+@media(max-width:1100px){.ct-layout{grid-template-columns:1fr;gap:52px}}
+@media(max-width:700px){.ct-row{grid-template-columns:1fr}}
+
+/* Interior hero — dark text on light background */
+.ct-hero { background:var(--bg-2); border-bottom:1px solid var(--bg-4); }
+.ct-hero h1 { color:var(--text); }
+.ct-hero h1 em { color:var(--gold); }
+.ct-hero .label { color:var(--gold); }
+.ct-hero .body-text { color:var(--text-2); }
+.ct-hero-wrap { position:relative; z-index:2; max-width:900px; }
+</style>

@@ -1,0 +1,123 @@
+---
+// src/pages/zh/downloads.astro  →  /zh/downloads
+// 独立的资料下载中心页面（下载文件与英文站一致，仅翻译分类、标题、简介）
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+
+const CATEGORIES = [
+  {
+    num: '01', title: '集团介绍', intro: '丰麒集团整体介绍及核心项目资料。',
+    files: [
+      { name: '公司介绍（中文版）',                 href: '/documents/fengqi-corporate-profile-cn.pdf' },
+      { name: 'Corporate Profile (English)',         href: '/documents/fengqi-corporate-profile-en.pdf' },
+      { name: '格宾清真产业园项目介绍（中文版）', href: '/documents/gambang-halal-park-cn.pdf' },
+      { name: 'Gambang Halal Park Introduction (English)', href: '/documents/gambang-halal-park-en.pdf' },
+      { name: '农业科技有限公司企业介绍（中文版）',   href: '/documents/fengqi-agritech-profile-cn.pdf' },
+    ],
+  },
+  {
+    num: '02', title: '招商资料', intro: '产业园区招商与投资合作资料。',
+    files: [
+      { name: '招商资料（中文版）',            href: '/documents/investment-brochure-cn.pdf' },
+      { name: 'Business opportunity (English)', href: '/documents/investment-brochure-en.pdf' },
+    ],
+  },
+  {
+    num: '03', title: '产品资料', intro: '丰麒产品与服务目录。',
+    files: [
+      { name: '产品资料（中文版）',           href: '/documents/product-catalogue-cn.pdf' },
+      { name: 'Product Catalogue (English)',  href: '/documents/product-catalogue-en.pdf' },
+    ],
+  },
+  {
+    num: '04', title: '技术方案', intro: '产业园、物流与数字系统技术方案。',
+    files: [
+      { name: '技术方案（中文版）',            href: '/documents/technical-solutions-cn.pdf' },
+      { name: 'Technical Solutions (English)', href: '/documents/technical-solutions-en.pdf' },
+    ],
+  },
+]
+---
+<BaseLayout lang="zh" title="资料下载 | 丰麒集团" description="下载丰麒集团官方资料——集团介绍、招商资料、产品资料及技术方案。">
+  <Header active="/zh/downloads" lang="zh" />
+  <main>
+
+    <section class="section dl-hero page-hero">
+      <div class="geo-bg dl-geo"></div>
+      <div class="wrap">
+        <div class="dl-hero-c">
+          <div class="label">资料下载中心</div>
+          <h1 class="heading">集团<em>资料</em>下载。</h1>
+          <p class="body-text body-text--wide">下载丰麒集团官方资料——集团介绍、招商资料、产品资料及技术方案。所有文件均可免费下载。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dl-sec">
+      <div class="wrap">
+        <div class="dl-grid">
+          {CATEGORIES.map(cat => (
+            <div class="dl-card reveal">
+              <div class="dl-card-head">
+                <p class="dl-card-num">{cat.num}</p>
+                <div>
+                  <h3 class="dl-card-title">{cat.title}</h3>
+                  <p class="dl-card-cn">{cat.intro}</p>
+                </div>
+              </div>
+              <ul class="dl-files">
+                {cat.files.map(f => (
+                  <li>
+                    <a href={f.href} class="dl-link" download>
+                      <svg class="dl-pdf" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+                      <span>{f.name}</span>
+                      <span class="dl-tag">PDF</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <p class="dl-note reveal">
+          如需获取上述未列出的特定资料，请联系
+          <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang="zh" />
+  <ClientEffects />
+</BaseLayout>
+
+<style>
+.dl-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.dl-geo{mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 40% 40%,black 20%,transparent 70%)}
+.dl-hero-c{max-width:760px}
+.dl-hero h1 { color:var(--text); }
+.dl-hero h1 em { color:var(--gold); }
+.dl-hero .label { color:var(--gold); }
+.dl-hero .body-text { color:var(--text-2); }
+
+.dl-sec { background: var(--bg); }
+.dl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 32px; }
+.dl-card { background: var(--bg); border: 1px solid var(--bg-4); border-top: 3px solid var(--gold); padding: 28px 24px; display: flex; flex-direction: column; gap: 20px; transition: box-shadow .25s, border-color .25s; }
+.dl-card:hover { box-shadow: var(--shadow); border-color: var(--gold-border); }
+.dl-card-head { display: flex; align-items: flex-start; gap: 16px; }
+.dl-card-num { font-family: var(--FL); font-size: 28px; color: var(--gold); font-weight: 600; letter-spacing: 1px; line-height: 1; flex-shrink: 0; }
+.dl-card-title { font-family: var(--FL); font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
+.dl-card-cn { font-family: var(--FB); font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.dl-files { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.dl-link { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--bg-2); border: 1px solid transparent; text-decoration: none; color: var(--text-2); font-family: var(--FB); font-size: 14px; transition: background .2s, border-color .2s, color .2s; }
+.dl-link:hover { background: var(--gold-faint); border-color: var(--gold-border); color: var(--text); }
+.dl-pdf { width: 16px; height: 16px; flex-shrink: 0; color: var(--gold); opacity: .8; }
+.dl-link span:nth-child(2) { flex: 1; }
+.dl-tag { font-family: var(--FL); font-size: 10px; letter-spacing: 1px; color: var(--gold-dk); background: rgba(184,145,42,.1); padding: 2px 7px; border-radius: 2px; flex-shrink: 0; }
+.dl-note { font-family: var(--FB); font-size: 15px; color: var(--text-3); text-align: center; padding-top: 8px; }
+.dl-note a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) { .dl-grid { grid-template-columns: 1fr; } }
+</style>

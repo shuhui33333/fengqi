@@ -1,0 +1,159 @@
+---
+// src/components/ui/RichText.astro
+// Renders a Storyblok rich-text document as HTML.
+// - Supports: paragraph, heading, bold, italic, underline, strike, code, link,
+//   bullet_list, ordered_list, list_item, image, blockquote, hard_break,
+//   horizontal_rule, code_block, table (table_row / table_header / table_cell), emoji.
+// - Unknown nodes degrade safely (render inner content or skip) instead of failing.
+// - Logs unknown node types to console for debugging.
+import type { StoryblokNode, StoryblokRichText } from '../../lib/storyblok'
+
+interface Props { doc: StoryblokRichText }
+const { doc } = Astro.props
+
+// Collect unknown node types for a single consolidated console warning
+const unknownTypes = new Set<string>()
+
+function esc(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function escAttr(s: string): string {
+  return esc(s).replace(/"/g, '&quot;')
+}
+
+function renderNode(node: StoryblokNode): string {
+  if (!node || typeof node !== 'object') return ''
+
+  const inner = () => (node.content ?? []).map(renderNode).join('')
+
+  try {
+    switch (node.type) {
+      case 'doc':
+        return inner()
+
+      case 'paragraph':
+        return `<p>${inner()}</p>`
+
+      case 'heading': {
+        const lvl = Math.min(Math.max(Number(node.attrs?.level ?? 2), 1), 6)
+        return `<h${lvl}>${inner()}</h${lvl}>`
+      }
+
+      case 'bullet_list':
+        return `<ul>${inner()}</ul>`
+
+      case 'ordered_list': {
+        const start = node.attrs?.order ? ` start="${Number(node.attrs.order)}"` : ''
+        return `<ol${start}>${inner()}</ol>`
+      }
+
+      case 'list_item':
+        return `<li>${inner()}</li>`
+
+      case 'blockquote':
+        return `<blockquote>${inner()}</blockquote>`
+
+      case 'horizontal_rule':
+        return '<hr>'
+
+      case 'hard_break':
+        return '<br>'
+
+      case 'code_block': {
+        const lang = node.attrs?.class ? ` class="${escAttr(String(node.attrs.class))}"` : ''
+        return `<pre><code${lang}>${inner()}</code></pre>`
+      }
+
+      case 'image': {
+        const src = String(node.attrs?.src ?? '')
+        if (!src) return ''
+        const alt = escAttr(String(node.attrs?.alt ?? ''))
+        const title = node.attrs?.title ? ` title="${escAttr(String(node.attrs.title))}"` : ''
+        return `<figure class="prose-img"><img src="${escAttr(src)}" alt="${alt}"${title} loading="lazy" />${
+          node.attrs?.alt ? `<figcaption>${esc(String(node.attrs.alt))}</figcaption>` : ''
+        }</figure>`
+      }
+
+      // ── Table support ──────────────────────────────────────────────
+      case 'table':
+        return `<div class="prose-table-wrap"><table>${inner()}</table></div>`
+
+      case 'table_row':
+        return `<tr>${inner()}</tr>`
+
+      case 'table_header':
+        return `<th${colspanRowspan(node)}>${inner()}</th>`
+
+      case 'table_cell':
+        return `<td${colspanRowspan(node)}>${inner()}</td>`
+
+      // ── Emoji ──────────────────────────────────────────────────────
+      case 'emoji': {
+        const name = String(node.attrs?.name ?? '')
+        const fallback = String(node.attrs?.emoji ?? node.attrs?.fallbackImage ?? '')
+        return fallback || `:${esc(name)}:`
+      }
+
+      // ── Text + marks ───────────────────────────────────────────────
+      case 'text': {
+        let text = esc(node.text ?? '')
+        ;(node.marks ?? []).forEach(mark => {
+          switch (mark.type) {
+            case 'bold':      text = `<strong>${text}</strong>`; break
+            case 'italic':    text = `<em>${text}</em>`; break
+            case 'strike':    text = `<s>${text}</s>`; break
+            case 'underline': text = `<u>${text}</u>`; break
+            case 'code':      text = `<code>${text}</code>`; break
+            case 'subscript':   text = `<sub>${text}</sub>`; break
+            case 'superscript': text = `<sup>${text}</sup>`; break
+            case 'link': {
+              const href   = escAttr(String(mark.attrs?.href ?? '#'))
+              const linktype = String(mark.attrs?.linktype ?? '')
+              const target = String(mark.attrs?.target ?? '_self')
+              const rel = target === '_blank' ? ' rel="noopener noreferrer"' : ''
+              const finalHref = linktype === 'email' ? `mailto:${href}` : href
+              text = `<a href="${finalHref}" target="${escAttr(target)}"${rel}>${text}</a>`
+              break
+            }
+            default:
+              // Unknown mark — keep the text, skip the mark
+              unknownTypes.add(`mark:${mark.type}`)
+          }
+        })
+        return text
+      }
+
+      default:
+        // Unknown node — degrade safely: render inner content if any, else skip
+        unknownTypes.add(`node:${node.type}`)
+        return inner()
+    }
+  } catch (err) {
+    // A single bad node must never break the whole article
+    console.error(`[RichText] Failed to render node type "${node.type}":`, err)
+    return inner()
+  }
+}
+
+function colspanRowspan(node: StoryblokNode): string {
+  let out = ''
+  if (node.attrs?.colspan && Number(node.attrs.colspan) > 1) out += ` colspan="${Number(node.attrs.colspan)}"`
+  if (node.attrs?.rowspan && Number(node.attrs.rowspan) > 1) out += ` rowspan="${Number(node.attrs.rowspan)}"`
+  return out
+}
+
+let html = ''
+try {
+  html = renderNode(doc as unknown as StoryblokNode)
+} catch (err) {
+  console.error('[RichText] Fatal render error:', err)
+  html = '<p>Content could not be displayed. Please try again later.</p>'
+}
+
+// Consolidated debug log for unknown node/mark types
+if (unknownTypes.size > 0) {
+  console.warn('[RichText] Unknown rich-text node/mark types (rendered with safe fallback):', [...unknownTypes])
+}
+---
+<div class="prose" set:html={html} />
