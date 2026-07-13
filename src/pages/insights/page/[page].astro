@@ -15,7 +15,6 @@ export async function getStaticPaths() {
   const all = await getAllInsights()
   const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE))
 
-  // Generate routes for pages 2 … N (page 1 is /insights)
   const paths = []
   for (let p = 2; p <= totalPages; p++) {
     paths.push({

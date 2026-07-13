@@ -25,6 +25,12 @@
  *   Entries with a missing/unrecognized Category still show up under "All"
  *   but are excluded from every category-specific listing.
  *
+ * Nested folders: articles do NOT need to live directly under insights/.
+ * If an editor drops a story into insights/media-coverage/2026-... instead
+ * of flat under insights/, everything below still resolves it correctly —
+ * `slug` on InsightEntry is always the FULL path after "insights/", derived
+ * from Storyblok's `full_slug`, not the single-segment `slug` field.
+ *
  * Environments:
  *   Production deploy  → version=published
  *   Preview deploy     → version=draft  (auto-detected via import.meta.env.MODE)
@@ -129,6 +135,8 @@ export async function getAllInsights(category?: InsightCategory): Promise<Insigh
       page++
     }
 
+    console.log(`[storyblok] getAllInsights(${category ?? 'all'}) → ${all.length} stories:`, all.map(s => s.full_slug))
+
     return all.map(mapStory)
   } catch (err) {
     console.error('[storyblok] getAllInsights fetch failed:', err)
@@ -140,13 +148,34 @@ export async function getAllInsights(category?: InsightCategory): Promise<Insigh
  *  matches InsightEntry.slug). Returns null if not found. */
 export async function getInsightBySlug(slug: string): Promise<InsightEntry | null> {
   if (!TOKEN) return null
-  const url = `${BASE}/stories/insights/${slug}?token=${TOKEN}&version=${VERSION}&cv=${CV}`
+
+  // Defensive cleanup: strip any leading/trailing slashes and an accidental
+  // "insights/" prefix if the caller already included it, then re-encode
+  // each path segment individually (encodeURIComponent would otherwise
+  // escape the "/" between segments, which breaks the nested path).
+  const cleanSlug = slug
+    .replace(/^\/+/, '')
+    .replace(/^insights\//, '')
+    .replace(/\/+$/, '')
+  const encodedSlug = cleanSlug.split('/').map(encodeURIComponent).join('/')
+  const storyPath = `insights/${encodedSlug}`
+
+  const url = `${BASE}/stories/${storyPath}?token=${TOKEN}&version=${VERSION}&cv=${CV}`
+
+  // DEBUG — remove once nested-slug routing is confirmed working in prod.
+  console.log('[storyblok] getInsightBySlug fetching:', storyPath)
+
   try {
-    const res  = await fetch(url)
-    if (!res.ok) return null
+    const res = await fetch(url)
+    console.log('[storyblok] getInsightBySlug response:', res.status, res.statusText, 'for', storyPath)
+    if (!res.ok) {
+      console.error('[storyblok] getInsightBySlug failed:', storyPath, res.status, await res.text().catch(() => ''))
+      return null
+    }
     const data = await res.json() as { story?: SBStory }
     return data.story ? mapStory(data.story) : null
-  } catch {
+  } catch (err) {
+    console.error('[storyblok] getInsightBySlug fetch threw:', storyPath, err)
     return null
   }
 }
