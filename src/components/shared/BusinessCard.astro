@@ -8,8 +8,9 @@ interface Props {
   href:  string
   tags:  string[]
   image?: string | null  // optional featured image URL
+  extraLink?: { label: string; href: string } | null  // optional secondary link, opens in a new tab
 }
-const { num, en, name, body, href, tags, image = null } = Astro.props
+const { num, en, name, body, href, tags, image = null, extraLink = null } = Astro.props
 
 // Shared with the Business & Platform page segments (b1–b6.png)
 const DEFAULTS: Record<string, string> = {
@@ -38,6 +39,13 @@ const imgSrc = image ?? DEFAULTS[num] ?? DEFAULTS['01']
     <div class="bc-tags">
       {tags.map(t => <span>{t}</span>)}
     </div>
+    {extraLink && (
+      <span class="btn-text-inline" role="link" tabindex="0" data-href={extraLink.href}
+        onclick="event.preventDefault();event.stopPropagation();window.open(this.dataset.href,'_blank','noopener')"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();window.open(this.dataset.href,'_blank','noopener')}">
+        {extraLink.label}
+      </span>
+    )}
     <span class="bc-arr" aria-hidden="true">
       <span>Learn More</span>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

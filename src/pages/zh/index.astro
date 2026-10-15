@@ -75,6 +75,7 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
 
           <div class="hero-actions">
             <a href="/zh/business"    class="btn btn--gold">探索我们的业务</a>
+            <a href="https://shop150633875.m.youzan.com/wscshop/feature/goods/all?kdt_id=150441707&amp;ps=760" target="_blank" rel="noopener" class="btn-text">查看产品 →</a>
             <a href="/zh/partnership" class="btn btn--ghost">与我们合作</a>
           </div>
         </div>
@@ -194,6 +195,7 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
               <h3 class="bc-name">贸易与分销</h3>
               <p class="bc-text">全球采购、跨境流通与区域分销——高效开拓东盟及国际市场，助力农产品与食品走向世界。</p>
               <div class="bc-tags"><span>清真进出口</span><span>分销渠道</span><span>全球采购</span></div>
+              <a href="https://shop150633875.m.youzan.com/wscshop/feature/goods/all?kdt_id=150441707&amp;ps=760" target="_blank" rel="noopener" class="btn-text-inline" onclick="event.stopPropagation()">查看产品目录 →</a>
               <span class="bc-arr">了解更多 →</span>
             </div>
           </div>
@@ -388,7 +390,7 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
 .hero-h1 { margin-bottom:24px; font-weight:400; opacity:0; animation:slideRight .9s ease .3s forwards; }
 .hero-h1 em { font-family:var(--FD); color:var(--gold); font-style:italic; font-weight:300; }
 .hero-body { font-family:var(--FB); font-size:16px; font-weight:400; line-height:1.85; color:var(--text-2); max-width:520px; margin-bottom:36px; opacity:0; animation:slideRight .9s ease .45s forwards; }
-.hero-actions { display:flex; gap:16px; flex-wrap:wrap; opacity:0; animation:slideRight .9s ease .6s forwards; }
+.hero-actions { display:flex; gap:16px; flex-wrap:wrap; align-items:center; opacity:0; animation:slideRight .9s ease .6s forwards; }
 
 /* 右侧业务卡 */
 .hero-right { display:flex; align-items:center; justify-content:center; opacity:0; animation:fadeIn 1s ease .75s forwards; }
@@ -543,7 +545,8 @@ const ZH_PROJECTS: Record<string, { title: string; subtitle: string; highlights:
 }
 @media (max-width:700px) {
   .hero-h1 { font-size:36px; }
-  .hero-actions { flex-direction:column; }
+  .hero-actions { flex-direction:column; align-items:stretch; }
+  .hero-actions .btn-text { text-align:center; }
   .hero-bar-inner { grid-template-columns:1fr; }
   .hb-item { border-right:none !important; border-bottom:1px solid var(--bg-4); }
   .biz-grid,.ins-grid,.mc-grid { grid-template-columns:1fr; }
