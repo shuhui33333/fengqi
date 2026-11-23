@@ -27,12 +27,11 @@ export interface ZhProject {
 export const ZH_PROJECTS: Record<string, ZhProject> = {
   'kuantan-halal-park': {
     title: '彭亨数字清真食品产业园',
-    subtitle: '格宾 730 英亩 + 甘孟 100 英亩，彭亨州一体化清真平台',
-    location: '马来西亚彭亨州关丹',
+    subtitle: '甘孟 100 英亩一体化清真平台',
+    location: '马来西亚彭亨州甘孟',
     highlights: [
-      '格宾 730 英亩 + 甘孟 100 英亩，合计 830 英亩',
-      '距关丹港约 10 公里，直连东海岸铁路（ECRL）',
-      'JAKIM 清真认证：30+ 天 → 10–12 天',
+      '甘孟园区，占地 100 英亩',
+      'JAKIM 清真认证：一般申请约 6–12 个月，丰麒协助申请预计 3–6 个月',
       '通关时间：约 72 小时 → 约 48 小时',
       '0–5% 关税优惠（RCEP 及马来西亚-欧盟自贸协定）',
       '聚焦：清真食品、保健品、化妆品、药品',

@@ -1,15 +1,14 @@
 ---
 title: "Pahang Digital Halal Food Industrial Park"
-subtitle: "730-Acre + 100-Acre  Integrated Halal Platform in Pahang"
-location: "Kuantan, Pahang, Malaysia"
+subtitle: "100-Acre Integrated Halal Platform in Gambang, Pahang"
+location: "Gambang, Pahang, Malaysia"
 category: "Industrial Park"
 status: "In Development"
 featured: true
 order: 1
 highlights:
-  - "730 acres + 100 acres (830 acres total)"
-  - "~10 km from Kuantan Port, direct ECRL rail access"
-  - "JAKIM halal certification: 30+ days → 10–12 days"
+  - "100-acre Gambang park"
+  - "JAKIM applications: typically 6–12 months; estimated 3–6 months with Fengqi support"
   - "Customs clearance: ~72 hrs → ~48 hrs"
   - "0–5% tariff via RCEP & Malaysia-EU FTA"
   - "Focus: halal food, health products, cosmetics, pharma"
@@ -17,11 +16,7 @@ highlights:
 
 ## Project Overview
 
-> **Land breakdown:** Kuantan zone — 730 acres · Kuantan-Gambang zone — 100 acres · Total: 830 acres
-
-With a global Muslim population exceeding 2 billion and halal market demand continuing to expand, the Pahang Digital Halal Food Industrial Park (HALAL Industria Hub) is Fengqi's flagship platform in Malaysia — comprising a 730-acre zone and a 100-acre zone (830 acres total), creating an integrated cross-border ecosystem integrating industrial park, logistics supply chain, international trade and digital platform into one.
-
-Located in Pahang, adjacent to the Malaysia-China Kuantan Industrial Park (MCKIP) and approximately 10 kilometres from Kuantan Port, the park benefits from direct access to the East Coast Rail Link (ECRL) and proximity to a planned new international airport — giving it a naturally superior multimodal transport position.
+With a global Muslim population exceeding 2 billion and halal market demand continuing to expand, the Pahang Digital Halal Food Industrial Park (HALAL Industria Hub) is Fengqi's flagship platform in Malaysia. The 100-acre park in Gambang brings together industrial space, logistics, international trade and digital services.
 
 ## Focus Industries
 
@@ -34,8 +29,8 @@ The park concentrates on four core halal-certified sectors:
 
 ## Key Competitive Advantages
 
-**JAKIM Certification Fast-Track**
-Malaysia's JAKIM is the world's most internationally recognised halal certification authority, accepted in 80+ countries. Through Fengqi's established processes and government relationships, standard certification timelines are compressed from 30+ days to approximately 10–12 days.
+**JAKIM Certification Support**
+Malaysia's JAKIM halal certification is recognised in 80+ countries. Applications typically take 6–12 months. With Fengqi's application support, the estimated timeline is 3–6 months.
 
 **Logistics Efficiency**
 The Kuantan Port–Port Klang direct shipping network, combined with ECRL rail connectivity, reduces cross-border customs clearance from approximately 72 hours to approximately 48 hours for participating businesses.
