@@ -1,0 +1,36 @@
+---
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+import InquiryForm   from '../../components/inquiry/InquiryForm.astro'
+---
+<BaseLayout lang="zh" title="采购询价 | 丰麒集团" description="告诉丰麒集团您在马来西亚和东盟需要采购的产品。">
+  <Header active="" lang="zh" />
+  <main>
+    <section class="section iq-hero page-hero">
+      <div class="geo-bg"></div>
+      <div class="wrap">
+        <div class="iq-hero-c">
+          <div class="label">采购询价</div>
+          <h1 class="heading">告诉我们<em>您需要什么</em>。</h1>
+          <p class="body-text body-text--wide">请填写产品、数量和交付市场。我们的团队会逐条核对，并在 1 个工作日内回复。</p>
+        </div>
+      </div>
+    </section>
+    <section class="section iq-body">
+      <div class="wrap iq-wrap">
+        <InquiryForm lang="zh" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.iq-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.iq-hero h1{color:var(--text)}
+.iq-hero-c{max-width:760px}
+.iq-body{background:var(--bg)}
+.iq-wrap{max-width:880px}
+</style>

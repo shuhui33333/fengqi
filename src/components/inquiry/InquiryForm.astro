@@ -1,0 +1,164 @@
+---
+interface Props { lang: 'en' | 'zh' }
+const { lang } = Astro.props
+const zh = lang === 'zh'
+
+const COUNTRIES: Array<[string, string, string]> = [
+  ['MY', 'Malaysia', '马来西亚'], ['CN', 'China', '中国'], ['SG', 'Singapore', '新加坡'], ['ID', 'Indonesia', '印度尼西亚'], ['TH', 'Thailand', '泰国'],
+  ['VN', 'Vietnam', '越南'], ['PH', 'Philippines', '菲律宾'], ['BN', 'Brunei', '文莱'], ['KH', 'Cambodia', '柬埔寨'], ['LA', 'Laos', '老挝'],
+  ['MM', 'Myanmar', '缅甸'], ['TL', 'Timor-Leste', '东帝汶'], ['HK', 'Hong Kong, China', '中国香港'], ['MO', 'Macao, China', '中国澳门'], ['TW', 'Taiwan, China', '中国台湾'],
+  ['JP', 'Japan', '日本'], ['KR', 'South Korea', '韩国'], ['IN', 'India', '印度'], ['PK', 'Pakistan', '巴基斯坦'], ['BD', 'Bangladesh', '孟加拉国'],
+  ['AE', 'United Arab Emirates', '阿联酋'], ['SA', 'Saudi Arabia', '沙特阿拉伯'], ['TR', 'Türkiye', '土耳其'], ['AU', 'Australia', '澳大利亚'], ['NZ', 'New Zealand', '新西兰'],
+  ['GB', 'United Kingdom', '英国'], ['DE', 'Germany', '德国'], ['FR', 'France', '法国'], ['IT', 'Italy', '意大利'], ['ES', 'Spain', '西班牙'],
+  ['NL', 'Netherlands', '荷兰'], ['RU', 'Russia', '俄罗斯'], ['US', 'United States', '美国'], ['CA', 'Canada', '加拿大'], ['MX', 'Mexico', '墨西哥'],
+  ['BR', 'Brazil', '巴西'], ['ZA', 'South Africa', '南非'],
+]
+const CURRENCIES = ['MYR', 'USD', 'CNY', 'SGD', 'IDR', 'THB', 'VND', 'HKD', 'EUR', 'GBP']
+const BUYER_TYPES: Array<[string, string, string]> = [
+  ['importer', 'Importer', '进口商'], ['distributor', 'Distributor / Wholesaler', '分销商 / 批发商'], ['retailer', 'Retailer', '零售商'],
+  ['industrial_buyer', 'Industrial / Project buyer', '工业 / 项目采购'], ['other', 'Other', '其他'],
+]
+
+const T = zh ? {
+  company: '公司名称', companyCountry: '公司所在国家/地区', contact: '联系人姓名', email: '邮箱', phone: '电话 / WhatsApp', buyerType: '买家类型',
+  product: '需要什么产品', productPh: '例如：丁腈手套、钢格栅、铝塑板', spec: '规格要求', qty: '数量', unit: '单位', unitPh: '例如：吨、盒、平方米',
+  price: '目标价格', currency: '币种', priceUnit: '计价单位', deliveryCountry: '交付国家', deliveryLocation: '交付地点', date: '期望采购时间',
+  cert: '认证要求', certPh: '例如：Halal、SIRIM', message: '补充说明', select: '请选择', optional: '选填',
+  consent: '我同意 Fengqi Group 按隐私说明处理以上信息，用于回复本次询价。', privacy: '隐私说明',
+  submit: '提交询价 →', sending: '提交中…', ok: '已收到询价，编号 {code}。我们会在 1 个工作日内联系您。',
+  err: '提交失败，请稍后再试，或发邮件至', errFields: '请检查标记的字段。', tooMany: '提交次数过多，请一小时后再试。',
+} : {
+  company: 'Company name', companyCountry: 'Company country / region', contact: 'Contact person', email: 'Email', phone: 'Phone / WhatsApp', buyerType: 'Buyer type',
+  product: 'Product you need', productPh: 'e.g. nitrile gloves, steel grating, aluminium composite panels', spec: 'Specification', qty: 'Quantity', unit: 'Unit', unitPh: 'e.g. tonnes, boxes, m²',
+  price: 'Target price', currency: 'Currency', priceUnit: 'Per unit', deliveryCountry: 'Delivery country', deliveryLocation: 'Delivery location', date: 'Expected purchase date',
+  cert: 'Certification requirements', certPh: 'e.g. Halal, SIRIM', message: 'Additional notes', select: 'Select…', optional: 'optional',
+  consent: 'I agree that Fengqi Group may process this information to respond to my inquiry, as described in the privacy notice.', privacy: 'Privacy notice',
+  submit: 'Submit inquiry →', sending: 'Sending…', ok: 'Inquiry received — reference {code}. We will contact you within one business day.',
+  err: 'Something went wrong. Please try again or email', errFields: 'Please check the highlighted fields.', tooMany: 'Too many submissions. Please try again in an hour.',
+}
+const country = (c: [string, string, string]) => zh ? c[2] : c[1]
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? ''
+const endpoint = import.meta.env.PUBLIC_INQUIRY_ENDPOINT ?? 'https://ixtzdllijnjchkvtcqkr.supabase.co/functions/v1/web-inquiry'
+const privacyHref = zh ? '/zh/privacy' : '/privacy'
+---
+<form id="inq-form" class="inq-form" novalidate data-endpoint={endpoint} data-lang={lang} data-msg-ok={T.ok} data-msg-fields={T.errFields} data-msg-many={T.tooMany}>
+  <input type="text" name="website_url" class="inq-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.company}<b>*</b></span><input class="inq-i" name="company_name" maxlength="200" required /></label>
+    <label class="inq-f"><span class="inq-l">{T.companyCountry}<b>*</b></span>
+      <select class="inq-i" name="company_country_code" required><option value="">{T.select}</option>{COUNTRIES.map((c) => <option value={c[0]}>{country(c)}</option>)}</select></label>
+  </div>
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.contact}<b>*</b></span><input class="inq-i" name="contact_name" maxlength="120" required /></label>
+    <label class="inq-f"><span class="inq-l">{T.email}<b>*</b></span><input class="inq-i" type="email" name="contact_email" maxlength="200" required /></label>
+  </div>
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.phone}</span><input class="inq-i" type="tel" name="contact_phone" maxlength="40" placeholder="+60 / +86 …" /></label>
+    <label class="inq-f"><span class="inq-l">{T.buyerType}</span>
+      <select class="inq-i" name="buyer_type"><option value="">{T.select}</option>{BUYER_TYPES.map((b) => <option value={b[0]}>{zh ? b[2] : b[1]}</option>)}</select></label>
+  </div>
+
+  <label class="inq-f"><span class="inq-l">{T.product}<b>*</b></span><input class="inq-i" name="product_text" maxlength="300" required placeholder={T.productPh} /></label>
+  <label class="inq-f"><span class="inq-l">{T.spec}</span><textarea class="inq-i inq-ta" name="specification" maxlength="2000" rows="3"></textarea></label>
+
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.qty}</span><input class="inq-i" name="quantity" inputmode="decimal" /></label>
+    <label class="inq-f"><span class="inq-l">{T.unit}</span><input class="inq-i" name="quantity_unit" maxlength="30" placeholder={T.unitPh} /></label>
+  </div>
+  <div class="inq-row inq-row3">
+    <label class="inq-f"><span class="inq-l">{T.price}</span><input class="inq-i" name="target_price" inputmode="decimal" /></label>
+    <label class="inq-f"><span class="inq-l">{T.currency}</span>
+      <select class="inq-i" name="currency_code"><option value="">{T.select}</option>{CURRENCIES.map((c) => <option value={c}>{c}</option>)}</select></label>
+    <label class="inq-f"><span class="inq-l">{T.priceUnit}</span><input class="inq-i" name="target_price_unit" maxlength="30" placeholder={T.unitPh} /></label>
+  </div>
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.deliveryCountry}<b>*</b></span>
+      <select class="inq-i" name="delivery_country_code" required><option value="">{T.select}</option>{COUNTRIES.map((c) => <option value={c[0]} selected={c[0] === 'MY'}>{country(c)}</option>)}</select></label>
+    <label class="inq-f"><span class="inq-l">{T.deliveryLocation}</span><input class="inq-i" name="delivery_location" maxlength="200" /></label>
+  </div>
+  <div class="inq-row">
+    <label class="inq-f"><span class="inq-l">{T.date}</span><input class="inq-i" type="date" name="expected_purchase_date" /></label>
+    <label class="inq-f"><span class="inq-l">{T.cert}</span><input class="inq-i" name="certification_requirements" maxlength="500" placeholder={T.certPh} /></label>
+  </div>
+  <label class="inq-f"><span class="inq-l">{T.message}</span><textarea class="inq-i inq-ta" name="message" maxlength="4000" rows="4"></textarea></label>
+
+  <label class="inq-consent"><input type="checkbox" name="consent" required /> <span>{T.consent} <a href={privacyHref}>{T.privacy}</a></span></label>
+
+  {siteKey && <div class="cf-turnstile" data-sitekey={siteKey} data-language={zh ? 'zh-cn' : 'en'}></div>}
+
+  <button type="submit" id="inq-submit" class="btn btn--gold inq-btn"><span class="inq-t">{T.submit}</span><span class="inq-s">{T.sending}</span></button>
+  <div id="inq-ok" class="inq-ok" aria-live="polite" hidden></div>
+  <div id="inq-err" class="inq-err" aria-live="polite" hidden>{T.err} <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a></div>
+</form>
+
+{siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+const form = document.getElementById('inq-form') as HTMLFormElement | null
+const btn = document.getElementById('inq-submit') as HTMLButtonElement | null
+const ok = document.getElementById('inq-ok')
+const err = document.getElementById('inq-err')
+if (form && btn && ok && err) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    form.querySelectorAll('.inq-bad').forEach((el) => el.classList.remove('inq-bad'))
+    if (!form.checkValidity()) { form.reportValidity(); return }
+    const fd = new FormData(form)
+    const body: Record<string, unknown> = {}
+    fd.forEach((v, k) => { if (k !== 'cf-turnstile-response') body[k] = String(v) })
+    body.consent = fd.get('consent') === 'on'
+    body.language = form.dataset.lang
+    body.turnstile_token = String(fd.get('cf-turnstile-response') ?? '')
+    btn.setAttribute('data-loading', '1'); btn.disabled = true
+    ok.hidden = true; err.hidden = true
+    try {
+      const res = await fetch(form.dataset.endpoint!, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      const result = await res.json().catch(() => ({}))
+      if (res.ok && result.success) {
+        form.reset()
+        ok.textContent = (form.dataset.msgOk ?? '').replace('{code}', result.inquiry_code ?? '')
+        ok.hidden = false
+      } else if (res.status === 400 && Array.isArray(result.fields)) {
+        for (const f of result.fields as string[]) form.querySelector(`[name="${f.split(':')[0]}"]`)?.classList.add('inq-bad')
+        err.textContent = form.dataset.msgFields ?? ''
+        err.hidden = false
+      } else if (res.status === 429) {
+        err.textContent = form.dataset.msgMany ?? ''
+        err.hidden = false
+      } else {
+        err.hidden = false
+      }
+    } catch {
+      err.hidden = false
+    } finally {
+      btn.removeAttribute('data-loading'); btn.disabled = false
+      ;(window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset()
+    }
+  })
+}
+</script>
+
+<style>
+.inq-form { display:flex; flex-direction:column; gap:18px; }
+.inq-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.inq-row3 { grid-template-columns:1fr 1fr 1fr; }
+.inq-f { display:flex; flex-direction:column; gap:6px; }
+.inq-l { font-family:var(--FL); font-size:15px; letter-spacing:2px; color:var(--text-2); font-weight:500; }
+.inq-l b { color:var(--gold); margin-left:3px; font-weight:500; }
+.inq-i { background:var(--bg); border:1.5px solid var(--bg-4); color:var(--text); font-family:var(--FB); font-size:15px; padding:12px 14px; width:100%; outline:none; transition:border-color .25s, box-shadow .25s; -webkit-appearance:none; }
+.inq-i:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(184,145,42,.12); }
+.inq-i.inq-bad { border-color:#c0392b; }
+.inq-ta { resize:vertical; min-height:96px; line-height:1.6; }
+.inq-hp { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+.inq-consent { display:flex; gap:10px; align-items:flex-start; font-size:15px; color:var(--text-2); line-height:1.6; }
+.inq-consent input { margin-top:5px; }
+.inq-consent a { color:var(--gold); }
+.inq-btn { width:100%; text-align:center; margin-top:4px; }
+.inq-btn .inq-s { display:none; }
+.inq-btn[data-loading] .inq-t { display:none; }
+.inq-btn[data-loading] .inq-s { display:inline; }
+.inq-ok { color:#1f8a5f; font-size:15px; line-height:1.6; }
+.inq-err { color:#c0392b; font-size:15px; line-height:1.6; }
+@media (max-width:700px) { .inq-row, .inq-row3 { grid-template-columns:1fr; } }
+</style>

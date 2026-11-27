@@ -1,0 +1,31 @@
+---
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+---
+<BaseLayout lang="en" title="Privacy Notice | Fengqi Group" description="Privacy Notice | Fengqi Group">
+  <Header active="" lang="en" />
+  <main>
+    <section class="section pv-body">
+      <div class="wrap pv-wrap">
+        <h1 class="heading">Privacy Notice</h1>
+        <p>This notice explains how Fengqi Group handles the information you submit through the sourcing inquiry form on this website.</p>
+        <h2>What we collect</h2><ul><li>Company name and country, contact name, email and phone / WhatsApp.</li><li>The details of your inquiry (product, specification, quantity, price, delivery, certification, notes).</li><li>A one-way hash of your IP address, used only to limit repeated submissions. We do not store the IP address itself.</li></ul>
+        <h2>Why we use it</h2><p>To review your inquiry, contact you about it, and prepare quotations. We do not sell your information or use it for unrelated marketing.</p>
+        <h2>Who can see it</h2><p>Authorised Fengqi Group staff working on sourcing and sales. Notification emails to our sales inbox contain the inquiry reference, company and product only.</p>
+        <h2>How long we keep it</h2><p>Inquiries we take on become part of our business records. Inquiries we close as invalid have the contact details removed after 90 days.</p>
+        <h2>Your rights</h2><p>You may ask to access, correct or delete your information by emailing <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a>.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pv-body{padding-top:calc(var(--sv) + 66px);background:var(--bg)}
+.pv-wrap{max-width:780px}
+.pv-wrap h2{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 8px}
+.pv-wrap p,.pv-wrap li{font-size:16px;line-height:1.8;color:var(--text-2)}
+.pv-wrap ul{padding-left:20px}
+</style>

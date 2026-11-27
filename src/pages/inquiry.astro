@@ -1,0 +1,36 @@
+---
+import BaseLayout    from '../layouts/BaseLayout.astro'
+import Header        from '../components/Header.astro'
+import Footer        from '../components/Footer.astro'
+import ClientEffects from '../components/ClientEffects.astro'
+import InquiryForm   from '../components/inquiry/InquiryForm.astro'
+---
+<BaseLayout lang="en" title="Sourcing Inquiry | Fengqi Group" description="Tell Fengqi Group what you need to source for Malaysia and ASEAN.">
+  <Header active="" lang="en" />
+  <main>
+    <section class="section iq-hero page-hero">
+      <div class="geo-bg"></div>
+      <div class="wrap">
+        <div class="iq-hero-c">
+          <div class="label">Sourcing Inquiry</div>
+          <h1 class="heading">Tell us <em>what you need</em>.</h1>
+          <p class="body-text body-text--wide">Describe the product, quantity and delivery market. Our team reviews every inquiry and replies within one business day.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section iq-body">
+      <div class="wrap iq-wrap">
+        <InquiryForm lang="en" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.iq-hero{padding-top:calc(var(--sv) + 66px);background:var(--bg-2);border-bottom:1px solid var(--bg-4);position:relative;overflow:hidden}
+.iq-hero h1{color:var(--text)}
+.iq-hero-c{max-width:760px}
+.iq-body{background:var(--bg)}
+.iq-wrap{max-width:880px}
+</style>

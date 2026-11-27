@@ -1,0 +1,31 @@
+---
+import BaseLayout    from '../../layouts/BaseLayout.astro'
+import Header        from '../../components/Header.astro'
+import Footer        from '../../components/Footer.astro'
+import ClientEffects from '../../components/ClientEffects.astro'
+---
+<BaseLayout lang="zh" title="隐私说明 | 丰麒集团" description="隐私说明 | 丰麒集团">
+  <Header active="" lang="zh" />
+  <main>
+    <section class="section pv-body">
+      <div class="wrap pv-wrap">
+        <h1 class="heading">隐私说明</h1>
+        <p>本说明介绍丰麒集团如何处理您通过本网站采购询价表单提交的信息。</p>
+        <h2>收集哪些信息</h2><ul><li>公司名称和所在国家、联系人姓名、邮箱、电话 / WhatsApp。</li><li>询价内容（产品、规格、数量、价格、交付、认证、补充说明）。</li><li>IP 地址的单向哈希值，只用于限制重复提交；不保存 IP 地址本身。</li></ul>
+        <h2>用途</h2><p>用于核对您的询价、就询价与您联系并准备报价。我们不会出售您的信息，也不会用于无关的营销。</p>
+        <h2>谁能看到</h2><p>负责采购和销售的丰麒集团授权员工。发送到销售邮箱的通知只包含询价编号、公司和产品。</p>
+        <h2>保留多久</h2><p>受理的询价会成为业务记录的一部分；被判定为无效的询价，联系信息在 90 天后清除。</p>
+        <h2>您的权利</h2><p>您可以发邮件至 <a href="mailto:info@fengqi-global.com">info@fengqi-global.com</a>，要求查阅、更正或删除您的信息。</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <ClientEffects />
+</BaseLayout>
+<style>
+.pv-body{padding-top:calc(var(--sv) + 66px);background:var(--bg)}
+.pv-wrap{max-width:780px}
+.pv-wrap h2{font-family:var(--FD);font-size:20px;font-weight:400;color:var(--gold);margin:28px 0 8px}
+.pv-wrap p,.pv-wrap li{font-size:16px;line-height:1.8;color:var(--text-2)}
+.pv-wrap ul{padding-left:20px}
+</style>
